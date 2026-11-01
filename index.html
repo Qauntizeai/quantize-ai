@@ -175,22 +175,18 @@ async function searchAcademic(q,secondaryOnly=false){
 function gdeltQuery(q,publisher){const clean=q.replace(/[():"\[\]{}]/g,' ').replace(/\b(?:OR|AND|NOT|domain|domainis)\b/gi,' ').trim().slice(0,150);const pubs=publisher==='all'?PUBS:PUBS.filter(p=>p.id===publisher);return clean+' ('+pubs.map(p=>'domainis:'+p.domain).join(' OR ')+')';}
 function parseClientNews(j){const lookup=new Map(PUBS.map(p=>[p.domain,p]));const seen=new Set();return(j.articles||[]).map(w=>{const p=lookup.get(String(w.domain||'').replace(/^www\./,''));if(!p||!/^https?:\/\//.test(w.url||'')||seen.has(w.url))return null;seen.add(w.url);const dt=/^\d{14}$/.test(w.seendate||'')?w.seendate.slice(0,4)+'-'+w.seendate.slice(4,6)+'-'+w.seendate.slice(6,8):'';return{kind:'news',title:[w.title||'Untitled article'],URL:w.url,'container-title':[p.name],author:[],published:null,indexedDate:dt,publisherId:p.id};}).filter(Boolean);}
 async function searchNews(q,publisher){
-  if(useServer)try{return await fetchJSON(url(API_BASE+'/api/news',{q,publisher}),13000);}catch{}
-  // Direct-browser fallback: short GDELT queries per small group of publishers.
-  const selected=publisher==='all'?PUBS:PUBS.filter(p=>p.id===publisher);
-  const groups=Array.from({length:Math.ceil(selected.length/3)},(_,i)=>selected.slice(i*3,i*3+3));
-  const settled=await Promise.allSettled(groups.map(async group=>{
-    const clean=q.replace(/[():"\[\]{}]/g,' ').replace(/\b(?:OR|AND|NOT|domain|domainis)\b/gi,' ').trim().slice(0,150);
-    const query=clean+' ('+group.map(p=>'domainis:'+p.domain).join(' OR ')+')';
-    const j=await fetchJSON(url('https://api.gdeltproject.org/api/v2/doc/doc',{query,mode:'artlist',format:'json',timespan:'3m',maxrecords:50,sort:'datedesc'}),12000);
-    return parseClientNews(j);
-  }));
-  const successful=settled.filter(s=>s.status==='fulfilled');
-  if(!successful.length)return{results:[],status:'unavailable',fallback:true};
-  const seen=new Set();
-  const results=successful.flatMap(x=>x.value).filter(w=>{if(seen.has(w.URL))return false;seen.add(w.URL);return true;})
-    .sort((a,b)=>String(b.indexedDate).localeCompare(String(a.indexedDate))).slice(0,125);
-  return{results,status:successful.length===settled.length?'ok':'partial',fallback:true};
+  if(useServer)try{return await fetchJSON(url(API_BASE+'/api/news',{q,publisher}),30000);}catch{}
+  // One browser request, not multiple simultaneous requests that trigger throttling.
+  try {
+    const j = await fetchJSON(url('https://api.gdeltproject.org/api/v2/doc/doc',{
+      query:gdeltQuery(q,publisher),mode:'artlist',format:'json',
+      timespan:'3m',maxrecords:200,sort:'datedesc'
+    }),15000);
+    return {results:parseClientNews(j).slice(0,125),status:'ok',fallback:true};
+  } catch(error) {
+    return {results:[],status:'unavailable',fallback:true,
+      message:'News index request failed. This may be a temporary provider rate limit or browser network restriction.'};
+  }
 }
 $('navDiscover').onclick=()=>setMode('academic');
 $('navNews').onclick=()=>setMode('news');
@@ -212,7 +208,7 @@ $('searchForm').onsubmit=async e=>{
   try{
     const data=mode==='news'?await searchNews(q,$('publisherChoice').value):await searchAcademic(q,mode==='secondary');
     works=(data.results||[]).map(w=>w.kind? w : {...w,kind:'academic'});
-    if(mode==='news')setStatus(data.status==='unavailable'?'News index unavailable. Try again, or connect the Node.js search server (see README).':(data.status==='partial'?'Some news searches unavailable · ':'')+'News results in Quantize AI: '+works.length+' indexed article links (past 3 months).');
+    if(mode==='news')setStatus(data.status==='unavailable'?'News search is temporarily unavailable. The public news index may be rate-limiting requests. For more reliable results, connect the separately hosted Node.js server (see README).':(data.status==='partial'?'Some news searches unavailable · ':'')+'News results in Quantize AI: '+works.length+' indexed article links (past 3 months).');
     else{const statuses=(data.sources||[]).map(s=>(ACADEMIC_LABELS[s.id]||s.label||s.id)+': '+(s.status==='ok'?(s.count+' records'):'unavailable'));setStatus((mode==='secondary'?'Review-focused search · ':'')+(data.fallback?'Direct search (up to 3 sources): ':'Five-source server: ')+statuses.join(' · '));}
     render();
   }catch{works=[];render();setStatus('Search unavailable; check your connection or server.');}
