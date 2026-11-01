@@ -1,599 +1,117 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="theme-color" content="#071426">
-  <meta name="description" content="Quantize AI helps students discover academic research and organize sources.">
-  <title>Quantize AI — Research smarter, learn faster</title>
-  <style>
-    :root {color-scheme:dark; --bg:#071120;--panel:#0d1b30;--panel2:#12233a;--border:#273b55;--muted:#a0b2ca;--ink:#f2f7ff;--blue:#4b98ff;--aqua:#65e0d5;--gold:#ffcf83;--shadow:0 26px 65px #01081480;}
-    *{box-sizing:border-box} html{scroll-behavior:smooth} body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;line-height:1.5} button,input,select{font:inherit} a{color:inherit} button{cursor:pointer} button:disabled{cursor:not-allowed;opacity:.55}
-    .shell{display:grid;grid-template-columns:252px minmax(0,1fr);min-height:100vh}
-    .sidebar{padding:29px 19px 22px;background:#0a1729;border-right:1px solid #233750;display:flex;flex-direction:column;gap:32px;position:sticky;top:0;height:100vh}
-    .brand{display:flex;gap:12px;align-items:center;text-decoration:none;padding:0 6px}.brand-mark{display:grid;place-items:center;width:42px;height:42px;border-radius:14px;background:linear-gradient(135deg,#3782f0,#64d6d4);box-shadow:0 10px 25px #2c7df73d;font-size:21px;font-weight:900;color:#04152d}.brand strong{display:block;font-size:19px;letter-spacing:-.65px}.brand small{display:block;color:#91a8c5;font-size:11px;letter-spacing:1.3px;text-transform:uppercase}
-    .side-label{font-size:11px;letter-spacing:1.8px;text-transform:uppercase;color:#7d94b4;margin:0 12px 12px;font-weight:800}.nav{display:grid;gap:7px}.nav-btn{width:100%;text-align:left;color:#a9bbd1;display:flex;align-items:center;gap:12px;border:1px solid transparent;padding:12px 13px;background:none;border-radius:12px;font-weight:650}.nav-btn svg{width:19px;height:19px;flex-shrink:0}.nav-btn.active,.nav-btn:hover{background:#172c4c;color:#fff;border-color:#28466b}.nav-btn.active svg{color:#77b8ff}.nav-count{margin-left:auto;background:#2a4568;border-radius:7px;padding:1px 8px;font-size:11px;color:#e4f4ff}.side-spacer{flex:1}.plan{padding:18px 15px;border:1px solid #264b69;border-radius:16px;background:linear-gradient(160deg,#112c4c,#112036);font-size:12px}.plan-head{display:flex;align-items:center;justify-content:space-between;font-weight:800;font-size:14px;margin-bottom:7px}.plan-head span{color:#78e5d9;font-size:10px;border:1px solid #43857f;border-radius:6px;padding:3px 6px}.plan p{color:#a6bbd2;margin:7px 0 0}
-    .main{min-width:0;max-width:1700px;width:100%;padding:28px clamp(18px,4vw,62px) 45px;margin:auto}.topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:30px;gap:16px}.breadcrumb{font-size:12px;letter-spacing:.2px;color:#8da5c1}.breadcrumb b{font-weight:600;color:#e2eeff}.top-actions{display:flex;align-items:center;gap:11px}.status-dot{width:7px;height:7px;display:inline-block;border-radius:50%;background:#6ce1ce;box-shadow:0 0 0 4px #61d9c523}.status{display:flex;align-items:center;gap:10px;border:1px solid #2a445e;background:#122239;border-radius:50px;padding:8px 13px;color:#adc6e1;font-size:12px}.avatar{display:grid;place-items:center;background:#263f61;color:#dbeeff;border:1px solid #42638a;width:38px;height:38px;border-radius:50%;font-weight:800}
-    .hero{position:relative;overflow:hidden;border:1px solid #355077;background:radial-gradient(circle at 81% 25%,#234e82 0,#152f56 21%,transparent 46%),linear-gradient(113deg,#122740,#0f2038 60%,#162d4c);padding:clamp(26px,4vw,52px);border-radius:24px;min-height:272px;box-shadow:var(--shadow)}.hero:after{content:"";position:absolute;width:310px;height:310px;right:-20px;top:-35px;border:1px solid #72cbff36;border-radius:50%;box-shadow:0 0 0 46px #75aaff0d,0 0 0 95px #75aaff0b;pointer-events:none}.hero:before{content:"✦";position:absolute;right:127px;top:64px;font-size:85px;color:#72e6df70;transform:rotate(-20deg);text-shadow:0 0 90px #58b9fd55;pointer-events:none}.eyebrow{font-size:11px;font-weight:850;letter-spacing:2.2px;text-transform:uppercase;color:#7ee2db;display:flex;align-items:center;gap:10px}.eyebrow:before{content:"";display:block;width:17px;height:2px;background:#7ee2db}.hero h1{max-width:680px;font-size:clamp(34px,4.3vw,59px);line-height:1.08;letter-spacing:-2.1px;margin:19px 0 14px;position:relative;z-index:1}.hero h1 em{font-style:normal;color:#78bbff}.hero p{max-width:530px;color:#bad0e7;margin:0;font-size:15px;position:relative;z-index:1}.hero-pills{margin-top:22px;display:flex;flex-wrap:wrap;gap:8px}.hero-pill{border:1px solid #456589;background:#152e4cc9;color:#cbdff6;border-radius:30px;font-size:11px;padding:7px 11px;position:relative;z-index:1}
-    .metrics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin:19px 0 28px}.metric{background:#0e1d32;border:1px solid #273a53;padding:16px 19px;border-radius:15px}.metric strong{display:block;font-size:25px;letter-spacing:-.6px}.metric span{display:block;color:#92a9c5;font-size:12px;margin-top:2px}
-    .workspace{display:grid;grid-template-columns:minmax(0,1.8fr) minmax(290px,.88fr);gap:20px;align-items:start}.stack{display:grid;gap:19px}.card{background:var(--panel);border:1px solid var(--border);border-radius:19px;padding:23px;min-width:0}.card-title{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:19px}.card-title h2{font-size:18px;letter-spacing:-.25px;margin:0}.mini{font-size:11px;color:#8da6c4}.badge{font-size:10px;border:1px solid #376391;background:#172e49;color:#99caff;border-radius:30px;padding:5px 9px;font-weight:800;white-space:nowrap}
-    .search-row{display:flex;gap:9px}.search-row input,.chat-input input{background:#0a1729;color:#f4f8ff;border:1px solid #35506c;outline:0;border-radius:11px;padding:15px 15px;min-width:0;flex:1;width:100%}.search-row input:focus,.chat-input input:focus,select:focus{border-color:#78b5ff;box-shadow:0 0 0 3px #3b8bfd2b}.primary{background:linear-gradient(135deg,#4c92f3,#3673df);border:1px solid #75b1fb;color:#fff;font-weight:800;padding:12px 20px;border-radius:11px;box-shadow:0 8px 20px #2778ed2a}.primary:hover{filter:brightness(1.1)}.topics{display:flex;flex-wrap:wrap;gap:8px;margin-top:15px;align-items:center}.topics span{color:#86a1be;font-size:11px;margin-right:3px}.topic-btn{border:1px solid #304966;background:#14263d;color:#bfd3e7;padding:6px 11px;border-radius:20px;font-size:11px}.topic-btn:hover{border-color:#69b0ff;color:#fff}
-    .filters{display:flex;flex-wrap:wrap;gap:7px;margin:0 0 14px}.filter{background:transparent;color:#97adc7;border:1px solid #2d4561;border-radius:9px;padding:7px 12px;font-size:11px;font-weight:750}.filter.active{background:#1b395d;color:#b8e0ff;border-color:#3d6e9f}.results{display:grid;gap:10px}.source{background:#101f35;border:1px solid #28405a;border-radius:13px;padding:17px}.source:hover{border-color:#3d6082}.source-top{display:flex;flex-wrap:wrap;gap:7px;align-items:center;margin-bottom:10px}.source-type{font-size:10px;font-weight:800;padding:4px 9px;border-radius:6px;background:#1d3c58;color:#9ee1f1}.source-type.review{background:#353052;color:#cbb8ff}.source-type.unclear{background:#3f3529;color:#f1cf8a}.source-year{color:#829cb9;font-size:11px;margin-left:auto}.source h3{font-size:15px;line-height:1.45;margin:0 0 9px;color:#e5f0ff}.source-detail{font-size:12px;color:#9eb4cc;margin:5px 0}.source-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:14px}.action{border:1px solid #395677;border-radius:9px;padding:7px 10px;font-size:11px;background:#172b46;color:#d8e9fc;font-weight:750;text-decoration:none}.action:hover{background:#203e64}.action.saved{border-color:#3b968f;color:#9aebe0}.empty{border:1px dashed #36526f;border-radius:12px;padding:31px 18px;text-align:center;color:#9db4ce;background:#0e1e33}.empty-icon{display:block;font-size:29px;margin-bottom:8px}.empty strong{color:#e3efff;display:block;margin-bottom:4px}.notice{font-size:11px;line-height:1.5;color:#8ea8c7;margin:12px 0 0}
-    .coach-wrap{position:sticky;top:22px}.coach-head{display:flex;align-items:center;gap:11px;margin-bottom:17px}.coach-logo{width:40px;height:40px;border-radius:13px;background:linear-gradient(135deg,#356caa,#35a49e);display:grid;place-items:center;font-size:23px}.coach-head h2{margin:0;font-size:17px}.coach-head small{color:#9bb2cb}.coach-messages{display:flex;flex-direction:column;gap:11px;min-height:252px;max-height:360px;overflow-y:auto;padding-right:4px}.bubble{max-width:95%;font-size:12px;line-height:1.6;border-radius:13px;padding:11px 13px;white-space:pre-line}.bubble.bot{background:#1b304a;border:1px solid #294967;color:#d9eaff;align-self:flex-start;border-top-left-radius:4px}.bubble.me{background:#28599b;color:white;align-self:flex-end;border-top-right-radius:4px}.suggestions{display:flex;gap:7px;flex-wrap:wrap;margin:15px 0}.suggestion{border:1px solid #3c5d80;color:#a9d6ff;background:#112741;border-radius:20px;padding:6px 10px;font-size:11px}.chat-input{display:flex;gap:7px}.chat-input input{padding:11px 12px;font-size:12px}.chat-input button{border-radius:10px;min-width:44px;border:none;background:#3b82e7;color:white;font-size:19px;font-weight:bold}.coach-note{padding:12px 14px;background:#111f33;border:1px solid #2e4765;border-radius:11px;font-size:11px;color:#98b0cb;line-height:1.55;margin-top:15px}.coach-note b{color:#cfe7ff}
-    .learn h3{font-size:14px
-              <script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#071120">
+<title>Quantize AI — Research Smarter, Learn Faster</title>
+<style>
+:root{color-scheme:dark;--bg:#071120;--panel:#0d1b30;--border:#273b55;--text:#f2f7ff;--muted:#a0b2ca;--blue:#4b98ff;--aqua:#65e0d5}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:15px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif}button,input{font:inherit}button{cursor:pointer}button:disabled{opacity:.6;cursor:wait}a{color:inherit}
+.shell{display:grid;grid-template-columns:245px minmax(0,1fr);min-height:100vh}
+.sidebar{background:#0a1729;border-right:1px solid var(--border);padding:28px 18px;display:flex;flex-direction:column;gap:35px}
+.brand{display:flex;align-items:center;gap:12px;text-decoration:none}.logo{display:grid;place-items:center;width:44px;height:44px;border-radius:14px;background:linear-gradient(135deg,#3782f0,#64d6d4);color:#04152d;font-weight:900;font-size:22px}.brand strong{display:block;font-size:19px}.brand small{display:block;color:#91a8c5;letter-spacing:1px;font-size:10px;text-transform:uppercase}
+.label{font-size:11px;color:#839bbb;text-transform:uppercase;letter-spacing:2px}.nav{display:grid;gap:8px}.nav button{display:block;width:100%;text-align:left;padding:12px;background:none;border:1px solid transparent;color:#afc0d7;border-radius:12px}.nav button:hover,.nav button.active{background:#172c4c;border-color:#28466b;color:#fff}.nav span{float:right;background:#2a4568;padding:0 7px;border-radius:7px}.spacer{flex:1}.plan{background:linear-gradient(135deg,#112c4c,#112036);border:1px solid #264b69;padding:16px;border-radius:15px;font-size:12px;color:#b2c6dd}.plan b{color:#77e1d8}
+.main{min-width:0;max-width:1600px;width:100%;margin:auto;padding:30px clamp(18px,4vw,58px)}.top{display:flex;justify-content:space-between;color:#97acc7;font-size:12px;margin-bottom:28px}.status{border:1px solid #2a445e;background:#122239;border-radius:30px;padding:7px 12px}.status:before{content:"● ";color:var(--aqua)}
+.hero{position:relative;overflow:hidden;border-radius:24px;border:1px solid #355077;background:radial-gradient(circle at 85% 25%,#234e82,transparent 48%),linear-gradient(115deg,#122740,#0f2038 60%,#162d4c);padding:clamp(26px,4vw,52px);min-height:270px;box-shadow:0 22px 60px #01081488}.hero:after{content:"✦";position:absolute;right:8%;top:7%;font-size:115px;color:#72e6df50;pointer-events:none}.eyebrow{font-size:11px;color:var(--aqua);letter-spacing:2px;text-transform:uppercase;font-weight:800}.hero h1{position:relative;z-index:1;font-size:clamp(34px,4vw,58px);line-height:1.08;letter-spacing:-2px;margin:18px 0 14px}.hero h1 em{font-style:normal;color:#78bbff}.hero p{position:relative;z-index:1;max-width:540px;color:#bad0e7}.pills{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}.pills span{border:1px solid #456589;border-radius:30px;background:#152e4cc9;padding:7px 11px;font-size:11px;color:#cbdff6}
+.metrics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin:19px 0 27px}.metric{border:1px solid var(--border);background:#0e1d32;border-radius:15px;padding:16px}.metric strong{display:block;font-size:25px}.metric small{color:#92a9c5}
+.grid{display:grid;grid-template-columns:minmax(0,1.7fr) minmax(290px,.9fr);gap:20px;align-items:start}.column{display:grid;gap:20px}.card{background:var(--panel);border:1px solid var(--border);border-radius:19px;padding:22px;min-width:0}.card h2{font-size:18px;margin:0 0 17px}.row{display:flex;gap:9px}.row input{min-width:0;flex:1;border-radius:11px;background:#0a1729;border:1px solid #35506c;padding:13px;color:#fff;outline:0}.row input:focus{border-color:#78b5ff}.primary{background:linear-gradient(135deg,#4c92f3,#3673df);color:white;border:1px solid #75b1fb;border-radius:11px;padding:12px 17px;font-weight:800}
+.chips{display:flex;gap:7px;flex-wrap:wrap;margin-top:15px}.chips button,.filter{background:#14263d;color:#bfd3e7;border:1px solid #304966;border-radius:20px;padding:7px 11px;font-size:11px}.chips button:hover,.filter.active{background:#1b395d;border-color:#5a8bc0}.filters{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:14px}.filter{border-radius:9px}.badge{font-size:11px;color:#99caff}.heading{display:flex;align-items:center;justify-content:space-between;gap:8px}.heading h2{margin-bottom:17px}
+#results{display:grid;gap:10px}.empty{text-align:center;color:#a0b2ca;padding:24px;border:1px dashed #36526f;border-radius:12px}.source{border:1px solid #28405a;border-radius:13px;background:#101f35;padding:16px}.source h3{font-size:15px;line-height:1.4;margin:8px 0}.source p{font-size:12px;color:#9eb4cc}.tag{font-size:10px;color:#9ee1f1;background:#1d3c58;padding:4px 8px;border-radius:6px}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:13px}.actions button,.actions a{font-size:11px;text-decoration:none;background:#172b46;border:1px solid #395677;color:#d8e9fc;border-radius:9px;padding:8px 10px}.hint{color:#8ea8c7;font-size:11px;margin-bottom:0}
+.chat{display:flex;flex-direction:column;gap:10px;height:260px;overflow:auto}.bubble{border-radius:12px;padding:11px 13px;font-size:12px;max-width:94%;white-space:pre-line}.bot{background:#1b304a;align-self:flex-start}.me{background:#28599b;align-self:flex-end}.coach-note{font-size:11px;color:#9ab0ca;background:#111f33;border:1px solid #2e4765;padding:12px;border-radius:10px}.guide p{font-size:12px;color:#a1b5ce}.guide h3{font-size:14px;margin-bottom:3px}.foot{text-align:center;color:#8198b5;font-size:11px;margin-top:30px}
+@media(max-width:1100px){.grid{grid-template-columns:1fr}.shell{grid-template-columns:210px minmax(0,1fr)}}
+@media(max-width:690px){.shell{display:block}.sidebar{padding:15px;gap:0}.sidebar .nav,.sidebar .label,.sidebar .plan,.sidebar .spacer{display:none}.main{padding:18px 15px}.hero h1{font-size:36px}.hero:after{opacity:.2}.metrics{gap:7px}.metric{padding:12px}.metric strong{font-size:21px}.metric small{font-size:10px}.row.search{flex-direction:column}.primary{width:100%}.card{padding:16px}}
+</style>
+</head>
+<body>
+<div class="shell">
+<aside class="sidebar">
+  <a class="brand" href="#top"><span class="logo">Q</span><span><strong>Quantize AI</strong><small>Research platform</small></span></a>
+  <div><p class="label">Workspace</p><nav class="nav"><button id="navDiscover" class="active" type="button">⌕ &nbsp; Discover research</button><button id="navSaved" type="button">♧ &nbsp; Saved sources <span id="navCount">0</span></button><button id="navCoach" type="button">✧ &nbsp; Research coach</button></nav></div>
+  <div class="spacer"></div><div class="plan"><strong>Student workspace <b>FREE</b></strong><p>Find academic research, save sources, and get guided help.</p></div>
+</aside>
+<main class="main" id="top">
+  <div class="top"><span>Workspace / Research dashboard</span><span class="status">Free research tools</span></div>
+  <section class="hero"><div class="eyebrow">The smarter way to research</div><h1>Find better sources.<br><em>Build stronger ideas.</em></h1><p>Discover published research, organize references, and get guided help with your next assignment—all in one student workspace.</p><div class="pills"><span>◇ Academic discovery</span><span>◇ Source organization</span><span>◇ Guided research help</span></div></section>
+  <section class="metrics"><div class="metric"><strong id="resultCount">0</strong><small>Results shown</small></div><div class="metric"><strong id="savedCount">0</strong><small>Saved sources</small></div><div class="metric"><strong>Free</strong><small>Research plan</small></div></section>
+  <div class="grid"><div class="column">
+    <section class="card"><div class="heading"><h2>Discover research</h2><span class="badge">CROSSREF SEARCH</span></div><form id="searchForm" class="row search"><input id="query" type="search" placeholder="e.g. Artificial intelligence in education" aria-label="Research topic" maxlength="180" required><button id="searchBtn" class="primary">Search sources →</button></form><div class="chips"><button data-topic="Artificial intelligence in education">AI in education</button><button data-topic="Climate change impacts">Climate change</button><button data-topic="Social media and mental health">Mental health</button></div></section>
+    <section class="card"><div class="heading"><h2 id="resultsTitle">Research results</h2><span class="badge" id="viewBadge">Search to get started</span></div><div class="filters" id="filters"><button class="filter active" data-filter="all">All sources</button><button class="filter" data-filter="primary">Primary candidates</button><button class="filter" data-filter="review">Review candidates</button></div><div id="results" aria-live="polite"><div class="empty">Search for a topic to discover academic publications.</div></div><p class="hint">Publication records come from Crossref. Source types are only possible classifications; verify the original paper before citing.</p></section>
+  </div><div class="column">
+    <section class="card" id="coach"><div class="heading"><h2>✧ Research Coach</h2><span class="badge">FREE GUIDE</span></div><div id="messages" class="chat" role="log" aria-live="polite"><div class="bubble bot">Hi! Ask me about primary sources, secondary sources, citations, credibility, or planning your research.</div></div><div class="chips"><button data-question="What is a primary source?">Primary sources</button><button data-question="How do I check credibility?">Check credibility</button><button data-question="How do I cite a source?">Citation tips</button></div><form id="coachForm" class="row"><input id="coachInput" maxlength="300" placeholder="Ask a research question..." aria-label="Ask the Research Coach" required><button class="primary" aria-label="Send">➜</button></form><p class="coach-note">This free Research Coach is a rule-based guide, not an OpenAI chatbot. It cannot read or verify full articles.</p></section>
+    <section class="card guide"><h2>Source essentials</h2><h3>Primary sources</h3><p>Original research, first-hand evidence, experiments, interviews, datasets.</p><h3>Secondary sources</h3><p>Reviews, interpretations, analyses, and textbooks.</p><h3>Credibility checklist</h3><p>Check authors, methods, publication venue, citations, conflicts of interest, and corrections.</p></section>
+  </div></div>
+  <p class="foot">© 2026 Quantize AI · Research Smarter, Learn Faster · Student prototype · Source data: Crossref</p>
+</main></div>
+<script>
 'use strict';
-
 const $ = id => document.getElementById(id);
-const STORAGE_KEY = 'quantize-ai-saved-v2';
-
-let results = [];
-let activeFilter = 'all';
-let currentView = 'discover';
-let saved = loadSaved();
-
-const cached = new Map();
-
-function loadSaved() {
-  try {
-    const items = JSON.parse(
-      localStorage.getItem(STORAGE_KEY) || '[]'
-    );
-
-    return Array.isArray(items)
-      ? items.slice(0, 80).filter(
-          x => x && typeof x.title === 'string'
-        )
-      : [];
-  } catch {
-    return [];
-  }
-}
-
-function storeSaved() {
-  try {
-    localStorage.setItem(
-      STORAGE_KEY,
-      JSON.stringify(saved)
-    );
-  } catch {
-    announce('Your browser cannot save sources right now.');
-  }
-
-  updateStats();
-}
-
-function updateStats() {
-  $('savedCount').textContent = String(saved.length);
-  $('navSavedCount').textContent = String(saved.length);
-  $('resultCount').textContent =
-    String(visibleItems().length);
-}
-
-function yearOf(item) {
-  const year =
-    item.published?.['date-parts']?.[0]?.[0] ||
-    item.created?.['date-parts']?.[0]?.[0];
-
-  return Number.isInteger(year)
-    ? String(year)
-    : 'Date unknown';
-}
-
-function flattenAuthors(item) {
-  return (item.author || [])
-    .slice(0, 5)
-    .map(author =>
-      [author.given, author.family]
-        .filter(Boolean)
-        .join(' ')
-        .trim()
-    )
-    .filter(Boolean);
-}
-
-function classify(item) {
-  const title = (item.title?.[0] || '').toLowerCase();
-  const type = (item.type || '').toLowerCase();
-
-  if (
-    /review|meta.analysis|systematic review|scoping review|literature review/.test(title) ||
-    type === 'book-review'
-  ) {
-    return 'review';
-  }
-
-  if (
-    /randomized trial|cohort study|clinical trial|field experiment|cross.sectional study|case.control|original research|survey of|qualitative interview/.test(title) ||
-    type === 'dataset'
-  ) {
-    return 'primary';
-  }
-
-  return 'unclear';
-}
-
-function safeUrl(item) {
-  const raw = item.DOI
-    ? 'https://doi.org/' + item.DOI
-    : item.URL;
-
-  try {
-    const url = new URL(raw);
-
-    return url.protocol === 'https:'
-      ? url.href
-      : null;
-  } catch {
-    return null;
-  }
-}
-
-function cleanItem(work) {
-  return {
-    DOI: typeof work.DOI === 'string'
-      ? work.DOI
-      : '',
-
-    title: [
-      String(work.title?.[0] || 'Untitled publication')
-    ],
-
-    author: Array.isArray(work.author)
-      ? work.author.slice(0, 8).map(a => ({
-          given: String(a.given || ''),
-          family: String(a.family || '')
-        }))
-      : [],
-
-    published: work.published,
-    created: work.created,
-    type: String(work.type || ''),
-    URL: String(work.URL || ''),
-
-    'container-title': [
-      String(
-        work['container-title']?.[0] ||
-        'Publication record'
-      )
-    ]
-  };
-}
-
-function keyFor(work) {
-  return work.DOI || work.URL || work.title?.[0] || '';
-}
-
-function visibleItems() {
-  const items =
-    currentView === 'saved' ? saved : results;
-
-  return items.filter(
-    item =>
-      activeFilter === 'all' ||
-      classify(item) === activeFilter
-  );
-}
-
-function announce(message) {
-  const box = document.createElement('div');
-
-  box.className = 'empty';
-  box.textContent = message;
-
-  $('results').replaceChildren(box);
-}
-
-function element(tag, className, text) {
-  const el = document.createElement(tag);
-
-  if (className) {
-    el.className = className;
-  }
-
-  if (text !== undefined) {
-    el.textContent = text;
-  }
-
-  return el;
-}
-
-function makeAction(label, action, className = '') {
-  const button = element(
-    'button',
-    'action ' + className,
-    label
-  );
-
-  button.type = 'button';
-  button.addEventListener('click', action);
-
-  return button;
-}
-
-function makeSource(work) {
-  const block = element('article', 'source');
-  const top = element('div', 'source-top');
-
-  const category = classify(work);
-
-  const label =
-    category === 'primary'
-      ? 'Possible primary'
-      : category === 'review'
-        ? 'Possible review'
-        : 'Type unconfirmed';
-
-  const categoryClass =
-    category === 'review'
-      ? 'review'
-      : category === 'unclear'
-        ? 'unclear'
-        : '';
-
-  top.append(
-    element(
-      'span',
-      'source-type ' + categoryClass,
-      label
-    )
-  );
-
-  top.append(
-    element('span', 'source-year', yearOf(work))
-  );
-
-  block.append(top);
-
-  block.append(
-    element(
-      'h3',
-      '',
-      work.title?.[0] || 'Untitled publication'
-    )
-  );
-
-  block.append(
-    element(
-      'p',
-      'source-detail',
-      (flattenAuthors(work).join(', ') ||
-        'Author not listed') +
-        ' · ' +
-        (work['container-title']?.[0] ||
-          'Publication record')
-    )
-  );
-
-  const actions = element('div', 'source-actions');
-  const link = safeUrl(work);
-
-  if (link) {
-    const anchor = element(
-      'a',
-      'action',
-      '↗ Open publication'
-    );
-
-    anchor.href = link;
-    anchor.target = '_blank';
-    anchor.rel = 'noopener noreferrer';
-
-    actions.append(anchor);
-  }
-
-  const isSaved = saved.some(
-    item => keyFor(item) === keyFor(work)
-  );
-
-  actions.append(
-    makeAction(
-      isSaved ? '✓ Saved' : '+ Save source',
-      () => {
-        if (
-          saved.some(
-            item => keyFor(item) === keyFor(work)
-          )
-        ) {
-          saved = saved.filter(
-            item => keyFor(item) !== keyFor(work)
-          );
-        } else if (saved.length < 80) {
-          saved.unshift(work);
-        } else {
-          alert(
-            'You can save up to 80 sources in this free prototype.'
-          );
-          return;
-        }
-
-        storeSaved();
-        render();
-      },
-      isSaved ? 'saved' : ''
-    )
-  );
-
-  actions.append(
-    makeAction('Copy APA draft', async () => {
-      const authors = flattenAuthors(work);
-
-      const names = authors.length
-        ? authors.join(', ')
-        : 'Author unknown';
-
-      const citation =
-        `${names} (${yearOf(work)}). ` +
-        `${work.title?.[0] || 'Untitled'}. ` +
-        `${work['container-title']?.[0] || ''}. ` +
-        `${link || ''}`;
-
-      try {
-        await navigator.clipboard.writeText(citation);
-
-        alert(
-          'Draft citation copied. Verify and format it before submitting.'
-        );
-      } catch {
-        prompt(
-          'Copy this draft citation:',
-          citation
-        );
-      }
-    })
-  );
-
-  block.append(actions);
-
-  return block;
-}
-
+const STORE = 'quantize-ai-saved-v2';
+let works = [], view = 'discover', filter = 'all', saved = [];
+try { const data = JSON.parse(localStorage.getItem(STORE) || '[]'); if (Array.isArray(data)) saved = data.slice(0, 80); } catch {}
+const title = w => String(w.title?.[0] || 'Untitled publication');
+const key = w => w.DOI || w.URL || title(w);
+const year = w => String(w.published?.['date-parts']?.[0]?.[0] || w.created?.['date-parts']?.[0]?.[0] || 'n.d.');
+const authors = w => (w.author || []).slice(0, 5).map(a => [a.given, a.family].filter(Boolean).join(' ')).join(', ') || 'Author unknown';
+const journal = w => w['container-title']?.[0] || 'Publication record';
+function typeOf(w) { const t = title(w).toLowerCase(); if (/review|meta.analysis|literature review/.test(t)) return 'review'; if (/trial|experiment|cohort study|survey|original research|interviews/.test(t)) return 'primary'; return 'unclear'; }
+function linkOf(w) { try { const u = new URL(w.DOI ? 'https://doi.org/' + w.DOI : w.URL); return u.protocol === 'https:' ? u.href : ''; } catch { return ''; } }
+function el(tag, cls, text) { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; }
+function action(text, fn) { const b = el('button', '', text); b.type = 'button'; b.onclick = fn; return b; }
+function save() { try { localStorage.setItem(STORE, JSON.stringify(saved)); } catch { alert('Browser storage is unavailable.'); } }
+function show(viewName) { view = viewName; filter = 'all'; $('navDiscover').classList.toggle('active', view === 'discover'); $('navSaved').classList.toggle('active', view === 'saved'); render(); }
 function render() {
-  const list = visibleItems();
-
-  $('results').replaceChildren();
-
-  $('filterRow').hidden =
-    currentView === 'saved' && saved.length === 0;
-
-  document
-    .querySelectorAll('.filter')
-    .forEach(button => {
-      button.classList.toggle(
-        'active',
-        button.dataset.filter === activeFilter
-      );
-    });
-
-  $('resultsTitle').textContent =
-    currentView === 'saved'
-      ? 'Saved sources'
-      : 'Research results';
-
-  $('viewBadge').textContent =
-    currentView === 'saved'
-      ? saved.length + ' saved locally'
-      : results.length
-        ? results.length + ' records loaded'
-        : 'Search to get started';
-
-  if (!list.length) {
-    announce(
-      currentView === 'saved'
-        ? 'No saved sources yet. Search for publications and use Save source.'
-        : results.length
-          ? 'No results match this filter. Try All sources.'
-          : 'Search for a topic to discover academic publications.'
-    );
-  } else {
-    list.forEach(item => {
-      $('results').append(makeSource(item));
-    });
-  }
-
-  updateStats();
-}
-
-function showView(view) {
-  currentView = view;
-  activeFilter = 'all';
-
-  $('navDiscover').classList.toggle(
-    'active',
-    view === 'discover'
-  );
-
-  $('navSaved').classList.toggle(
-    'active',
-    view === 'saved'
-  );
-
-  render();
-
-  $('resultsTitle').scrollIntoView({
-    behavior: 'smooth',
-    block: 'start'
+  const list = (view === 'saved' ? saved : works).filter(w => filter === 'all' || typeOf(w) === filter);
+  $('savedCount').textContent = $('navCount').textContent = saved.length;
+  $('resultCount').textContent = list.length;
+  $('resultsTitle').textContent = view === 'saved' ? 'Saved sources' : 'Research results';
+  $('viewBadge').textContent = view === 'saved' ? saved.length + ' saved locally' : works.length ? works.length + ' records loaded' : 'Search to get started';
+  document.querySelectorAll('[data-filter]').forEach(b => b.classList.toggle('active', b.dataset.filter === filter));
+  const area = $('results'); area.replaceChildren();
+  if (!list.length) { area.append(el('div', 'empty', view === 'saved' ? 'No saved sources yet. Search for papers and save one.' : works.length ? 'No matches. Try All sources.' : 'Search for a topic to discover academic publications.')); return; }
+  list.forEach(w => {
+    const card = el('article', 'source'), tag = typeOf(w);
+    card.append(el('span', 'tag', tag === 'primary' ? 'Possible primary' : tag === 'review' ? 'Possible review' : 'Type unconfirmed'));
+    card.append(el('h3', '', title(w)));
+    card.append(el('p', '', authors(w) + ' · ' + journal(w) + ' · ' + year(w)));
+    const buttons = el('div', 'actions'), url = linkOf(w);
+    if (url) { const a = el('a', '', '↗ Open publication'); a.href = url; a.target = '_blank'; a.rel = 'noopener noreferrer'; buttons.append(a); }
+    const stored = saved.some(s => key(s) === key(w));
+    buttons.append(action(stored ? '✓ Saved (remove)' : '+ Save source', () => { if (stored) saved = saved.filter(s => key(s) !== key(w)); else if (saved.length < 80) saved.unshift(w); else return alert('Limit: 80 saved sources.'); save(); render(); }));
+    buttons.append(action('Copy APA draft', async () => { const cite = `${authors(w)} (${year(w)}). ${title(w)}. ${journal(w)}. ${url}`; try { await navigator.clipboard.writeText(cite); alert('Citation draft copied. Verify APA formatting.'); } catch { prompt('Copy this citation draft:', cite); } }));
+    card.append(buttons); area.append(card);
   });
 }
-
-async function searchResearch(event) {
-  if (event) {
-    event.preventDefault();
-  }
-
-  const term = $('searchInput').value.trim();
-
-  if (!term) {
-    return;
-  }
-
-  currentView = 'discover';
-  activeFilter = 'all';
-
-  $('navDiscover').classList.add('active');
-  $('navSaved').classList.remove('active');
-
-  $('searchBtn').disabled = true;
-  $('searchBtn').textContent = 'Searching…';
-
-  announce('Searching published research records…');
-
-  const controller = new AbortController();
-
-  const timeout = setTimeout(
-    () => controller.abort(),
-    13000
-  );
-
+$('navDiscover').onclick = () => show('discover');
+$('navSaved').onclick = () => show('saved');
+$('navCoach').onclick = () => $('coachInput').focus();
+document.querySelectorAll('[data-filter]').forEach(b => b.onclick = () => { filter = b.dataset.filter; render(); });
+document.querySelectorAll('[data-topic]').forEach(b => b.onclick = () => { $('query').value = b.dataset.topic; $('searchForm').requestSubmit(); });
+$('searchForm').onsubmit = async event => {
+  event.preventDefault(); const term = $('query').value.trim(); if (!term) return;
+  show('discover'); const btn = $('searchBtn'); btn.disabled = true; btn.textContent = 'Searching…';
+  $('results').replaceChildren(el('div', 'empty', 'Searching academic publication records…'));
+  const controller = new AbortController(); const timeout = setTimeout(() => controller.abort(), 13000);
   try {
-    let items = cached.get(term.toLowerCase());
-
-    if (!items) {
-      const url =
-        'https://api.crossref.org/works?query.bibliographic=' +
-        encodeURIComponent(term) +
-        '&rows=12';
-
-      const response = await fetch(url, {
-        signal: controller.signal,
-        headers: {
-          Accept: 'application/json'
-        }
-      });
-
-      if (!response.ok) {
-        throw new Error(
-          'The research service returned ' +
-          response.status
-        );
-      }
-
-      const data = await response.json();
-
-      items = (data.message?.items || [])
-        .map(cleanItem);
-
-      cached.set(term.toLowerCase(), items);
-    }
-
-    results = items;
+    const url = 'https://api.crossref.org/works?query.bibliographic=' + encodeURIComponent(term) + '&rows=12';
+    const response = await fetch(url, { signal: controller.signal }); if (!response.ok) throw Error('Search failed');
+    const data = await response.json(); works = (data.message?.items || []).map(w => ({ DOI:w.DOI || '', URL:w.URL || '', title:[title(w)], author:w.author || [], published:w.published, created:w.created, 'container-title':[journal(w)] }));
     render();
-
-  } catch (error) {
-    results = [];
-    render();
-
-    announce(
-      error.name === 'AbortError'
-        ? 'The search took too long. Please try again.'
-        : 'Research search is unavailable right now. Check your connection or try again later.'
-    );
-
-  } finally {
-    clearTimeout(timeout);
-
-    $('searchBtn').disabled = false;
-    $('searchBtn').textContent = 'Search sources →';
-  }
+  } catch { works = []; render(); $('results').replaceChildren(el('div', 'empty', 'Search unavailable. Check your connection and try again.')); }
+  finally { clearTimeout(timeout); btn.disabled = false; btn.textContent = 'Search sources →'; }
+};
+function coachAnswer(q) {
+  const s = q.toLowerCase();
+  if (/primary/.test(s)) return 'Primary sources provide original evidence: experiments, datasets, interviews, or historical documents.';
+  if (/secondary|review/.test(s)) return 'Secondary sources interpret or summarize original evidence. Look for literature reviews or analyses.';
+  if (/credib|reliab|trust|peer.review/.test(s)) return 'Check author expertise, publisher, research methods, cited evidence, date, conflicts of interest, and retractions.';
+  if (/cite|citation|apa|mla|reference/.test(s)) return 'Record author, year, title, journal, DOI, and pages where relevant. Verify every draft citation against your required style.';
+  if (/plan|topic|question|research/.test(s)) return 'Research plan: 1. Define a question. 2. Search key terms. 3. Compare original studies and reviews. 4. Record evidence and limitations. 5. Cite your sources.';
+  return 'I can help with primary and secondary sources, credibility, citations, and research plans. This free guide does not read articles or generate OpenAI responses.';
 }
-
-function coachReply(question) {
-  const text = question.toLowerCase();
-
-  if (/hello|^hi\b|hey/.test(text)) {
-    return 'Hi! Try asking about primary sources, secondary sources, credibility, citations, or making a research plan.';
-  }
-
-  if (/primary/.test(text)) {
-    return 'A primary source is original evidence. Examples include original experiments, interviews, survey results, court records, and historical letters.';
-  }
-
-  if (/secondary|review/.test(text)) {
-    return 'Secondary sources interpret or combine primary evidence. Examples include literature reviews, textbooks, and historical analyses.';
-  }
-
-  if (/credib|reliab|trust|peer.review|fake/.test(text)) {
-    return 'Credibility checklist: Check the author, publication, research methods, supporting evidence, publication date, conflicts of interest, corrections, and retractions.';
-  }
-
-  if (/cite|citation|apa|mla|reference/.test(text)) {
-    return 'Record the authors, year, title, publication, DOI or URL, and relevant pages. Use the Copy APA draft button, but verify the citation before submitting it.';
-  }
-
-  if (/plan|topic|question|research/.test(text)) {
-    return 'Try this research plan:\n1. Write a clear research question.\n2. Identify useful search terms.\n3. Compare original studies and review articles.\n4. Record evidence and limitations.\n5. Cite your sources.';
-  }
-
-  if (
-    /summar|explain.*(article|paper)|what.*(article|paper)/.test(text)
-  ) {
-    return 'I cannot read or summarize full articles in this free guide. Open the publication and review its abstract, methods, findings, and limitations.';
-  }
-
-  return 'I am a free, rule-based research guide rather than an OpenAI model. I can help with source types, credibility checks, citations, and research planning.';
-}
-
-function sendCoach(question) {
-  const text = question.trim();
-
-  if (!text) {
-    return;
-  }
-
-  const messages = $('coachMessages');
-
-  messages.append(
-    element('div', 'bubble me', text)
-  );
-
-  messages.append(
-    element('div', 'bubble bot', coachReply(text))
-  );
-
-  messages.scrollTop = messages.scrollHeight;
-}
-
-$('coachForm').addEventListener('submit', event => {
-  event.preventDefault();
-
-  const question = $('coachInput').value;
-
-  $('coachInput').value = '';
-
-  sendCoach(question);
-});
-
-$('searchForm').addEventListener(
-  'submit',
-  searchResearch
-);
-
-document
-  .querySelectorAll('[data-topic]')
-  .forEach(button => {
-    button.addEventListener('click', () => {
-      $('searchInput').value = button.dataset.topic;
-      searchResearch();
-    });
-  });
-
-document
-  .querySelectorAll('[data-question]')
-  .forEach(button => {
-    button.addEventListener('click', () => {
-      sendCoach(button.dataset.question);
-    });
-  });
-
-document
-  .querySelectorAll('[data-filter]')
-  .forEach(button => {
-    button.addEventListener('click', () => {
-      activeFilter = button.dataset.filter;
-      render();
-    });
-  });
-
+function ask(q) { if (!q.trim()) return; $('messages').append(el('div', 'bubble me', q)); $('messages').append(el('div', 'bubble bot', coachAnswer(q))); $('messages').scrollTop = $('messages').scrollHeight; }
+$('coachForm').onsubmit = e => { e.preventDefault(); ask($('coachInput').value); $('coachInput').value = ''; };
+document.querySelectorAll('[data-question]').forEach(b => b.onclick = () => ask(b.dataset.question));
 render();
 </script>
 </body>
