@@ -2,239 +2,117 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Quantize AI | Research Smarter</title>
-
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#071120">
+<title>Quantize AI — Research Smarter, Learn Faster</title>
 <style>
-* {
-  box-sizing: border-box;
-}
-
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background: #f4f7ff;
-  color: #17233b;
-}
-
-header {
-  background: #152a64;
-  color: white;
-  padding: 35px 20px;
-  text-align: center;
-}
-
-header h1 {
-  font-size: 42px;
-  margin: 0;
-}
-
-header p {
-  font-size: 18px;
-}
-
-main {
-  max-width: 900px;
-  margin: 35px auto;
-  padding: 20px;
-}
-
-.card {
-  background: white;
-  padding: 25px;
-  margin-bottom: 20px;
-  border-radius: 14px;
-  box-shadow: 0 3px 15px #00000012;
-}
-
-input {
-  width: 100%;
-  padding: 15px;
-  font-size: 17px;
-  border: 1px solid #aaa;
-  border-radius: 8px;
-}
-
-button {
-  background: #3159e8;
-  color: white;
-  border: none;
-  padding: 13px 20px;
-  border-radius: 8px;
-  cursor: pointer;
-  margin-top: 12px;
-  font-size: 16px;
-}
-
-button:hover {
-  background: #1739a8;
-}
-
-.result {
-  border-bottom: 1px solid #ddd;
-  padding: 18px 0;
-}
-
-.result a {
-  color: #3159e8;
-  overflow-wrap: anywhere;
-}
-
-small {
-  color: #555;
-}
-
-footer {
-  text-align: center;
-  padding: 30px;
-  color: #555;
-}
+:root{color-scheme:dark;--bg:#071120;--panel:#0d1b30;--border:#273b55;--text:#f2f7ff;--muted:#a0b2ca;--blue:#4b98ff;--aqua:#65e0d5}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:15px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif}button,input{font:inherit}button{cursor:pointer}button:disabled{opacity:.6;cursor:wait}a{color:inherit}
+.shell{display:grid;grid-template-columns:245px minmax(0,1fr);min-height:100vh}
+.sidebar{background:#0a1729;border-right:1px solid var(--border);padding:28px 18px;display:flex;flex-direction:column;gap:35px}
+.brand{display:flex;align-items:center;gap:12px;text-decoration:none}.logo{display:grid;place-items:center;width:44px;height:44px;border-radius:14px;background:linear-gradient(135deg,#3782f0,#64d6d4);color:#04152d;font-weight:900;font-size:22px}.brand strong{display:block;font-size:19px}.brand small{display:block;color:#91a8c5;letter-spacing:1px;font-size:10px;text-transform:uppercase}
+.label{font-size:11px;color:#839bbb;text-transform:uppercase;letter-spacing:2px}.nav{display:grid;gap:8px}.nav button{display:block;width:100%;text-align:left;padding:12px;background:none;border:1px solid transparent;color:#afc0d7;border-radius:12px}.nav button:hover,.nav button.active{background:#172c4c;border-color:#28466b;color:#fff}.nav span{float:right;background:#2a4568;padding:0 7px;border-radius:7px}.spacer{flex:1}.plan{background:linear-gradient(135deg,#112c4c,#112036);border:1px solid #264b69;padding:16px;border-radius:15px;font-size:12px;color:#b2c6dd}.plan b{color:#77e1d8}
+.main{min-width:0;max-width:1600px;width:100%;margin:auto;padding:30px clamp(18px,4vw,58px)}.top{display:flex;justify-content:space-between;color:#97acc7;font-size:12px;margin-bottom:28px}.status{border:1px solid #2a445e;background:#122239;border-radius:30px;padding:7px 12px}.status:before{content:"● ";color:var(--aqua)}
+.hero{position:relative;overflow:hidden;border-radius:24px;border:1px solid #355077;background:radial-gradient(circle at 85% 25%,#234e82,transparent 48%),linear-gradient(115deg,#122740,#0f2038 60%,#162d4c);padding:clamp(26px,4vw,52px);min-height:270px;box-shadow:0 22px 60px #01081488}.hero:after{content:"✦";position:absolute;right:8%;top:7%;font-size:115px;color:#72e6df50;pointer-events:none}.eyebrow{font-size:11px;color:var(--aqua);letter-spacing:2px;text-transform:uppercase;font-weight:800}.hero h1{position:relative;z-index:1;font-size:clamp(34px,4vw,58px);line-height:1.08;letter-spacing:-2px;margin:18px 0 14px}.hero h1 em{font-style:normal;color:#78bbff}.hero p{position:relative;z-index:1;max-width:540px;color:#bad0e7}.pills{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}.pills span{border:1px solid #456589;border-radius:30px;background:#152e4cc9;padding:7px 11px;font-size:11px;color:#cbdff6}
+.metrics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin:19px 0 27px}.metric{border:1px solid var(--border);background:#0e1d32;border-radius:15px;padding:16px}.metric strong{display:block;font-size:25px}.metric small{color:#92a9c5}
+.grid{display:grid;grid-template-columns:minmax(0,1.7fr) minmax(290px,.9fr);gap:20px;align-items:start}.column{display:grid;gap:20px}.card{background:var(--panel);border:1px solid var(--border);border-radius:19px;padding:22px;min-width:0}.card h2{font-size:18px;margin:0 0 17px}.row{display:flex;gap:9px}.row input{min-width:0;flex:1;border-radius:11px;background:#0a1729;border:1px solid #35506c;padding:13px;color:#fff;outline:0}.row input:focus{border-color:#78b5ff}.primary{background:linear-gradient(135deg,#4c92f3,#3673df);color:white;border:1px solid #75b1fb;border-radius:11px;padding:12px 17px;font-weight:800}
+.chips{display:flex;gap:7px;flex-wrap:wrap;margin-top:15px}.chips button,.filter{background:#14263d;color:#bfd3e7;border:1px solid #304966;border-radius:20px;padding:7px 11px;font-size:11px}.chips button:hover,.filter.active{background:#1b395d;border-color:#5a8bc0}.filters{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:14px}.filter{border-radius:9px}.badge{font-size:11px;color:#99caff}.heading{display:flex;align-items:center;justify-content:space-between;gap:8px}.heading h2{margin-bottom:17px}
+#results{display:grid;gap:10px}.empty{text-align:center;color:#a0b2ca;padding:24px;border:1px dashed #36526f;border-radius:12px}.source{border:1px solid #28405a;border-radius:13px;background:#101f35;padding:16px}.source h3{font-size:15px;line-height:1.4;margin:8px 0}.source p{font-size:12px;color:#9eb4cc}.tag{font-size:10px;color:#9ee1f1;background:#1d3c58;padding:4px 8px;border-radius:6px}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:13px}.actions button,.actions a{font-size:11px;text-decoration:none;background:#172b46;border:1px solid #395677;color:#d8e9fc;border-radius:9px;padding:8px 10px}.hint{color:#8ea8c7;font-size:11px;margin-bottom:0}
+.chat{display:flex;flex-direction:column;gap:10px;height:260px;overflow:auto}.bubble{border-radius:12px;padding:11px 13px;font-size:12px;max-width:94%;white-space:pre-line}.bot{background:#1b304a;align-self:flex-start}.me{background:#28599b;align-self:flex-end}.coach-note{font-size:11px;color:#9ab0ca;background:#111f33;border:1px solid #2e4765;padding:12px;border-radius:10px}.guide p{font-size:12px;color:#a1b5ce}.guide h3{font-size:14px;margin-bottom:3px}.foot{text-align:center;color:#8198b5;font-size:11px;margin-top:30px}
+@media(max-width:1100px){.grid{grid-template-columns:1fr}.shell{grid-template-columns:210px minmax(0,1fr)}}
+@media(max-width:690px){.shell{display:block}.sidebar{padding:15px;gap:0}.sidebar .nav,.sidebar .label,.sidebar .plan,.sidebar .spacer{display:none}.main{padding:18px 15px}.hero h1{font-size:36px}.hero:after{opacity:.2}.metrics{gap:7px}.metric{padding:12px}.metric strong{font-size:21px}.metric small{font-size:10px}.row.search{flex-direction:column}.primary{width:100%}.card{padding:16px}}
 </style>
 </head>
-
 <body>
-
-<header>
-  <h1>Quantize AI</h1>
-  <p>Research Smarter, Learn Faster</p>
-</header>
-
-<main>
-
-<section class="card">
-  <h2>AI Research Assistant</h2>
-
-  <p>
-    Discover academic research for high school
-    and college projects.
-  </p>
-
-  <input
-    id="topic"
-    placeholder="Enter your research topic..."
-  >
-
-  <button onclick="searchResearch()">
-    Search Research
-  </button>
-</section>
-
-<section class="card">
-  <h2>Research Results</h2>
-  <div id="results">
-    Enter a topic to begin.
-  </div>
-</section>
-
-<section class="card">
-  <h2>Understanding Sources</h2>
-
-  <h3>Primary Sources</h3>
-  <p>
-    Original research, interviews,
-    experiments, and historical documents.
-  </p>
-
-  <h3>Secondary Sources</h3>
-  <p>
-    Reviews and analyses of original research.
-  </p>
-
-  <p>
-    Always examine the author, publisher,
-    evidence, and publication date.
-  </p>
-</section>
-
-</main>
-
-<footer>
-  © 2026 Quantize AI
-  <p>Research Smarter, Learn Faster</p>
-</footer>
-
+<div class="shell">
+<aside class="sidebar">
+  <a class="brand" href="#top"><span class="logo">Q</span><span><strong>Quantize AI</strong><small>Research platform</small></span></a>
+  <div><p class="label">Workspace</p><nav class="nav"><button id="navDiscover" class="active" type="button">⌕ &nbsp; Discover research</button><button id="navSaved" type="button">♧ &nbsp; Saved sources <span id="navCount">0</span></button><button id="navCoach" type="button">✧ &nbsp; Research coach</button></nav></div>
+  <div class="spacer"></div><div class="plan"><strong>Student workspace <b>FREE</b></strong><p>Find academic research, save sources, and get guided help.</p></div>
+</aside>
+<main class="main" id="top">
+  <div class="top"><span>Workspace / Research dashboard</span><span class="status">Free research tools</span></div>
+  <section class="hero"><div class="eyebrow">The smarter way to research</div><h1>Find better sources.<br><em>Build stronger ideas.</em></h1><p>Discover published research, organize references, and get guided help with your next assignment—all in one student workspace.</p><div class="pills"><span>◇ Academic discovery</span><span>◇ Source organization</span><span>◇ Guided research help</span></div></section>
+  <section class="metrics"><div class="metric"><strong id="resultCount">0</strong><small>Results shown</small></div><div class="metric"><strong id="savedCount">0</strong><small>Saved sources</small></div><div class="metric"><strong>Free</strong><small>Research plan</small></div></section>
+  <div class="grid"><div class="column">
+    <section class="card"><div class="heading"><h2>Discover research</h2><span class="badge">CROSSREF SEARCH</span></div><form id="searchForm" class="row search"><input id="query" type="search" placeholder="e.g. Artificial intelligence in education" aria-label="Research topic" maxlength="180" required><button id="searchBtn" class="primary">Search sources →</button></form><div class="chips"><button data-topic="Artificial intelligence in education">AI in education</button><button data-topic="Climate change impacts">Climate change</button><button data-topic="Social media and mental health">Mental health</button></div></section>
+    <section class="card"><div class="heading"><h2 id="resultsTitle">Research results</h2><span class="badge" id="viewBadge">Search to get started</span></div><div class="filters" id="filters"><button class="filter active" data-filter="all">All sources</button><button class="filter" data-filter="primary">Primary candidates</button><button class="filter" data-filter="review">Review candidates</button></div><div id="results" aria-live="polite"><div class="empty">Search for a topic to discover academic publications.</div></div><p class="hint">Publication records come from Crossref. Source types are only possible classifications; verify the original paper before citing.</p></section>
+  </div><div class="column">
+    <section class="card" id="coach"><div class="heading"><h2>✧ Research Coach</h2><span class="badge">FREE GUIDE</span></div><div id="messages" class="chat" role="log" aria-live="polite"><div class="bubble bot">Hi! Ask me about primary sources, secondary sources, citations, credibility, or planning your research.</div></div><div class="chips"><button data-question="What is a primary source?">Primary sources</button><button data-question="How do I check credibility?">Check credibility</button><button data-question="How do I cite a source?">Citation tips</button></div><form id="coachForm" class="row"><input id="coachInput" maxlength="300" placeholder="Ask a research question..." aria-label="Ask the Research Coach" required><button class="primary" aria-label="Send">➜</button></form><p class="coach-note">This free Research Coach is a rule-based guide, not an OpenAI chatbot. It cannot read or verify full articles.</p></section>
+    <section class="card guide"><h2>Source essentials</h2><h3>Primary sources</h3><p>Original research, first-hand evidence, experiments, interviews, datasets.</p><h3>Secondary sources</h3><p>Reviews, interpretations, analyses, and textbooks.</p><h3>Credibility checklist</h3><p>Check authors, methods, publication venue, citations, conflicts of interest, and corrections.</p></section>
+  </div></div>
+  <p class="foot">© 2026 Quantize AI · Research Smarter, Learn Faster · Student prototype · Source data: Crossref</p>
+</main></div>
 <script>
-async function searchResearch() {
-  const topic = document
-    .getElementById("topic")
-    .value.trim();
-
-  const results = document
-    .getElementById("results");
-
-  if (!topic) {
-    results.textContent =
-      "Please enter a research topic.";
-    return;
-  }
-
-  results.textContent = "Searching...";
-
-  try {
-    const url =
-      "https://api.openalex.org/works?search=" +
-      encodeURIComponent(topic) +
-      "&per-page=10";
-
-    const response = await fetch(url);
-
-    if (!response.ok) {
-      throw new Error("Search unavailable");
-    }
-
-    const data = await response.json();
-
-    results.replaceChildren();
-
-    if (!data.results?.length) {
-      results.textContent =
-        "No research results found.";
-      return;
-    }
-
-    data.results.forEach(work => {
-      const item = document.createElement("div");
-      item.className = "result";
-
-      const title = document.createElement("h3");
-      title.textContent =
-        work.display_name || "Untitled";
-
-      const details = document.createElement("p");
-
-      const authors = (work.authorships || [])
-        .slice(0, 3)
-        .map(a => a.author?.display_name)
-        .filter(Boolean)
-        .join(", ");
-
-      details.textContent =
-        "Authors: " + (authors || "Unknown") +
-        " | Year: " +
-        (work.publication_year || "Unknown");
-
-      const link = document.createElement("a");
-
-      link.href =
-        work.doi ||
-        work.primary_location?.landing_page_url ||
-        work.id;
-
-      link.textContent = "View Source";
-      link.target = "_blank";
-      link.rel = "noopener noreferrer";
-
-      item.append(title, details, link);
-      results.appendChild(item);
-    });
-
-  } catch (error) {
-    results.textContent =
-      "Search failed. Check your internet connection.";
-  }
+'use strict';
+const $ = id => document.getElementById(id);
+const STORE = 'quantize-ai-saved-v2';
+let works = [], view = 'discover', filter = 'all', saved = [];
+try { const data = JSON.parse(localStorage.getItem(STORE) || '[]'); if (Array.isArray(data)) saved = data.slice(0, 80); } catch {}
+const title = w => String(w.title?.[0] || 'Untitled publication');
+const key = w => w.DOI || w.URL || title(w);
+const year = w => String(w.published?.['date-parts']?.[0]?.[0] || w.created?.['date-parts']?.[0]?.[0] || 'n.d.');
+const authors = w => (w.author || []).slice(0, 5).map(a => [a.given, a.family].filter(Boolean).join(' ')).join(', ') || 'Author unknown';
+const journal = w => w['container-title']?.[0] || 'Publication record';
+function typeOf(w) { const t = title(w).toLowerCase(); if (/review|meta.analysis|literature review/.test(t)) return 'review'; if (/trial|experiment|cohort study|survey|original research|interviews/.test(t)) return 'primary'; return 'unclear'; }
+function linkOf(w) { try { const u = new URL(w.DOI ? 'https://doi.org/' + w.DOI : w.URL); return u.protocol === 'https:' ? u.href : ''; } catch { return ''; } }
+function el(tag, cls, text) { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; }
+function action(text, fn) { const b = el('button', '', text); b.type = 'button'; b.onclick = fn; return b; }
+function save() { try { localStorage.setItem(STORE, JSON.stringify(saved)); } catch { alert('Browser storage is unavailable.'); } }
+function show(viewName) { view = viewName; filter = 'all'; $('navDiscover').classList.toggle('active', view === 'discover'); $('navSaved').classList.toggle('active', view === 'saved'); render(); }
+function render() {
+  const list = (view === 'saved' ? saved : works).filter(w => filter === 'all' || typeOf(w) === filter);
+  $('savedCount').textContent = $('navCount').textContent = saved.length;
+  $('resultCount').textContent = list.length;
+  $('resultsTitle').textContent = view === 'saved' ? 'Saved sources' : 'Research results';
+  $('viewBadge').textContent = view === 'saved' ? saved.length + ' saved locally' : works.length ? works.length + ' records loaded' : 'Search to get started';
+  document.querySelectorAll('[data-filter]').forEach(b => b.classList.toggle('active', b.dataset.filter === filter));
+  const area = $('results'); area.replaceChildren();
+  if (!list.length) { area.append(el('div', 'empty', view === 'saved' ? 'No saved sources yet. Search for papers and save one.' : works.length ? 'No matches. Try All sources.' : 'Search for a topic to discover academic publications.')); return; }
+  list.forEach(w => {
+    const card = el('article', 'source'), tag = typeOf(w);
+    card.append(el('span', 'tag', tag === 'primary' ? 'Possible primary' : tag === 'review' ? 'Possible review' : 'Type unconfirmed'));
+    card.append(el('h3', '', title(w)));
+    card.append(el('p', '', authors(w) + ' · ' + journal(w) + ' · ' + year(w)));
+    const buttons = el('div', 'actions'), url = linkOf(w);
+    if (url) { const a = el('a', '', '↗ Open publication'); a.href = url; a.target = '_blank'; a.rel = 'noopener noreferrer'; buttons.append(a); }
+    const stored = saved.some(s => key(s) === key(w));
+    buttons.append(action(stored ? '✓ Saved (remove)' : '+ Save source', () => { if (stored) saved = saved.filter(s => key(s) !== key(w)); else if (saved.length < 80) saved.unshift(w); else return alert('Limit: 80 saved sources.'); save(); render(); }));
+    buttons.append(action('Copy APA draft', async () => { const cite = `${authors(w)} (${year(w)}). ${title(w)}. ${journal(w)}. ${url}`; try { await navigator.clipboard.writeText(cite); alert('Citation draft copied. Verify APA formatting.'); } catch { prompt('Copy this citation draft:', cite); } }));
+    card.append(buttons); area.append(card);
+  });
 }
+$('navDiscover').onclick = () => show('discover');
+$('navSaved').onclick = () => show('saved');
+$('navCoach').onclick = () => $('coachInput').focus();
+document.querySelectorAll('[data-filter]').forEach(b => b.onclick = () => { filter = b.dataset.filter; render(); });
+document.querySelectorAll('[data-topic]').forEach(b => b.onclick = () => { $('query').value = b.dataset.topic; $('searchForm').requestSubmit(); });
+$('searchForm').onsubmit = async event => {
+  event.preventDefault(); const term = $('query').value.trim(); if (!term) return;
+  show('discover'); const btn = $('searchBtn'); btn.disabled = true; btn.textContent = 'Searching…';
+  $('results').replaceChildren(el('div', 'empty', 'Searching academic publication records…'));
+  const controller = new AbortController(); const timeout = setTimeout(() => controller.abort(), 13000);
+  try {
+    const url = 'https://api.crossref.org/works?query.bibliographic=' + encodeURIComponent(term) + '&rows=12';
+    const response = await fetch(url, { signal: controller.signal }); if (!response.ok) throw Error('Search failed');
+    const data = await response.json(); works = (data.message?.items || []).map(w => ({ DOI:w.DOI || '', URL:w.URL || '', title:[title(w)], author:w.author || [], published:w.published, created:w.created, 'container-title':[journal(w)] }));
+    render();
+  } catch { works = []; render(); $('results').replaceChildren(el('div', 'empty', 'Search unavailable. Check your connection and try again.')); }
+  finally { clearTimeout(timeout); btn.disabled = false; btn.textContent = 'Search sources →'; }
+};
+function coachAnswer(q) {
+  const s = q.toLowerCase();
+  if (/primary/.test(s)) return 'Primary sources provide original evidence: experiments, datasets, interviews, or historical documents.';
+  if (/secondary|review/.test(s)) return 'Secondary sources interpret or summarize original evidence. Look for literature reviews or analyses.';
+  if (/credib|reliab|trust|peer.review/.test(s)) return 'Check author expertise, publisher, research methods, cited evidence, date, conflicts of interest, and retractions.';
+  if (/cite|citation|apa|mla|reference/.test(s)) return 'Record author, year, title, journal, DOI, and pages where relevant. Verify every draft citation against your required style.';
+  if (/plan|topic|question|research/.test(s)) return 'Research plan: 1. Define a question. 2. Search key terms. 3. Compare original studies and reviews. 4. Record evidence and limitations. 5. Cite your sources.';
+  return 'I can help with primary and secondary sources, credibility, citations, and research plans. This free guide does not read articles or generate OpenAI responses.';
+}
+function ask(q) { if (!q.trim()) return; $('messages').append(el('div', 'bubble me', q)); $('messages').append(el('div', 'bubble bot', coachAnswer(q))); $('messages').scrollTop = $('messages').scrollHeight; }
+$('coachForm').onsubmit = e => { e.preventDefault(); ask($('coachInput').value); $('coachInput').value = ''; };
+document.querySelectorAll('[data-question]').forEach(b => b.onclick = () => ask(b.dataset.question));
+render();
 </script>
-
 </body>
 </html>
