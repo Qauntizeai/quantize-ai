@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Quantize AI | Research Smarter</title>
+
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f4f7ff;
+  color: #17233b;
+}
+
+header {
+  background: #152a64;
+  color: white;
+  padding: 35px 20px;
+  text-align: center;
+}
+
+header h1 {
+  font-size: 42px;
+  margin: 0;
+}
+
+header p {
+  font-size: 18px;
+}
+
+main {
+  max-width: 900px;
+  margin: 35px auto;
+  padding: 20px;
+}
+
+.card {
+  background: white;
+  padding: 25px;
+  margin-bottom: 20px;
+  border-radius: 14px;
+  box-shadow: 0 3px 15px #00000012;
+}
+
+input {
+  width: 100%;
+  padding: 15px;
+  font-size: 17px;
+  border: 1px solid #aaa;
+  border-radius: 8px;
+}
+
+button {
+  background: #3159e8;
+  color: white;
+  border: none;
+  padding: 13px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-top: 12px;
+  font-size: 16px;
+}
+
+button:hover {
+  background: #1739a8;
+}
+
+.result {
+  border-bottom: 1px solid #ddd;
+  padding: 18px 0;
+}
+
+.result a {
+  color: #3159e8;
+  overflow-wrap: anywhere;
+}
+
+small {
+  color: #555;
+}
+
+footer {
+  text-align: center;
+  padding: 30px;
+  color: #555;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>Quantize AI</h1>
+  <p>Research Smarter, Learn Faster</p>
+</header>
+
+<main>
+
+<section class="card">
+  <h2>AI Research Assistant</h2>
+
+  <p>
+    Discover academic research for high school
+    and college projects.
+  </p>
+
+  <input
+    id="topic"
+    placeholder="Enter your research topic..."
+  >
+
+  <button onclick="searchResearch()">
+    Search Research
+  </button>
+</section>
+
+<section class="card">
+  <h2>Research Results</h2>
+  <div id="results">
+    Enter a topic to begin.
+  </div>
+</section>
+
+<section class="card">
+  <h2>Understanding Sources</h2>
+
+  <h3>Primary Sources</h3>
+  <p>
+    Original research, interviews,
+    experiments, and historical documents.
+  </p>
+
+  <h3>Secondary Sources</h3>
+  <p>
+    Reviews and analyses of original research.
+  </p>
+
+  <p>
+    Always examine the author, publisher,
+    evidence, and publication date.
+  </p>
+</section>
+
+</main>
+
+<footer>
+  © 2026 Quantize AI
+  <p>Research Smarter, Learn Faster</p>
+</footer>
+
+<script>
+async function searchResearch() {
+  const topic = document
+    .getElementById("topic")
+    .value.trim();
+
+  const results = document
+    .getElementById("results");
+
+  if (!topic) {
+    results.textContent =
+      "Please enter a research topic.";
+    return;
+  }
+
+  results.textContent = "Searching...";
+
+  try {
+    const url =
+      "https://api.openalex.org/works?search=" +
+      encodeURIComponent(topic) +
+      "&per-page=10";
+
+    const response = await fetch(url);
+
+    if (!response.ok) {
+      throw new Error("Search unavailable");
+    }
+
+    const data = await response.json();
+
+    results.replaceChildren();
+
+    if (!data.results?.length) {
+      results.textContent =
+        "No research results found.";
+      return;
+    }
+
+    data.results.forEach(work => {
+      const item = document.createElement("div");
+      item.className = "result";
+
+      const title = document.createElement("h3");
+      title.textContent =
+        work.display_name || "Untitled";
+
+      const details = document.createElement("p");
+
+      const authors = (work.authorships || [])
+        .slice(0, 3)
+        .map(a => a.author?.display_name)
+        .filter(Boolean)
+        .join(", ");
+
+      details.textContent =
+        "Authors: " + (authors || "Unknown") +
+        " | Year: " +
+        (work.publication_year || "Unknown");
+
+      const link = document.createElement("a");
+
+      link.href =
+        work.doi ||
+        work.primary_location?.landing_page_url ||
+        work.id;
+
+      link.textContent = "View Source";
+      link.target = "_blank";
+      link.rel = "noopener noreferrer";
+
+      item.append(title, details, link);
+      results.appendChild(item);
+    });
+
+  } catch (error) {
+    results.textContent =
+      "Search failed. Check your internet connection.";
+  }
+}
+</script>
+
+</body>
+</html>
