@@ -7,7 +7,7 @@
 <title>Quantize AI — Research Smarter, Learn Faster</title>
 <style>
 :root{color-scheme:dark;--bg:#071120;--panel:#0d1b30;--border:#273b55;--text:#f2f7ff;--muted:#a0b2ca;--blue:#4b98ff;--aqua:#65e0d5}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:15px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif}button,input{font:inherit}button{cursor:pointer}button:disabled{opacity:.6;cursor:wait}a{color:inherit}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:15px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif}button,input,select{font:inherit}button{cursor:pointer}button:disabled{opacity:.6;cursor:wait}a{color:inherit}
 .shell{display:grid;grid-template-columns:245px minmax(0,1fr);min-height:100vh}
 .sidebar{background:#0a1729;border-right:1px solid var(--border);padding:28px 18px;display:flex;flex-direction:column;gap:35px}
 .brand{display:flex;align-items:center;gap:12px;text-decoration:none}.logo{display:grid;place-items:center;width:44px;height:44px;border-radius:14px;background:linear-gradient(135deg,#3782f0,#64d6d4);color:#04152d;font-weight:900;font-size:22px}.brand strong{display:block;font-size:19px}.brand small{display:block;color:#91a8c5;letter-spacing:1px;font-size:10px;text-transform:uppercase}
@@ -19,6 +19,7 @@
 .chips{display:flex;gap:7px;flex-wrap:wrap;margin-top:15px}.chips button,.filter{background:#14263d;color:#bfd3e7;border:1px solid #304966;border-radius:20px;padding:7px 11px;font-size:11px}.chips button:hover,.filter.active{background:#1b395d;border-color:#5a8bc0}.filters{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:14px}.filter{border-radius:9px}.badge{font-size:11px;color:#99caff}.heading{display:flex;align-items:center;justify-content:space-between;gap:8px}.heading h2{margin-bottom:17px}
 #results{display:grid;gap:10px}.empty{text-align:center;color:#a0b2ca;padding:24px;border:1px dashed #36526f;border-radius:12px}.source{border:1px solid #28405a;border-radius:13px;background:#101f35;padding:16px}.source h3{font-size:15px;line-height:1.4;margin:8px 0}.source p{font-size:12px;color:#9eb4cc}.tag{font-size:10px;color:#9ee1f1;background:#1d3c58;padding:4px 8px;border-radius:6px}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:13px}.actions button,.actions a{font-size:11px;text-decoration:none;background:#172b46;border:1px solid #395677;color:#d8e9fc;border-radius:9px;padding:8px 10px}.hint{color:#8ea8c7;font-size:11px;margin-bottom:0}
 .chat{display:flex;flex-direction:column;gap:10px;height:260px;overflow:auto}.bubble{border-radius:12px;padding:11px 13px;font-size:12px;max-width:94%;white-space:pre-line}.bot{background:#1b304a;align-self:flex-start}.me{background:#28599b;align-self:flex-end}.coach-note{font-size:11px;color:#9ab0ca;background:#111f33;border:1px solid #2e4765;padding:12px;border-radius:10px}.guide p{font-size:12px;color:#a1b5ce}.guide h3{font-size:14px;margin-bottom:3px}.foot{text-align:center;color:#8198b5;font-size:11px;margin-top:30px}
+[hidden]{display:none!important}.choicebar{display:flex;gap:9px;flex-wrap:wrap;margin:0 0 18px}.choicebar button{padding:10px 14px;border:1px solid #35506d;background:#132742;color:#c4d7ef;border-radius:10px}.choicebar button.active{background:#24538c;border-color:#73abf1;color:#fff}.news-tools{margin-top:16px}.news-tools label{font-size:12px;color:#b2c6dc}.news-tools select{border:1px solid #35506d;background:#0a1729;color:white;border-radius:10px;padding:8px;margin-left:8px;max-width:100%}.publisherlinks{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:8px;margin-top:12px}.publisherlinks a{display:block;text-decoration:none;font-size:12px;color:#cde6ff;background:#112941;border:1px solid #315373;border-radius:9px;padding:9px}.publisherlinks a:hover{border-color:#74b1fa}.notice{font-size:12px;color:#aec7e2;margin:10px 0 0}.providerstatus{font-size:11px;color:#9ebddd;margin:12px 0 0}.source .source-meta{font-size:11px;color:#8fdad2;margin-top:6px}.source .tag.news-tag{background:#46351c;color:#ffdf98}
 @media(max-width:1100px){.grid{grid-template-columns:1fr}.shell{grid-template-columns:210px minmax(0,1fr)}}
 @media(max-width:690px){.shell{display:block}.sidebar{padding:15px;gap:0}.sidebar .nav,.sidebar .label,.sidebar .plan,.sidebar .spacer{display:none}.main{padding:18px 15px}.hero h1{font-size:36px}.hero:after{opacity:.2}.metrics{gap:7px}.metric{padding:12px}.metric strong{font-size:21px}.metric small{font-size:10px}.row.search{flex-direction:column}.primary{width:100%}.card{padding:16px}}
 </style>
@@ -27,157 +28,140 @@
 <div class="shell">
 <aside class="sidebar">
   <a class="brand" href="#top"><span class="logo">Q</span><span><strong>Quantize AI</strong><small>Research platform</small></span></a>
-  <div><p class="label">Workspace</p><nav class="nav"><button id="navDiscover" class="active" type="button">⌕ &nbsp; Discover research</button><button id="navSaved" type="button">♧ &nbsp; Saved sources <span id="navCount">0</span></button><button id="navCoach" type="button">✧ &nbsp; Research coach</button></nav></div>
-  <div class="spacer"></div><div class="plan"><strong>Student workspace <b>FREE</b></strong><p>Find academic research, save sources, and get guided help.</p></div>
+  <div><p class="label">Workspace</p><nav class="nav"><button id="navDiscover" class="active" type="button">⌕ &nbsp; Discover research</button><button id="navNews" type="button">▤ &nbsp; News publishers</button><button id="navSaved" type="button">♧ &nbsp; Saved sources <span id="navCount">0</span></button><button id="navCoach" type="button">✧ &nbsp; Research coach</button></nav></div>
+  <div class="spacer"></div><div class="plan"><strong>Student workspace <b>FREE</b></strong><p>Explore scholarly research and newspaper reports; save and cite sources.</p></div>
 </aside>
 <main class="main" id="top">
   <div class="top"><span>Workspace / Research dashboard</span><span class="status">Free research tools</span></div>
-  <section class="hero"><div class="eyebrow">The smarter way to research</div><h1>Find better sources.<br><em>Build stronger ideas.</em></h1><p>Discover published research, organize references, and get guided help with your next assignment—all in one student workspace.</p><div class="pills"><span>◇ Academic discovery</span><span>◇ Source organization</span><span>◇ Guided research help</span></div></section>
+  <section class="hero"><div class="eyebrow">The smarter way to research</div><h1>Find better sources.<br><em>Build stronger ideas.</em></h1><p>Discover published research, organize references, and get guided help with your next assignment—all in one student workspace.</p><div class="pills"><span>◇ 5 scholarly indexes</span><span>◇ News publishers</span><span>◇ Save &amp; cite</span></div></section>
   <section class="metrics"><div class="metric"><strong id="resultCount">0</strong><small>Results shown</small></div><div class="metric"><strong id="savedCount">0</strong><small>Saved sources</small></div><div class="metric"><strong>Free</strong><small>Research plan</small></div></section>
   <div class="grid"><div class="column">
-    <section class="card"><div class="heading"><h2>Discover research</h2><span class="badge">3 RESEARCH DATABASES</span></div><form id="searchForm" class="row search"><input id="query" type="search" placeholder="e.g. Artificial intelligence in education" aria-label="Research topic" maxlength="180" required><button id="searchBtn" class="primary">Search sources →</button></form><div class="chips"><button data-topic="Artificial intelligence in education">AI in education</button><button data-topic="Climate change impacts">Climate change</button><button data-topic="Social media and mental health">Mental health</button></div></section>
-    <section class="card"><div class="heading"><h2 id="resultsTitle">Research results</h2><span class="badge" id="viewBadge">Search to get started</span></div><div class="filters" id="filters"><button class="filter active" data-filter="all">All sources</button><button class="filter" data-filter="primary">Primary candidates</button><button class="filter" data-filter="review">Review candidates</button></div><div id="results" aria-live="polite"><div class="empty">Search for a topic to discover academic publications.</div></div><p class="hint">Results come from Crossref, OpenAlex and PubMed-indexed records (via Europe PMC). Database coverage varies. Source types are estimates; check the original work before citing.</p></section>
+    <section class="card"><div class="heading"><h2 id="searchHeading">Discover sources</h2><span class="badge" id="searchBadge">ACADEMIC + NEWS</span></div><div class="choicebar"><button id="modeAcademic" type="button" class="active">Scholarly databases</button><button id="modeNews" type="button">News publishers</button></div><form id="searchForm" class="row search"><input id="query" type="search" placeholder="e.g. Artificial intelligence in education" aria-label="Search topic" maxlength="150" required><button id="searchBtn" class="primary">Search sources →</button></form><div id="academicTopics" class="chips"><button data-topic="Artificial intelligence in education">AI in education</button><button data-topic="Climate change impacts">Climate change</button><button data-topic="Social media and mental health">Mental health</button></div><div id="newsTools" class="news-tools" hidden><label for="publisherChoice">Choose publisher: <select id="publisherChoice"><option value="all">All major publishers</option></select></label><p class="notice">News is discovered through the independent GDELT index, not direct publisher agreements. Some original articles require subscriptions.</p></div><p class="providerstatus" id="providerStatus" aria-live="polite">Scholarly: Crossref · OpenAlex · Europe PMC · OpenAIRE · Semantic Scholar</p></section>
+    <section class="card"><div class="heading"><h2 id="resultsTitle">Research results</h2><span class="badge" id="viewBadge">Search to get started</span></div><div class="filters" id="filters"><button class="filter active" data-filter="all">All sources</button><button class="filter" data-filter="primary">Primary candidates</button><button class="filter" data-filter="review">Review candidates</button></div><div id="results" aria-live="polite"><div class="empty">Search for a topic to discover academic publications.</div></div><p class="hint" id="resultsHint">Research metadata comes from scholarly indexes. Source-type labels and citation drafts need verification against originals.</p><div id="publisherDirectory" hidden><h3 style="font-size:14px;margin-top:20px">Find articles at major news publishers</h3><div class="publisherlinks" id="publisherLinks"></div><p class="hint">Publisher-specific links open a Google News search limited to each publisher. We do not bypass paywalls or copy articles.</p></div></section>
   </div><div class="column">
     <section class="card" id="coach"><div class="heading"><h2>✧ Research Coach</h2><span class="badge">FREE GUIDE</span></div><div id="messages" class="chat" role="log" aria-live="polite"><div class="bubble bot">Hi! Ask me about primary sources, secondary sources, citations, credibility, or planning your research.</div></div><div class="chips"><button data-question="What is a primary source?">Primary sources</button><button data-question="How do I check credibility?">Check credibility</button><button data-question="How do I cite a source?">Citation tips</button></div><form id="coachForm" class="row"><input id="coachInput" maxlength="300" placeholder="Ask a research question..." aria-label="Ask the Research Coach" required><button class="primary" aria-label="Send">➜</button></form><p class="coach-note">This free Research Coach is a rule-based guide, not an OpenAI chatbot. It cannot read or verify full articles.</p></section>
     <section class="card guide"><h2>Source essentials</h2><h3>Primary sources</h3><p>Original research, first-hand evidence, experiments, interviews, datasets.</p><h3>Secondary sources</h3><p>Reviews, interpretations, analyses, and textbooks.</p><h3>Credibility checklist</h3><p>Check authors, methods, publication venue, citations, conflicts of interest, and corrections.</p></section>
   </div></div>
-  <p class="foot">© 2026 Quantize AI · Research Smarter, Learn Faster · Student prototype · Sources: Crossref, OpenAlex & PubMed via Europe PMC</p>
+  <p class="foot">© 2026 Quantize AI · Student prototype · Academic metadata: Crossref, OpenAlex, Europe PMC, OpenAIRE, Semantic Scholar · News discovery: GDELT</p>
 </main></div>
 <script>
 'use strict';
+// Optional: set this to a separately deployed Node.js server URL when publishing on GitHub Pages.
+// Example: window.QUANTIZE_API_BASE = 'https://your-quantize-api.example'; (before this script)
 const $ = id => document.getElementById(id);
 const STORE = 'quantize-ai-saved-v2';
-let works = [], view = 'discover', filter = 'all', saved = [];
-try { const data = JSON.parse(localStorage.getItem(STORE) || '[]'); if (Array.isArray(data)) saved = data.slice(0, 80); } catch {}
-const title = w => String(w.title?.[0] || 'Untitled publication');
-const key = w => (w.DOI ? 'doi:' + w.DOI.toLowerCase().replace(/^https?:\/\/(dx\.)?doi\.org\//, '') : (w.pmid ? 'pmid:' + w.pmid : (title(w).toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim() + ':' + year(w))));
+const ACADEMIC_LABELS = {crossref:'Crossref',openalex:'OpenAlex',europepmc:'Europe PMC',openaire:'OpenAIRE',semanticscholar:'Semantic Scholar'};
+const PUBS = [
+  {id:'reuters',name:'Reuters',domain:'reuters.com'},
+  {id:'ap',name:'Associated Press',domain:'apnews.com'},
+  {id:'bbc',name:'BBC News',domain:'bbc.com'},
+  {id:'guardian',name:'The Guardian',domain:'theguardian.com'},
+  {id:'nytimes',name:'The New York Times',domain:'nytimes.com'},
+  {id:'washingtonpost',name:'The Washington Post',domain:'washingtonpost.com'},
+  {id:'wsj',name:'The Wall Street Journal',domain:'wsj.com'},
+  {id:'ft',name:'Financial Times',domain:'ft.com'},
+  {id:'latimes',name:'Los Angeles Times',domain:'latimes.com'},
+  {id:'bloomberg',name:'Bloomberg',domain:'bloomberg.com'}
+];
+const API_BASE = String(window.QUANTIZE_API_BASE || '').replace(/\/$/, '');
+const staticPage = location.protocol === 'file:' || location.hostname.endsWith('github.io');
+const useServer = Boolean(API_BASE) || !staticPage;
+let works = [], view = 'discover', filter = 'all', mode = 'academic', saved = [], lastStatus = '';
+try {const data = JSON.parse(localStorage.getItem(STORE) || '[]'); if (Array.isArray(data)) saved = data.slice(0, 80);} catch {}
+const title = w => String(Array.isArray(w.title) ? (w.title[0] || 'Untitled') : (w.title || 'Untitled'));
+const key = w => (w.kind === 'news' ? `news:${w.URL}` : 'paper:' + (w.DOI || w.URL || title(w)));
 const year = w => String(w.published?.['date-parts']?.[0]?.[0] || w.created?.['date-parts']?.[0]?.[0] || 'n.d.');
-const authors = w => (w.author || []).slice(0, 5).map(a => [a.given, a.family].filter(Boolean).join(' ')).join(', ') || 'Author unknown';
-const journal = w => w['container-title']?.[0] || 'Publication record';
-function typeOf(w) { const t = title(w).toLowerCase(); if (/review|meta.analysis|literature review/.test(t)) return 'review'; if (/trial|experiment|cohort study|survey|original research|interviews/.test(t)) return 'primary'; return 'unclear'; }
-function linkOf(w) { try { const u = new URL(w.DOI ? 'https://doi.org/' + w.DOI : w.URL); return u.protocol === 'https:' ? u.href : ''; } catch { return ''; } }
-function el(tag, cls, text) { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; }
-function action(text, fn) { const b = el('button', '', text); b.type = 'button'; b.onclick = fn; return b; }
-function save() { try { localStorage.setItem(STORE, JSON.stringify(saved)); } catch { alert('Browser storage is unavailable.'); } }
-function show(viewName) { view = viewName; filter = 'all'; $('navDiscover').classList.toggle('active', view === 'discover'); $('navSaved').classList.toggle('active', view === 'saved'); render(); }
-function render() {
-  const list = (view === 'saved' ? saved : works).filter(w => filter === 'all' || typeOf(w) === filter);
-  $('savedCount').textContent = $('navCount').textContent = saved.length;
-  $('resultCount').textContent = list.length;
-  $('resultsTitle').textContent = view === 'saved' ? 'Saved sources' : 'Research results';
-  $('viewBadge').textContent = view === 'saved' ? saved.length + ' saved locally' : works.length ? works.length + ' records loaded' : 'Search to get started';
-  document.querySelectorAll('[data-filter]').forEach(b => b.classList.toggle('active', b.dataset.filter === filter));
-  const area = $('results'); area.replaceChildren();
-  if (!list.length) { area.append(el('div', 'empty', view === 'saved' ? 'No saved sources yet. Search for papers and save one.' : works.length ? 'No matches. Try All sources.' : 'Search for a topic to discover academic publications.')); return; }
-  list.forEach(w => {
-    const card = el('article', 'source'), tag = typeOf(w);
-    card.append(el('span', 'tag', tag === 'primary' ? 'Possible primary' : tag === 'review' ? 'Possible review' : 'Type unconfirmed'));
-    card.append(el('span', 'tag', w.database || 'Saved source'));
-    card.append(el('h3', '', title(w)));
-    card.append(el('p', '', authors(w) + ' · ' + journal(w) + ' · ' + year(w)));
-    const buttons = el('div', 'actions'), url = linkOf(w);
-    if (url) { const a = el('a', '', '↗ Open publication'); a.href = url; a.target = '_blank'; a.rel = 'noopener noreferrer'; buttons.append(a); }
-    const stored = saved.some(s => key(s) === key(w));
-    buttons.append(action(stored ? '✓ Saved (remove)' : '+ Save source', () => { if (stored) saved = saved.filter(s => key(s) !== key(w)); else if (saved.length < 80) saved.unshift(w); else return alert('Limit: 80 saved sources.'); save(); render(); }));
-    buttons.append(action('Copy APA draft', async () => { const cite = `${authors(w)} (${year(w)}). ${title(w)}. ${journal(w)}. ${url}`; try { await navigator.clipboard.writeText(cite); alert('Citation draft copied. Verify APA formatting.'); } catch { prompt('Copy this citation draft:', cite); } }));
-    card.append(buttons); area.append(card);
+const authors = w => (w.author || []).slice(0, 5).map(a => [a.given,a.family].filter(Boolean).join(' ')).join(', ') || 'Author unknown';
+const journal = w => (Array.isArray(w['container-title']) ? w['container-title'][0] : w['container-title']) || 'Publication record';
+function typeOf(w) {if (w.kind === 'news') return 'news'; const t=title(w).toLowerCase(); if (/review|meta.analysis|literature review/.test(t))return 'review'; if (/trial|experiment|cohort study|survey|original research|interviews/.test(t))return 'primary';return 'unclear';}
+function linkOf(w) {try {const u = new URL(w.DOI ? 'https://doi.org/' + w.DOI : w.URL);return ['https:','http:'].includes(u.protocol) ? u.href : '';}catch{return '';}}
+function el(tag,cls,text) {const e=document.createElement(tag);if(cls)e.className=cls;if(text!=null)e.textContent=text;return e;}
+function action(text,fn){const b=el('button','',text);b.type='button';b.onclick=fn;return b;}
+function save(){try{localStorage.setItem(STORE,JSON.stringify(saved));}catch{alert('Browser storage is unavailable.');}}
+function setStatus(s){lastStatus=s;$('providerStatus').textContent=s;}
+function setMode(next){mode=next;view='discover';filter='all';$('modeAcademic').classList.toggle('active',mode==='academic');$('modeNews').classList.toggle('active',mode==='news');$('navDiscover').classList.toggle('active',mode==='academic');$('navNews').classList.toggle('active',mode==='news');$('navSaved').classList.remove('active');$('newsTools').hidden=mode!=='news';$('academicTopics').hidden=mode==='news';$('filters').hidden=mode==='news';$('publisherDirectory').hidden=mode!=='news';$('searchHeading').textContent=mode==='news'?'Search major news publishers':'Discover scholarly research';$('searchBadge').textContent=mode==='news'?'NEWS INDEX + PUBLISHER LINKS':'5 SCHOLARLY INDEXES';$('query').placeholder=mode==='news'?'e.g. Artificial intelligence regulation':'e.g. Artificial intelligence in education';$('resultsHint').textContent=mode==='news'?'News articles are not peer-reviewed research. GDELT discovery may be incomplete; check publication dates and original reporting.':'Scholarly records are metadata; source-type labels and citation drafts require checking against the paper.';if(mode==='news')renderPublisherLinks();render();}
+function showSaved(){view='saved';filter='all';$('navDiscover').classList.remove('active');$('navNews').classList.remove('active');$('navSaved').classList.add('active');$('filters').hidden=false;$('publisherDirectory').hidden=true;render();}
+function showDiscover(){view='discover';$('navSaved').classList.remove('active');$('navDiscover').classList.toggle('active',mode==='academic');$('navNews').classList.toggle('active',mode==='news');$('filters').hidden=mode==='news';$('publisherDirectory').hidden=mode!=='news';render();}
+function render(){
+  const list=(view==='saved'?saved:works).filter(w=>filter==='all'||(filter==='news'?w.kind==='news':typeOf(w)===filter));
+  $('savedCount').textContent=$('navCount').textContent=saved.length;
+  $('resultCount').textContent=list.length;
+  $('resultsTitle').textContent=view==='saved'?'Saved sources':mode==='news'?'News articles':'Research results';
+  $('viewBadge').textContent=view==='saved'?saved.length+' saved locally':works.length?works.length+' records loaded':'Search to get started';
+  document.querySelectorAll('[data-filter]').forEach(b=>b.classList.toggle('active',b.dataset.filter===filter));
+  const area=$('results');area.replaceChildren();
+  if(!list.length){area.append(el('div','empty',view==='saved'?'No saved sources yet. Search and save an item.':works.length?'No matches for this filter. Try All sources.':mode==='news'?'Search for a topic, or use the publisher links below.':'Search for a topic to discover academic publications.'));return;}
+  list.forEach(w=>{
+    const card=el('article','source'),kind=typeOf(w);
+    card.append(el('span','tag'+(w.kind==='news'?' news-tag':''),kind==='news'?'News article':kind==='primary'?'Possible primary':kind==='review'?'Possible review':'Type unconfirmed'));
+    card.append(el('h3','',title(w)));
+    card.append(el('p','',w.kind==='news'?journal(w)+(w.indexedDate?' · Indexed '+w.indexedDate:''):authors(w)+' · '+journal(w)+' · '+year(w)));
+    if(w.kind!=='news' && (w.providers||[]).length)card.append(el('div','source-meta','Indexed by: '+w.providers.map(p=>ACADEMIC_LABELS[p]||p).join(', ')+(w.openAccess?' · Open-access record':'')));
+    const buttons=el('div','actions'),url=linkOf(w);
+    if(url){const a=el('a','',w.kind==='news'?'↗ Read at publisher':'↗ Open publication');a.href=url;a.target='_blank';a.rel='noopener noreferrer';buttons.append(a);}
+    if(w.oaUrl && w.oaUrl!==url){const oa=el('a','','↗ Open-access copy');oa.href=w.oaUrl;oa.target='_blank';oa.rel='noopener noreferrer';buttons.append(oa);}
+    const stored=saved.some(s=>key(s)===key(w));
+    buttons.append(action(stored?'✓ Saved (remove)':'+ Save source',()=>{if(stored)saved=saved.filter(s=>key(s)!==key(w));else if(saved.length<80)saved.unshift(w);else return alert('Limit: 80 saved sources.');save();render();}));
+    buttons.append(action('Copy APA draft',async()=>{const cite=w.kind==='news'?`${journal(w)}. (n.d.). ${title(w)}. ${url}`:`${authors(w)} (${year(w)}). ${title(w)}. ${journal(w)}. ${url}`;try{await navigator.clipboard.writeText(cite);alert('Draft copied. Check author, date and style against the original source.');}catch{prompt('Copy citation draft:',cite);}}));
+    card.append(buttons);area.append(card);
   });
 }
-$('navDiscover').onclick = () => show('discover');
-$('navSaved').onclick = () => show('saved');
-$('navCoach').onclick = () => $('coachInput').focus();
-document.querySelectorAll('[data-filter]').forEach(b => b.onclick = () => { filter = b.dataset.filter; render(); });
-document.querySelectorAll('[data-topic]').forEach(b => b.onclick = () => { $('query').value = b.dataset.topic; $('searchForm').requestSubmit(); });
-// Each database is searched independently so one service failure does not block the others.
-async function getJSON(url, signal) {
-  const response = await fetch(url, {signal, headers: {'Accept':'application/json'}});
-  if (!response.ok) throw new Error('HTTP ' + response.status);
-  return response.json();
+function renderPublisherLinks(){const area=$('publisherLinks');area.replaceChildren();const topic=$('query').value.trim()||'research';for(const p of PUBS){const a=el('a','',p.name+' ↗');a.href='https://news.google.com/search?q='+encodeURIComponent(topic+' site:'+p.domain);a.target='_blank';a.rel='noopener noreferrer';area.append(a);}}
+async function fetchJSON(url,ms=11000){const controller=new AbortController();const timer=setTimeout(()=>controller.abort(),ms);try{const res=await fetch(url,{signal:controller.signal,headers:{Accept:'application/json'}});if(!res.ok)throw Error(`HTTP ${res.status}`);return await res.json();}finally{clearTimeout(timer);}}
+const url=(root,params)=>{const u=new URL(root);Object.entries(params).forEach(([k,v])=>{if(v!==''&&v!=null)u.searchParams.set(k,v);});return u.href;};
+const norm=(w,provider)=>({...w,kind:'academic',provider,providers:[provider]});
+function dedup(rows){const seen=new Map();for(const w of rows){const k=w.DOI?'doi:'+w.DOI.toLowerCase():'title:'+title(w).toLowerCase().replace(/[^\p{L}\p{N}]+/gu,' ').trim()+':'+year(w);const old=seen.get(k);if(old){old.providers=[...new Set([...(old.providers||[]),...(w.providers||[])])];old.oaUrl ||= w.oaUrl;old.openAccess ||= w.openAccess;}else seen.set(k,w);}return [...seen.values()].slice(0,125);}
+function parseClientCrossref(j){return (j.message?.items||[]).map(w=>norm({DOI:w.DOI||'',URL:w.URL||'',title:[w.title?.[0]||'Untitled'],author:w.author||[],published:w.published||w.created,'container-title':[w['container-title']?.[0]||'Publication record']},'crossref'));}
+function parseClientOpenAlex(j){return(j.results||[]).map(w=>norm({DOI:(w.doi||'').replace(/^https?:\/\/(dx\.)?doi\.org\//i,''),URL:w.primary_location?.landing_page_url||w.id||'',title:[w.display_name||w.title||'Untitled'],author:(w.authorships||[]).map(x=>({family:x.author?.display_name||''})),published:{'date-parts':[[w.publication_year||null]]},'container-title':[w.primary_location?.source?.display_name||'Publication record'],openAccess:Boolean(w.open_access?.is_oa),oaUrl:w.best_oa_location?.landing_page_url||''},'openalex'));}
+function parseClientEurope(j){return(j.resultList?.result||[]).map(w=>norm({DOI:w.doi||'',URL:w.doi?'https://doi.org/'+w.doi:(w.source&&w.id?'https://europepmc.org/article/'+encodeURIComponent(w.source)+'/'+encodeURIComponent(w.id):''),title:[w.title||'Untitled'],author:w.authorString?[{family:w.authorString}]:[],published:{'date-parts':[[Number(w.pubYear)||null]]},'container-title':[w.journalTitle||'Publication record'],openAccess:w.isOpenAccess==='Y',oaUrl:w.isOpenAccess==='Y'&&w.pmcid?'https://europepmc.org/articles/'+w.pmcid:''},'europepmc'));}
+async function directScholarly(q){
+  const tasks=[
+    ['crossref',()=>fetchJSON(url('https://api.crossref.org/works',{'query.bibliographic':q,rows:25})).then(parseClientCrossref)],
+    ['openalex',()=>fetchJSON(url('https://api.openalex.org/works',{search:q,per_page:25})).then(parseClientOpenAlex)],
+    ['europepmc',()=>fetchJSON(url('https://www.ebi.ac.uk/europepmc/webservices/rest/search',{query:q,format:'json',pageSize:25})).then(parseClientEurope)]
+  ];
+  const settled=await Promise.all(tasks.map(async([id,fn])=>{try{return{id,ok:true,rows:await fn()};}catch{return{id,ok:false,rows:[]};}}));
+  return {results:dedup(settled.flatMap(x=>x.rows)),sources:settled.map(x=>({id:x.id,status:x.ok?'ok':'unavailable',count:x.rows.length})),fallback:true};
 }
-function record(w) {
-  return { DOI:w.DOI || '', URL:w.URL || '', pmid:w.pmid || '', database:w.database || '',
-    title:[title(w)], author:w.author || [], published:w.published,
-    created:w.created, 'container-title':[journal(w)] };
+async function searchAcademic(q){
+  if(useServer)try{return await fetchJSON(url(API_BASE+'/api/search',{q}),13500);}catch{}
+  return directScholarly(q);
 }
-function dateField(y) { return y ? {'date-parts':[[Number(y)]]} : undefined; }
-async function crossrefSearch(term, signal) {
-  const data = await getJSON('https://api.crossref.org/works?query.bibliographic=' + encodeURIComponent(term) + '&rows=30', signal);
-  return (data.message?.items || []).map(w => record({...w, database:'Crossref'}));
+function gdeltQuery(q,publisher){const clean=q.replace(/[():"\[\]{}]/g,' ').replace(/\b(?:OR|AND|NOT|domain|domainis)\b/gi,' ').trim().slice(0,150);const pubs=publisher==='all'?PUBS:PUBS.filter(p=>p.id===publisher);return clean+' ('+pubs.map(p=>'domainis:'+p.domain).join(' OR ')+')';}
+function parseClientNews(j){const lookup=new Map(PUBS.map(p=>[p.domain,p]));const seen=new Set();return(j.articles||[]).map(w=>{const p=lookup.get(String(w.domain||'').replace(/^www\./,''));if(!p||!/^https?:\/\//.test(w.url||'')||seen.has(w.url))return null;seen.add(w.url);const dt=/^\d{14}$/.test(w.seendate||'')?w.seendate.slice(0,4)+'-'+w.seendate.slice(4,6)+'-'+w.seendate.slice(6,8):'';return{kind:'news',title:[w.title||'Untitled article'],URL:w.url,'container-title':[p.name],author:[],published:null,indexedDate:dt,publisherId:p.id};}).filter(Boolean);}
+async function searchNews(q,publisher){
+  if(useServer)try{return await fetchJSON(url(API_BASE+'/api/news',{q,publisher}),13000);}catch{}
+  try{const j=await fetchJSON(url('https://api.gdeltproject.org/api/v2/doc/doc',{query:gdeltQuery(q,publisher),mode:'artlist',format:'json',timespan:'3m',maxrecords:75,sort:'datedesc'}),12000);return{results:parseClientNews(j),status:'ok',fallback:true};}
+  catch{return{results:[],status:'unavailable',fallback:true};}
 }
-async function openAlexSearch(term, signal) {
-  const data = await getJSON('https://api.openalex.org/works?search=' + encodeURIComponent(term) + '&per-page=30', signal);
-  return (data.results || []).map(w => record({
-    DOI: (w.doi || '').replace(/^https?:\/\/doi\.org\//i,''),
-    URL: w.primary_location?.landing_page_url || w.id || '',
-    title: [w.display_name || 'Untitled publication'],
-    author: (w.authorships || []).slice(0, 8).map(a => ({family:'',given:a.author?.display_name || ''})),
-    published: dateField(w.publication_year),
-    'container-title':[w.primary_location?.source?.display_name || 'OpenAlex record'],
-    database:'OpenAlex'
-  }));
-}
-async function pubmedSearch(term, signal) {
-  // Europe PMC provides cross-origin browser access to PubMed-indexed publication records.
-  const query = '(' + term.replace(/[()]/g,' ') + ') AND SRC:MED';
-  const data = await getJSON('https://www.ebi.ac.uk/europepmc/webservices/rest/search?format=json&pageSize=30&query=' + encodeURIComponent(query), signal);
-  return (data.resultList?.result || []).map(w => record({
-    DOI:w.doi || '', pmid:w.pmid || '',
-    URL:w.pmid ? 'https://pubmed.ncbi.nlm.nih.gov/' + encodeURIComponent(w.pmid) + '/' : (w.journalInfo?.journal?.title ? 'https://europepmc.org/article/MED/' + w.id : ''),
-    title:[w.title || 'Untitled publication'],
-    author:(w.authorString || '').split(',').slice(0, 8).map(a => ({given:a.trim(), family:''})),
-    published:dateField(w.pubYear),
-    'container-title':[w.journalTitle || 'PubMed-indexed record'],
-    database:'PubMed'
-  }));
-}
-let searchSequence = 0;
-$('searchForm').onsubmit = async event => {
-  event.preventDefault(); const term = $('query').value.trim(); if (!term) return;
-  const sequence = ++searchSequence;
-  show('discover'); const btn = $('searchBtn'); btn.disabled = true; btn.textContent = 'Searching…';
-  $('results').replaceChildren(el('div', 'empty', 'Searching Crossref, OpenAlex and PubMed…'));
-  const controller = new AbortController(); const timeout = setTimeout(() => controller.abort(), 18000);
-  try {
-    const queries = [crossrefSearch, openAlexSearch, pubmedSearch];
-    const outcomes = await Promise.allSettled(queries.map(fn => fn(term, controller.signal)));
-    if (sequence !== searchSequence) return;
-    const seen = new Set(); const merged = [];
-    // Round-robin display for variety across successful databases.
-    const batches = outcomes.map(r => r.status === 'fulfilled' ? r.value : []);
-    for (let i = 0; i < 30; i++) for (const batch of batches) {
-      const w = batch[i]; if (!w) continue;
-      const k = key(w); if (seen.has(k)) continue;
-      seen.add(k); merged.push(w);
-    }
-    works = merged;
+$('navDiscover').onclick=()=>setMode('academic');
+$('navNews').onclick=()=>setMode('news');
+$('navSaved').onclick=showSaved;
+$('navCoach').onclick=()=>$('coachInput').focus();
+$('modeAcademic').onclick=()=>setMode('academic');
+$('modeNews').onclick=()=>setMode('news');
+document.querySelectorAll('[data-filter]').forEach(b=>b.onclick=()=>{filter=b.dataset.filter;render();});
+document.querySelectorAll('[data-topic]').forEach(b=>b.onclick=()=>{$('query').value=b.dataset.topic;$('searchForm').requestSubmit();});
+for(const p of PUBS){const o=el('option','',p.name);o.value=p.id;$('publisherChoice').append(o);}
+$('query').addEventListener('input',()=>{if(mode==='news')renderPublisherLinks();});
+$('searchForm').onsubmit=async e=>{
+  e.preventDefault();const q=$('query').value.trim();if(q.length<2)return;
+  showDiscover();const btn=$('searchBtn');btn.disabled=true;btn.textContent='Searching…';
+  $('results').replaceChildren(el('div','empty',mode==='news'?'Searching news coverage…':'Searching scholarly indexes…'));
+  setStatus('Searching '+(mode==='news'?'news index…':'scholarly databases…'));
+  try{
+    const data=mode==='news'?await searchNews(q,$('publisherChoice').value):await searchAcademic(q);
+    works=(data.results||[]).map(w=>w.kind? w : {...w,kind:'academic'});
+    if(mode==='news')setStatus(data.status==='unavailable'?'GDELT is unavailable; use the publisher links below.':'News discovered via GDELT · '+works.length+' indexed articles (last ~3 months).');
+    else{const statuses=(data.sources||[]).map(s=>(ACADEMIC_LABELS[s.id]||s.label||s.id)+': '+(s.status==='ok'?(s.count+' records'):'unavailable'));setStatus((data.fallback?'Direct search (up to 3 sources): ':'Five-source server: ')+statuses.join(' · '));}
     render();
-    const successes = outcomes.filter(r => r.status === 'fulfilled').length;
-    $('viewBadge').textContent = works.length + ' records · ' + successes + '/3 databases';
-    if (!works.length) $('results').replaceChildren(el('div', 'empty', 'No results available. Try a different topic or check your connection.'));
-    else if (successes < 3) {
-      const notice = el('p', 'hint', 'Some databases were unavailable. Results from the others are shown.');
-      $('results').prepend(notice);
-    }
-  } catch {
-    works = []; render();
-    $('results').replaceChildren(el('div', 'empty', 'Search unavailable. Check your connection and try again.'));
-  } finally {
-    clearTimeout(timeout);
-    if (sequence === searchSequence) { btn.disabled = false; btn.textContent = 'Search sources →'; }
-  }
+  }catch{works=[];render();setStatus('Search unavailable; check your connection or server.');}
+  finally{btn.disabled=false;btn.textContent='Search sources →';if(mode==='news')renderPublisherLinks();}
 };
-function coachAnswer(q) {
-  const s = q.toLowerCase();
-  if (/primary/.test(s)) return 'Primary sources provide original evidence: experiments, datasets, interviews, or historical documents.';
-  if (/secondary|review/.test(s)) return 'Secondary sources interpret or summarize original evidence. Look for literature reviews or analyses.';
-  if (/credib|reliab|trust|peer.review/.test(s)) return 'Check author expertise, publisher, research methods, cited evidence, date, conflicts of interest, and retractions.';
-  if (/cite|citation|apa|mla|reference/.test(s)) return 'Record author, year, title, journal, DOI, and pages where relevant. Verify every draft citation against your required style.';
-  if (/plan|topic|question|research/.test(s)) return 'Research plan: 1. Define a question. 2. Search key terms. 3. Compare original studies and reviews. 4. Record evidence and limitations. 5. Cite your sources.';
-  return 'I can help with primary and secondary sources, credibility, citations, and research plans. This free guide does not read articles or generate OpenAI responses.';
-}
-function ask(q) { if (!q.trim()) return; $('messages').append(el('div', 'bubble me', q)); $('messages').append(el('div', 'bubble bot', coachAnswer(q))); $('messages').scrollTop = $('messages').scrollHeight; }
-$('coachForm').onsubmit = e => { e.preventDefault(); ask($('coachInput').value); $('coachInput').value = ''; };
-document.querySelectorAll('[data-question]').forEach(b => b.onclick = () => ask(b.dataset.question));
+function coachAnswer(q){const s=q.toLowerCase();if(/primary/.test(s))return'Primary sources provide original evidence: experiments, datasets, interviews, or historical documents.';if(/secondary|review/.test(s))return'Secondary sources interpret or summarize original evidence. Look for literature reviews or analyses.';if(/credib|reliab|trust|peer.review/.test(s))return'Check author expertise, publisher, methods, cited evidence, date, conflicts of interest, and corrections. Newspaper reports and peer-reviewed papers serve different purposes.';if(/cite|citation|apa|mla|reference/.test(s))return'Record the actual author, date, title, publisher or journal, and URL or DOI. Check each generated citation draft against your assignment style.';if(/news|newspaper|publisher/.test(s))return'News reports are useful for current events, but are not scholarly peer review. Compare outlets, identify original reporting, and verify claims against primary documents.';if(/plan|topic|question|research/.test(s))return'Research plan: 1. Define a question. 2. Search academic and news sources separately. 3. Compare evidence and original reporting. 4. Record limitations. 5. Cite properly.';return'I can help with sources, credibility, citations, newspapers and research planning. This free guide does not read full articles or generate OpenAI responses.';}
+function ask(q){if(!q.trim())return;$('messages').append(el('div','bubble me',q));$('messages').append(el('div','bubble bot',coachAnswer(q)));$('messages').scrollTop=$('messages').scrollHeight;}
+$('coachForm').onsubmit=e=>{e.preventDefault();ask($('coachInput').value);$('coachInput').value='';};
+document.querySelectorAll('[data-question]').forEach(b=>b.onclick=()=>ask(b.dataset.question));
 render();
 </script>
 </body>
