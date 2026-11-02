@@ -215,7 +215,41 @@ $('searchForm').onsubmit=async e=>{
   finally{btn.disabled=false;btn.textContent='Search sources →';if(mode==='news')renderPublisherLinks();}
 };
 function coachAnswer(q){const s=q.toLowerCase();if(/primary/.test(s))return'Primary sources provide original evidence: experiments, datasets, interviews, or historical documents.';if(/secondary|review/.test(s))return'Use the Secondary sources tab for literature reviews, systematic reviews and meta-analyses. Check publisher, author expertise, methods, cited studies, bias, funding and retractions before trusting a result.';if(/credib|reliab|trust|peer.review/.test(s))return'Check author expertise, publisher, methods, cited evidence, date, conflicts of interest, and corrections. Newspaper reports and peer-reviewed papers serve different purposes.';if(/cite|citation|apa|mla|reference/.test(s))return'Record the actual author, date, title, publisher or journal, and URL or DOI. Check each generated citation draft against your assignment style.';if(/news|newspaper|publisher/.test(s))return'News reports are useful for current events, but are not scholarly peer review. Compare outlets, identify original reporting, and verify claims against primary documents.';if(/plan|topic|question|research/.test(s))return'Research plan: 1. Define a question. 2. Search academic and news sources separately. 3. Compare evidence and original reporting. 4. Record limitations. 5. Cite properly.';return'I can help with sources, credibility, citations, newspapers and research planning. This free guide does not read full articles or generate OpenAI responses.';}
-function ask(q){if(!q.trim())return;$('messages').append(el('div','bubble me',q));$('messages').append(el('div','bubble bot',coachAnswer(q)));$('messages').scrollTop=$('messages').scrollHeight;}
+async function ask(q){
+  q = q.trim();
+  if (!q) return;
+
+  $('messages').append(el('div','bubble me',q));
+  const bubble = el('div','bubble bot','Thinking…');
+  $('messages').append(bubble);
+  $('messages').scrollTop = $('messages').scrollHeight;
+
+  try {
+    const response = await fetch('/api/chat', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({message:q})
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) throw new Error('AI request failed');
+
+    const answer = data.reply || data.answer ||
+      data.response || data.output_text || data.message;
+
+    bubble.textContent =
+      typeof answer === 'string' && answer.trim()
+        ? answer
+        : 'The AI returned an empty response.';
+  } catch(error) {
+    bubble.textContent =
+      'Unable to contact the AI. Please try again.';
+    console.error('Quantize AI chat error:', error);
+  }
+
+  $('messages').scrollTop = $('messages').scrollHeight;
+}
 $('coachForm').onsubmit=e=>{e.preventDefault();ask($('coachInput').value);$('coachInput').value='';};
 document.querySelectorAll('[data-question]').forEach(b=>b.onclick=()=>ask(b.dataset.question));
 render();
