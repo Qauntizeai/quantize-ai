@@ -9,7 +9,7 @@ const OpenAI = require('openai');
 const openai = new OpenAI({
   apiKey: process.env.key_X6uyihW7ZYBknI9L
 });
-const PROVIDERS = ['crossref', 'openalex', 'europepmc', 'openaire', 'semanticscholar'];
+const PROVIDERS = ['crossref', 'openalex', 'europepmc', 'openaire', 'semanticscholar', 'pubmed', 'arxiv', 'eric', 'doaj', 'clinicaltrials', 'hal'];
 // Publisher discovery, not a direct/licensed partnership with the publishers.
 const NEWS_PUBLISHERS = [
   {id:'reuters', name:'Reuters', domain:'reuters.com'},
@@ -25,11 +25,11 @@ const NEWS_PUBLISHERS = [
 ];
 const LABELS = {
   crossref: 'Crossref', openalex: 'OpenAlex', europepmc: 'Europe PMC',
-  openaire: 'OpenAIRE (Europe)', semanticscholar: 'Semantic Scholar'
+  openaire: 'OpenAIRE (Europe)', semanticscholar: 'Semantic Scholar', pubmed: 'PubMed', arxiv: 'arXiv', eric: 'ERIC', doaj: 'DOAJ', clinicaltrials: 'ClinicalTrials.gov', hal: 'HAL Open Science'
 };
 const PORT = Number(process.env.PORT || 3000);
 const LIMIT = 25; // Maximum records per provider before deduplication.
-const TIMEOUT_MS = 8500;
+const TIMEOUT_MS = 20000;
 const CACHE_MS = 120000;
 const CACHE_MAX = 120;
 const cache = new Map();
@@ -179,7 +179,309 @@ const queryUrl = (root, entries) => {
   const u = new URL(root); for (const [key, value] of Object.entries(entries)) if (value != null && value !== '') u.searchParams.set(key, value);
   return u.href;
 };
+
+function parsePubMed(json) {
+  const result = json.result || {};
+  return (result.uids || []).map(id => {
+    const w = result[id];
+    if (!w) return null;
+
+    const doi = (w.articleids || [])
+      .find(x => x.idtype === 'doi')?.value || '';
+
+    return createRecord({
+      title: w.title,
+      doi,
+      url: `https://pubmed.ncbi.nlm.nih.gov/${id}/`,
+      authors: (w.authors || []).map(a => a.name),
+      year: firstYear(w.pubdate, w.epubdate),
+      journal: w.fulljournalname || w.source,
+      openAccess: false,
+      provider: 'pubmed',
+      type: (w.pubtype || []).join(', ')
+    });
+  }).filter(Boolean);
+}
+
+async function searchPubMed(q, secondaryOnly = false) {
+  const base = 'https://eutils.ncbi.nlm.nih.gov/entrez/eutils/';
+
+  const term = secondaryOnly
+    ? `(${q}) AND (review[pt] OR meta-analysis[pt])`
+    : q;
+
+  const searchUrl = queryUrl(base + 'esearch.fcgi', {
+    db: 'pubmed',
+    term,
+    retmax: LIMIT,
+    retmode: 'json'
+  });
+
+  const search = await fetchJson(searchUrl);
+  const ids = search.esearchresult?.idlist || [];
+
+  if (!ids.length) return [];
+
+  const summaryUrl = queryUrl(base + 'esummary.fcgi', {
+    db: 'pubmed',
+    id: ids.join(','),
+    retmode: 'json'
+  });
+
+  return parsePubMed(await fetchJson(summaryUrl));
+}
+
+
+function parseArxiv(xml) {
+  const decode = s => String(s || '')
+    .replace(/&#x([0-9a-f]+);/gi,
+      (_, n) => String.fromCodePoint(parseInt(n, 16)))
+    .replace(/&#(\d+);/g,
+      (_, n) => String.fromCodePoint(Number(n)))
+    .replace(/&amp;/g, '&')
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/&quot;/g, '"')
+    .replace(/&apos;/g, "'");
+
+  const tag = (xml, name) => {
+    const match = xml.match(
+      new RegExp('<' + name + '(?:\\s[^>]*)?>([\\s\\S]*?)<\\/' + name + '>', 'i')
+    );
+    return decode(match?.[1] || '').replace(/\s+/g, ' ').trim();
+  };
+
+  const entries = xml.match(/<entry(?:\s[^>]*)?>[\s\S]*?<\/entry>/g) || [];
+
+  return entries.map(entry => {
+    const title = tag(entry, 'title');
+    const articleUrl = tag(entry, 'id');
+    const published = tag(entry, 'published');
+    const doi = tag(entry, 'arxiv:doi');
+
+    const authors = [...entry.matchAll(
+      /<author(?:\s[^>]*)?>([\s\S]*?)<\/author>/g
+    )].map(match => tag(match[1], 'name'));
+
+    if (!title || !articleUrl ||
+        articleUrl.includes('/api/errors')) return null;
+
+    return createRecord({
+      title,
+      doi,
+      url: articleUrl,
+      authors,
+      year: firstYear(published),
+      journal: 'arXiv',
+      openAccess: true,
+      oaUrl: articleUrl,
+      provider: 'arxiv',
+      type: 'preprint'
+    });
+  }).filter(Boolean);
+}
+
+async function searchArxiv(q, secondaryOnly = false) {
+  const url = new URL('https://export.arxiv.org/api/query');
+
+  const safeQuery = q.replace(/[^\p{L}\p{N}\s-]/gu, ' ').trim();
+
+  url.searchParams.set('search_query', 'all:' + safeQuery);
+  url.searchParams.set('start', '0');
+  url.searchParams.set('max_results', String(LIMIT));
+
+  const response = await fetch(url, {
+    headers: {
+      'User-Agent': 'QuantizeAIStudentResearch/1.0'
+    },
+    signal: AbortSignal.timeout(TIMEOUT_MS)
+  });
+
+  if (!response.ok) throw new Error('arXiv HTTP ' + response.status);
+
+  const records = parseArxiv(await response.text());
+
+  return secondaryOnly
+    ? records.filter(r => r.secondaryCategory)
+    : records;
+}
+
+
+async function searchEric(q, secondaryOnly = false) {
+  const url = queryUrl('https://api.ies.ed.gov/eric/', {
+    search: q,
+    format: 'json',
+    rows: LIMIT
+  });
+
+  const data = await fetchJson(url);
+  const docs = data.response?.docs || [];
+
+  return docs.filter(w => {
+    if (!secondaryOnly) return true;
+    const types = [].concat(w.publicationtype || [])
+      .join(' ').toLowerCase();
+    return /review|meta-analysis|research synthesis|information analyses/.test(types);
+  }).map(w => createRecord({
+    title: w.title || '',
+    doi: '',
+    url: 'https://eric.ed.gov/?id=' + encodeURIComponent(w.id),
+    authors: [].concat(w.author || []),
+    year: firstYear(w.publicationdateyear, w.publicationdate),
+    journal: w.source || 'ERIC',
+    openAccess: false,
+    provider: 'eric',
+    type: [].concat(w.publicationtype || []).join(', ')
+  })).filter(w => w.title?.[0]);
+}
+
+
+async function searchDoaj(q, secondaryOnly = false) {
+  const base = 'https://doaj.org/api/v4/search/articles/';
+  const url = queryUrl(base + encodeURIComponent(q), {
+    page: 1,
+    pageSize: LIMIT
+  });
+
+  const data = await fetchJson(url);
+  const articles = data.results || [];
+
+  return articles.filter(item => {
+    if (!secondaryOnly) return true;
+    const b = item.bibjson || {};
+    return /\\b(review|systematic review|meta-analysis)\\b/i
+      .test((b.title || '') + ' ' + (b.abstract || ''));
+  }).map(item => {
+    const b = item.bibjson || {};
+    const identifiers = b.identifier || [];
+    const doi = identifiers.find(i =>
+      i.type?.toLowerCase() === 'doi'
+    )?.id || '';
+
+    const links = b.link || [];
+    const articleUrl = links.find(l =>
+      l.type === 'fulltext'
+    )?.url || links[0]?.url ||
+      (doi ? 'https://doi.org/' + doi : '');
+
+    return createRecord({
+      title: b.title || '',
+      doi,
+      url: articleUrl,
+      authors: (b.author || []).map(a => a.name),
+      year: firstYear(b.year),
+      journal: b.journal?.title || 'DOAJ',
+      openAccess: true,
+      oaUrl: articleUrl,
+      provider: 'doaj',
+      type: 'journal-article'
+    });
+  }).filter(w => w.title?.[0]);
+}
+
+
+async function searchClinicalTrials(q, secondaryOnly = false) {
+  // Registrations are primary research records, not reviews.
+  if (secondaryOnly) return [];
+
+  const url = queryUrl('https://clinicaltrials.gov/api/v2/studies', {
+    'query.term': q,
+    pageSize: LIMIT,
+    format: 'json'
+  });
+
+  const data = await fetchJson(url);
+
+  return (data.studies || []).map(study => {
+    const p = study.protocolSection || {};
+    const id = p.identificationModule || {};
+    const status = p.statusModule || {};
+    const sponsor = p.sponsorCollaboratorsModule || {};
+    const nctId = id.nctId;
+
+    if (!nctId || !id.briefTitle) return null;
+
+    return createRecord({
+      title: id.briefTitle,
+      doi: '',
+      url: 'https://clinicaltrials.gov/study/' + nctId,
+      authors: sponsor.leadSponsor?.name
+        ? [sponsor.leadSponsor.name]
+        : [],
+      year: firstYear(
+        status.studyFirstSubmitDate,
+        status.startDateStruct?.date
+      ),
+      journal: 'ClinicalTrials.gov',
+      openAccess: false,
+      provider: 'clinicaltrials',
+      type: 'Clinical trial registration'
+    });
+  }).filter(Boolean);
+}
+
+
+async function searchHal(q, secondaryOnly = false) {
+  const url = queryUrl('https://api.archives-ouvertes.fr/search/', {
+    q,
+    rows: LIMIT,
+    wt: 'json',
+    fl: 'title_s,halId_s,uri_s,producedDateY_i,authFullName_s,doiId_s,journalTitle_s,docType_s,files_s'
+  });
+
+  const data = await fetchJson(url);
+  const docs = data.response?.docs || [];
+
+  return docs.filter(doc => {
+    if (!secondaryOnly) return true;
+    const title = [].concat(doc.title_s || []).join(' ');
+    const type = [].concat(doc.docType_s || []).join(' ');
+    return /review|meta-analysis|systematic review/i.test(title + ' ' + type);
+  }).map(doc => {
+    const first = value =>
+      Array.isArray(value) ? (value[0] || '') : (value || '');
+
+    const title = first(doc.title_s);
+    const doi = first(doc.doiId_s);
+    const url = first(doc.uri_s) ||
+      (doc.halId_s ? 'https://hal.science/' + doc.halId_s : '');
+
+    const files = [].concat(doc.files_s || []).filter(Boolean);
+
+    return createRecord({
+      title,
+      doi,
+      url,
+      authors: [].concat(doc.authFullName_s || []),
+      year: firstYear(doc.producedDateY_i),
+      journal: first(doc.journalTitle_s) || 'HAL Open Science',
+      openAccess: files.length > 0,
+      oaUrl: files.length > 0 ? url : '',
+      provider: 'hal',
+      type: first(doc.docType_s) || 'Research repository record'
+    });
+  }).filter(record => record.title?.[0]);
+}
+
 const SEARCHERS = {
+  async hal(q, secondaryOnly = false) {
+    return searchHal(q, secondaryOnly);
+  },
+  async clinicaltrials(q, secondaryOnly = false) {
+    return searchClinicalTrials(q, secondaryOnly);
+  },
+  async doaj(q, secondaryOnly = false) {
+    return searchDoaj(q, secondaryOnly);
+  },
+  async eric(q, secondaryOnly = false) {
+    return searchEric(q, secondaryOnly);
+  },
+  async arxiv(q, secondaryOnly = false) {
+    return searchArxiv(q, secondaryOnly);
+  },
+  async pubmed(q, secondaryOnly = false) {
+    return searchPubMed(q, secondaryOnly);
+  },
   async crossref(q, secondaryOnly = false) {
     const url = queryUrl('https://api.crossref.org/works', {'query.bibliographic':secondaryOnly ? `${q} systematic review` : q, rows:LIMIT});
     return parseCrossref(await fetchJson(url));
@@ -281,10 +583,18 @@ function parseGdelt(json) {
     };
   }).filter(Boolean);
 }
-async function newsSearch(q,publisherId) {
+
+const GDELT_COOLDOWN_MS = 60000;
+let gdeltBlockedUntil = 0;
+
+async function gdeltNewsSearch(q,publisherId) {
   const key = JSON.stringify(['news-v2',q.toLowerCase(),publisherId]);
   const cached = cache.get(key);
   if (cached && cached.expires > Date.now()) return {...cached.data,cached:true};
+if (Date.now() < gdeltBlockedUntil) {
+  const seconds = Math.ceil((gdeltBlockedUntil - Date.now()) / 1000);
+  throw new Error(`GDELT rate limited. Retry in ${seconds} seconds.`);
+}
 
   // Keep the first attempt small and simple: the GDELT DOC API can reject
   // long OR expressions or throttle large result sets.
@@ -309,10 +619,108 @@ async function newsSearch(q,publisherId) {
     } catch (error) {
       lastError = error;
       console.error('[Quantize AI news] GDELT request failed:', String(error.message || error));
+
+      if (String(error.message || error).includes('429')) {
+        gdeltBlockedUntil = Date.now() + GDELT_COOLDOWN_MS;
+        console.log('[Quantize AI] GDELT rate limit reached. Cooling down for 60 seconds.');
+        break;
+      }
     }
   }
   throw lastError || new Error('News provider unavailable');
 }
+
+
+const GoogleNewsParser = require('rss-parser');
+const googleNewsParser = new GoogleNewsParser({
+  timeout: 12000
+});
+
+async function googleNewsSearch(q, publisherId) {
+  const publisher = NEWS_PUBLISHERS.find(
+    p => p.id === publisherId
+  );
+
+  const topic = cleanNewsQuery(q);
+  const search = publisher
+    ? `${topic} site:${publisher.domain}`
+    : topic;
+
+  const feedUrl = new URL(
+    'https://news.google.com/rss/search'
+  );
+
+  feedUrl.searchParams.set('q', search);
+  feedUrl.searchParams.set('hl', 'en-US');
+  feedUrl.searchParams.set('gl', 'US');
+  feedUrl.searchParams.set('ceid', 'US:en');
+
+  const feed = await googleNewsParser.parseURL(
+    feedUrl.toString()
+  );
+
+  const results = (feed.items || []).slice(0, 100)
+    .map(item => {
+      const link = urlIfSafe(item.link);
+      if (!link) return null;
+
+      const date = item.isoDate || item.pubDate;
+      const parsedDate = date ? new Date(date) : null;
+
+      return {
+        kind: 'news',
+        title: [item.title || 'Untitled article'],
+        URL: link,
+        DOI: '',
+        author: [],
+        'container-title': [
+          publisher ? publisher.name : 'Google News'
+        ],
+        published: null,
+        indexedDate: parsedDate &&
+          !Number.isNaN(parsedDate.getTime())
+            ? parsedDate.toISOString().slice(0, 10)
+            : '',
+        publisherId: publisher ? publisher.id : 'all',
+        provider: 'google-news',
+        providers: ['Google News'],
+        sourceType: 'news'
+      };
+    })
+    .filter(Boolean);
+
+  return {
+    query: q,
+    results,
+    publisher: publisherId,
+    status: 'ok',
+    cached: false,
+    note: 'Google News RSS backup results. Publisher-specific searches are approximate.'
+  };
+}
+
+async function newsSearch(q, publisherId) {
+  try {
+    if (Date.now() < gdeltBlockedUntil) {
+      return await googleNewsSearch(q, publisherId);
+    }
+
+    const gdeltResult = await gdeltNewsSearch(q, publisherId);
+    if (gdeltResult.results?.length > 0) {
+      return gdeltResult;
+    }
+    console.log('[Quantize AI] GDELT returned no articles; using Google News.');
+    return await googleNewsSearch(q, publisherId);
+  } catch (error) {
+    console.warn(
+      '[Quantize AI] Using Google News backup:',
+      error.message
+    );
+
+    return await googleNewsSearch(q, publisherId);
+  }
+}
+
 function sendJson(res, status, data) {
   res.writeHead(status, {'Content-Type':'application/json; charset=utf-8', 'Cache-Control':'no-store', 'X-Content-Type-Options':'nosniff', 'Access-Control-Allow-Origin':process.env.ALLOWED_ORIGIN || '*'});
   res.end(JSON.stringify(data));
@@ -377,8 +785,15 @@ if (req.method !== 'GET') return sendJson(res,405,{error:'Only GET requests are 
     const publisher = url.searchParams.get('publisher') || 'all';
     if (q.length < 2 || q.length > 150) return sendJson(res,400,{error:'Enter a news topic of 2 to 150 characters.'});
     if (publisher !== 'all' && !NEWS_PUBLISHERS.some(p=>p.id===publisher)) return sendJson(res,400,{error:'Unknown publisher.'});
-    try {return sendJson(res,200,await newsSearch(q,publisher));}
-    catch {return sendJson(res,503,{error:'News index temporarily unavailable. Use the publisher links shown on the website.',results:[]});}
+ try {
+  return sendJson(res, 200, await newsSearch(q, publisher));
+} catch (error) {
+  console.error('Quantize AI News Error:', error);
+  return sendJson(res, 503, {
+    error: 'News index temporarily unavailable.',
+    results: []
+  });
+}
   }
   if (url.pathname === '/api/search') {
     const q = (url.searchParams.get('q') || '').trim();
