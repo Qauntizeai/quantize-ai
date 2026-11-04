@@ -36,7 +36,8 @@
   <section class="hero"><div class="eyebrow">The smarter way to research</div><h1>Find better sources.<br><em>Build stronger ideas.</em></h1><p>Discover published research, organize references, and get guided help with your next assignment—all in one student workspace.</p><div class="pills"><span>◇ 5 scholarly indexes</span><span>◇ Review &amp; secondary sources</span><span>◇ News publishers</span><span>◇ Save &amp; cite</span></div></section>
   <section class="metrics"><div class="metric"><strong id="resultCount">0</strong><small>Results shown</small></div><div class="metric"><strong id="savedCount">0</strong><small>Saved sources</small></div><div class="metric"><strong>Free</strong><small>Research plan</small></div></section>
   <div class="grid"><div class="column">
-    <section class="card"><div class="heading"><h2 id="searchHeading">Discover sources</h2><span class="badge" id="searchBadge">ACADEMIC + NEWS</span></div><div class="choicebar"><button id="modeAcademic" type="button" class="active">Scholarly databases</button><button id="modeSecondary" type="button">Secondary sources</button><button id="modeNews" type="button">News publishers</button></div><form id="searchForm" class="row search"><input id="query" type="search" placeholder="e.g. Artificial intelligence in education" aria-label="Search topic" maxlength="150" required><button id="searchBtn" class="primary">Search sources →</button></form><div id="academicTopics" class="chips"><button data-topic="Artificial intelligence in education">AI in education</button><button data-topic="Climate change impacts">Climate change</button><button data-topic="Social media and mental health">Mental health</button></div><p id="secondaryNote" class="notice" hidden>Find literature reviews, systematic reviews, and meta-analyses. Results are candidates based on scholarly metadata or title clues—not automatic credibility or peer-review certification. Open the original and evaluate its evidence.</p><div id="newsTools" class="news-tools" hidden><label for="publisherChoice">Choose publisher: <select id="publisherChoice"><option value="all">All major publishers</option></select></label><p class="notice">Search publisher-indexed article headlines directly in Quantize AI using GDELT. Full articles remain on publisher websites and may require subscriptions.</p></div><p class="providerstatus" id="providerStatus" aria-live="polite">Scholarly: Crossref · OpenAlex · Europe PMC · OpenAIRE · Semantic Scholar</p></section>
+    <section class="card"><div class="heading"><h2 id="searchHeading">Discover sources</h2><span class="badge" id="searchBadge">ACADEMIC + NEWS</span></div><div class="choicebar"><button id="modeAcademic" type="button" class="active">Scholarly databases</button><button id="modeSecondary" type="button">Secondary sources</button><button id="modeNews" 
+type="button"><button id="modeWikipedia" type="button">Wikipedia</button></button></div><form id="searchForm" class="row search"><input id="query" type="search" placeholder="e.g. Artificial intelligence in education" aria-label="Search topic" maxlength="150" required><button id="searchBtn" class="primary">Search sources →</button></form><div id="academicTopics" class="chips"><button data-topic="Artificial intelligence in education">AI in education</button><button data-topic="Climate change impacts">Climate change</button><button data-topic="Social media and mental health">Mental health</button></div><p id="secondaryNote" class="notice" hidden>Find literature reviews, systematic reviews, and meta-analyses. Results are candidates based on scholarly metadata or title clues—not automatic credibility or peer-review certification. Open the original and evaluate its evidence.</p><div id="newsTools" class="news-tools" hidden><label for="publisherChoice">Choose publisher: <select id="publisherChoice"><option value="all">All major publishers</option></select></label><p class="notice">Search publisher-indexed article headlines directly in Quantize AI using GDELT. Full articles remain on publisher websites and may require subscriptions.</p></div><p class="providerstatus" id="providerStatus" aria-live="polite">Scholarly: Crossref · OpenAlex · Europe PMC · OpenAIRE · Semantic Scholar</p></section>
     <section class="card"><div class="heading"><h2 id="resultsTitle">Research results</h2><span class="badge" id="viewBadge">Search to get started</span></div><div class="filters" id="filters"><button class="filter active" data-filter="all">All sources</button><button class="filter" data-filter="primary">Primary candidates</button><button class="filter" data-filter="review">Review candidates</button><button class="filter" data-filter="secondary">Secondary candidates</button></div><div id="results" aria-live="polite"><div class="empty">Search for a topic to discover academic publications.</div></div><p class="hint" id="resultsHint">Research metadata comes from scholarly indexes. Source-type labels and citation drafts need verification against originals.</p><div id="publisherDirectory" hidden><h3 style="font-size:14px;margin-top:20px">Search a specific news publisher</h3><div class="publisherlinks" id="publisherLinks"></div><p class="hint">Choose a publisher to search articles here in Quantize AI. Enter a topic first. Article cards show publisher-indexed headlines and links to original reporting; full articles are not reproduced or unlocked.</p></div></section>
   </div><div class="column">
     <section class="card" id="coach"><div class="heading"><h2>✧ Research Coach</h2><span class="badge">FREE GUIDE</span></div><div id="messages" class="chat" role="log" aria-live="polite"><div class="bubble bot">Hi! Ask me about primary sources, secondary sources, citations, credibility, or planning your research.</div></div><div class="chips"><button data-question="What is a primary source?">Primary sources</button><button data-question="How do I check credibility?">Check credibility</button><button data-question="How do I cite a source?">Citation tips</button></div><form id="coachForm" class="row"><input id="coachInput" maxlength="300" placeholder="Ask a research question..." aria-label="Ask the Research Coach" required><button class="primary" aria-label="Send">➜</button></form><p class="coach-note">This free Research Coach is a rule-based guide, not an OpenAI chatbot. It cannot read or verify full articles.</p></section>
@@ -50,7 +51,7 @@
 // Example: window.QUANTIZE_API_BASE = 'https://your-quantize-api.example'; (before this script)
 const $ = id => document.getElementById(id);
 const STORE = 'quantize-ai-saved-v2';
-const ACADEMIC_LABELS = {crossref:'Crossref',openalex:'OpenAlex',europepmc:'Europe PMC',openaire:'OpenAIRE',semanticscholar:'Semantic Scholar'};
+const ACADEMIC_LABELS = {crossref:'Crossref',openalex:'OpenAlex',europepmc:'Europe PMC',openaire:'OpenAIRE',semanticscholar:'Semantic Scholar',pubmed:'PubMed',arxiv:'arXiv',eric:'ERIC',doaj:'DOAJ',clinicaltrials:'ClinicalTrials.gov',hal:'HAL Open Science'};
 const PUBS = [
   {id:'reuters',name:'Reuters',domain:'reuters.com'},
   {id:'ap',name:'Associated Press',domain:'apnews.com'},
@@ -98,6 +99,7 @@ function setMode(next){
   $('modeAcademic').classList.toggle('active',mode==='academic');
   $('modeSecondary').classList.toggle('active',mode==='secondary');
   $('modeNews').classList.toggle('active',mode==='news');
+  $('modeWikipedia').classList.toggle('active',mode==='wikipedia');
   $('navDiscover').classList.toggle('active',mode==='academic');
   $('navSecondary').classList.toggle('active',mode==='secondary');
   $('navNews').classList.toggle('active',mode==='news');
@@ -105,7 +107,7 @@ function setMode(next){
   $('secondaryNote').hidden=mode!=='secondary';
   $('newsTools').hidden=mode!=='news';$('academicTopics').hidden=mode==='news';
   $('filters').hidden=mode==='news';$('publisherDirectory').hidden=mode!=='news';
-  $('searchHeading').textContent=mode==='news'?'Search major news publishers':mode==='secondary'?'Find credible secondary-source candidates':'Discover scholarly research';
+ $('searchHeading').textContent=mode==='wikipedia'?'Search Wikipedia articles':mode==='news'?'Search major news publishers':mode==='secondary'?'Find credible secondary-source candidates':'Discover scholarly research';
   $('searchBadge').textContent=mode==='news'?'NEWS INDEX + IN-PAGE RESULTS':mode==='secondary'?'REVIEW LITERATURE':'5 SCHOLARLY INDEXES';
   $('query').placeholder=mode==='news'?'e.g. Artificial intelligence regulation':'e.g. Artificial intelligence in education';
   $('resultsHint').textContent=mode==='news'?'News is not automatically scholarly or peer reviewed. Verify dates, authors and original reporting.':mode==='secondary'?'Metadata identifies review candidates—not proven credibility. Check author expertise, method, citations, publication venue, funding and retractions.':'Scholarly records are metadata; source-type labels and citation drafts require checking against the paper.';
@@ -113,6 +115,7 @@ function setMode(next){
 }
 function showSaved(){view='saved';filter='all';$('navDiscover').classList.remove('active');$('navNews').classList.remove('active');$('navSecondary').classList.remove('active');$('navSaved').classList.add('active');$('filters').hidden=false;$('publisherDirectory').hidden=true;render();}
 function showDiscover(){view='discover';$('navSaved').classList.remove('active');$('navDiscover').classList.toggle('active',mode==='academic');$('navSecondary').classList.toggle('active',mode==='secondary');$('navNews').classList.toggle('active',mode==='news');$('filters').hidden=mode==='news';$('publisherDirectory').hidden=mode!=='news';render();}
+let visibleResults = 50;
 function render(){
   const list=(view==='saved'?saved:works).filter(w=>filter==='all'||(filter==='news'?w.kind==='news':filter==='secondary'?Boolean(w.secondaryCategory||classifySecondaryClient(w).category):typeOf(w)===filter));
   $('savedCount').textContent=$('navCount').textContent=saved.length;
@@ -122,7 +125,7 @@ function render(){
   document.querySelectorAll('[data-filter]').forEach(b=>b.classList.toggle('active',b.dataset.filter===filter));
   const area=$('results');area.replaceChildren();
   if(!list.length){area.append(el('div','empty',view==='saved'?'No saved sources yet. Search and save an item.':works.length?'No matches for this filter. Try All sources.':mode==='news'?'Enter a news topic above, then search all publishers or choose a publisher below.':'Search for a topic to discover academic publications.'));return;}
-  list.forEach(w=>{
+list.slice(0, visibleResults).forEach(w=>{
     const card=el('article','source'),kind=typeOf(w);
     const secondary=w.secondaryCategory?{category:w.secondaryCategory,evidence:w.secondaryEvidence}:classifySecondaryClient(w);
     card.append(el('span','tag'+(w.kind==='news'?' news-tag':''),kind==='news'?'News article':secondary.category?secondary.category:kind==='primary'?'Possible primary':kind==='review'?'Possible review':'Type unconfirmed'));
@@ -138,6 +141,19 @@ function render(){
     buttons.append(action('Copy APA draft',async()=>{const cite=w.kind==='news'?`${journal(w)}. (n.d.). ${title(w)}. ${url}`:`${authors(w)} (${year(w)}). ${title(w)}. ${journal(w)}. ${url}`;try{await navigator.clipboard.writeText(cite);alert('Draft copied. Check author, date and style against the original source.');}catch{prompt('Copy citation draft:',cite);}}));
     card.append(buttons);area.append(card);
   });
+  if (view !== 'saved' && list.length > visibleResults) {
+    const loadMore = document.createElement('button');
+    loadMore.type = 'button';
+    loadMore.className = 'primary';
+    loadMore.textContent = 'Load More (Next 50)';
+
+    loadMore.onclick = () => {
+      visibleResults += 50;
+      render();
+    };
+
+    area.appendChild(loadMore);
+  }
 }
 function renderPublisherLinks(){
   const area=$('publisherLinks');area.replaceChildren();
@@ -153,7 +169,7 @@ function renderPublisherLinks(){
   }
 }
 async function fetchJSON(url,ms=11000){const controller=new AbortController();const timer=setTimeout(()=>controller.abort(),ms);try{const res=await fetch(url,{signal:controller.signal,headers:{Accept:'application/json'}});if(!res.ok)throw Error(`HTTP ${res.status}`);return await res.json();}finally{clearTimeout(timer);}}
-const url=(root,params)=>{const u=new URL(root);Object.entries(params).forEach(([k,v])=>{if(v!==''&&v!=null)u.searchParams.set(k,v);});return u.href;};
+const url=(root,params)=>{const u=new URL(root, window.location.origin);Object.entries(params).forEach(([k,v])=>{if(v!==''&&v!=null)u.searchParams.set(k,v);});return u.href;};
 const norm=(w,provider)=>{const info=classifySecondaryClient(w);return{...w,kind:'academic',provider,providers:[provider],secondaryCategory:info.category,secondaryEvidence:info.evidence};};
 function dedup(rows){const seen=new Map();for(const w of rows){const k=w.DOI?'doi:'+w.DOI.toLowerCase():'title:'+title(w).toLowerCase().replace(/[^\p{L}\p{N}]+/gu,' ').trim()+':'+year(w);const old=seen.get(k);if(old){old.providers=[...new Set([...(old.providers||[]),...(w.providers||[])])];old.oaUrl ||= w.oaUrl;old.openAccess ||= w.openAccess;}else seen.set(k,w);}return [...seen.values()].slice(0,125);}
 function parseClientCrossref(j){return (j.message?.items||[]).map(w=>norm({DOI:w.DOI||'',URL:w.URL||'',title:[w.title?.[0]||'Untitled'],author:w.author||[],published:w.published||w.created,'container-title':[w['container-title']?.[0]||'Publication record'],sourceType:w.type||''},'crossref'));}
@@ -161,9 +177,9 @@ function parseClientOpenAlex(j){return(j.results||[]).map(w=>norm({DOI:(w.doi||'
 function parseClientEurope(j){return(j.resultList?.result||[]).map(w=>norm({DOI:w.doi||'',URL:w.doi?'https://doi.org/'+w.doi:(w.source&&w.id?'https://europepmc.org/article/'+encodeURIComponent(w.source)+'/'+encodeURIComponent(w.id):''),title:[w.title||'Untitled'],author:w.authorString?[{family:w.authorString}]:[],published:{'date-parts':[[Number(w.pubYear)||null]]},'container-title':[w.journalTitle||'Publication record'],openAccess:w.isOpenAccess==='Y',oaUrl:w.isOpenAccess==='Y'&&w.pmcid?'https://europepmc.org/articles/'+w.pmcid:'',sourceType:(w.pubTypeList?.pubType||[]).join(', ')||w.pubType||''},'europepmc'));}
 async function directScholarly(q,secondaryOnly=false){
   const tasks=[
-    ['crossref',()=>fetchJSON(url('https://api.crossref.org/works',{'query.bibliographic':secondaryOnly?q+' systematic review':q,rows:25})).then(parseClientCrossref)],
-    ['openalex',()=>fetchJSON(url('https://api.openalex.org/works',{search:q,filter:secondaryOnly?'type:review':'',per_page:25})).then(parseClientOpenAlex)],
-    ['europepmc',()=>fetchJSON(url('https://www.ebi.ac.uk/europepmc/webservices/rest/search',{query:secondaryOnly?'('+q+') AND PUB_TYPE:review':q,format:'json',resultType:'core',pageSize:25})).then(parseClientEurope)]
+    ['crossref',()=>fetchJSON(url('https://api.crossref.org/works',{'query.bibliographic':secondaryOnly?q+' systematic review':q,rows:50})).then(parseClientCrossref)],
+    ['openalex',()=>fetchJSON(url('https://api.openalex.org/works',{search:q,filter:secondaryOnly?'type:review':'',per_page:50})).then(parseClientOpenAlex)],
+    ['europepmc',()=>fetchJSON(url('https://www.ebi.ac.uk/europepmc/webservices/rest/search',{query:secondaryOnly?'('+q+') AND PUB_TYPE:review':q,format:'json',resultType:'core',pageSize:50})).then(parseClientEurope)]
   ];
   const settled=await Promise.all(tasks.map(async([id,fn])=>{try{const rows=await fn();return{id,ok:true,rows:secondaryOnly?rows.filter(w=>w.secondaryCategory):rows};}catch{return{id,ok:false,rows:[]};}}));
   return {results:dedup(settled.flatMap(x=>x.rows)),sources:settled.map(x=>({id:x.id,status:x.ok?'ok':'unavailable',count:x.rows.length})),secondaryOnly,fallback:true};
@@ -191,6 +207,7 @@ async function searchNews(q,publisher){
 $('navDiscover').onclick=()=>setMode('academic');
 $('navNews').onclick=()=>setMode('news');
 $('navSecondary').onclick=()=>setMode('secondary');
+$('modeWikipedia').onclick=()=>setMode('wikipedia');
 $('navSaved').onclick=showSaved;
 $('navCoach').onclick=()=>$('coachInput').focus();
 $('modeAcademic').onclick=()=>setMode('academic');
@@ -201,11 +218,125 @@ document.querySelectorAll('[data-topic]').forEach(b=>b.onclick=()=>{$('query').v
 for(const p of PUBS){const o=el('option','',p.name);o.value=p.id;$('publisherChoice').append(o);}
 $('publisherChoice').addEventListener('change',()=>{if(mode==='news'){renderPublisherLinks();if($('query').value.trim().length>=2)$('searchForm').requestSubmit();}});
 $('searchForm').onsubmit=async e=>{
+visibleResults = 50;
   e.preventDefault();const q=$('query').value.trim();if(q.length<2)return;
   showDiscover();const btn=$('searchBtn');btn.disabled=true;btn.textContent='Searching…';
   $('results').replaceChildren(el('div','empty',mode==='news'?'Searching news coverage…':'Searching scholarly indexes…'));
   setStatus('Searching '+(mode==='news'?'news index…':'scholarly databases…'));
   try{
+if (mode === 'wikipedia') {
+  const params = new URLSearchParams({
+    action: 'query',
+    list: 'search',
+    srsearch: q,
+    srlimit: '50',
+    format: 'json',
+    origin: '*'
+  });
+
+  const response = await fetch(
+    'https://en.wikipedia.org/w/api.php?' + params
+  );
+
+  if (!response.ok) throw new Error('Wikipedia unavailable');
+
+  const data = await response.json();
+  if (data.error) throw new Error(data.error.info);
+
+works = [];
+
+const results = $('results');
+results.replaceChildren();
+
+let totalShown = 0;
+let nextPage = data.continue || null;
+
+const loadMore = document.createElement('button');
+loadMore.type = 'button';
+loadMore.className = 'primary';
+loadMore.textContent = 'Load More (Next 50)';
+
+function displayWikipediaResults(searchData) {
+  const articles = searchData.query?.search || [];
+
+  for (const article of articles) {
+    const card = document.createElement('div');
+    card.className = 'empty';
+
+    const title = document.createElement('h3');
+    title.textContent = article.title;
+
+    const label = document.createElement('p');
+    label.textContent = 'Wikipedia · Tertiary source';
+
+    const link = document.createElement('a');
+    link.href = 'https://en.wikipedia.org/?curid=' + article.pageid;
+    link.target = '_blank';
+    link.rel = 'noopener noreferrer';
+    link.textContent = 'Read Wikipedia article →';
+
+    card.append(title, label, link);
+    results.appendChild(card);
+  }
+
+  totalShown += articles.length;
+  nextPage = searchData.continue || null;
+
+  if (nextPage) {
+    results.appendChild(loadMore);
+  } else {
+    loadMore.remove();
+  }
+
+  if (totalShown === 0) {
+    results.textContent = 'No Wikipedia articles found.';
+  }
+
+  setStatus('Wikipedia articles shown: ' + totalShown);
+}
+
+loadMore.onclick = async () => {
+  if (!nextPage) return;
+
+  loadMore.disabled = true;
+  loadMore.textContent = 'Loading...';
+
+  try {
+    const nextParams = new URLSearchParams(params);
+
+    for (const [key, value] of Object.entries(nextPage)) {
+      nextParams.set(key, value);
+    }
+
+    const response = await fetch(
+      'https://en.wikipedia.org/w/api.php?' + nextParams
+    );
+
+    if (!response.ok) {
+      throw new Error('Wikipedia request failed');
+    }
+
+    const nextData = await response.json();
+
+    if (nextData.error) {
+      throw new Error(nextData.error.info);
+    }
+
+    loadMore.remove();
+    displayWikipediaResults(nextData);
+
+  } catch (error) {
+    console.error(error);
+    setStatus('Could not load more Wikipedia articles.');
+  } finally {
+    loadMore.disabled = false;
+    loadMore.textContent = 'Load More (Next 50)';
+  }
+};
+
+displayWikipediaResults(data);
+  return;
+}
     const data=mode==='news'?await searchNews(q,$('publisherChoice').value):await searchAcademic(q,mode==='secondary');
     works=(data.results||[]).map(w=>w.kind? w : {...w,kind:'academic'});
     if(mode==='news')setStatus(data.status==='unavailable'?'News search is temporarily unavailable. The public news index may be rate-limiting requests. For more reliable results, connect the separately hosted Node.js server (see README).':(data.status==='partial'?'Some news searches unavailable · ':'')+'News results in Quantize AI: '+works.length+' indexed article links (past 3 months).');
@@ -255,4 +386,5 @@ document.querySelectorAll('[data-question]').forEach(b=>b.onclick=()=>ask(b.data
 render();
 </script>
 </body>
+
 </html>
