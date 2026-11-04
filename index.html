@@ -1855,6 +1855,266 @@ body.q-restored:not(.q-chat-view) .top {
   }
 }
 
+
+/* QUANTIZE MARKDOWN FORMAT V2 */
+#messages .bubble.bot p {
+  line-height: 1.7;
+  margin: 0 0 12px;
+}
+
+#messages .bubble.bot h3 {
+  color: #ffffff;
+  font-size: 17px;
+  margin: 18px 0 10px;
+}
+
+#messages .bubble.bot ul,
+#messages .bubble.bot ol {
+  padding-left: 24px;
+  margin: 8px 0 14px;
+}
+
+#messages .bubble.bot li {
+  margin-bottom: 7px;
+  line-height: 1.6;
+}
+
+#messages .bubble.bot code {
+  background: #172d49;
+  border-radius: 5px;
+  padding: 2px 5px;
+}
+
+
+/* QUANTIZE GLOWING Q VOICE V1 */
+
+/* Default: voice is disabled */
+#voiceToggle,
+#coachForm #voiceToggle {
+  background: #285483 !important;
+  color: white !important;
+  border: 1px solid #426D9E !important;
+  border-radius: 50% !important;
+  transition:
+    background .2s ease,
+    box-shadow .2s ease,
+    border-color .2s ease !important;
+}
+
+/* Voice enabled: illuminate the Q */
+#voiceToggle[aria-pressed="true"],
+#coachForm #voiceToggle[aria-pressed="true"] {
+  background: #397FE8 !important;
+  border: 2px solid #85DDFF !important;
+  color: #FFFFFF !important;
+  box-shadow:
+    0 0 9px #65CAFF,
+    0 0 20px #397FE888,
+    0 0 32px #397FE855 !important;
+}
+
+/* Clear keyboard focus */
+#voiceToggle:focus-visible {
+  outline: 2px solid #A5E8FF !important;
+  outline-offset: 4px;
+}
+
+
+/* QUANTIZE TWO WAY VOICE V1 */
+
+#coachForm #qMicrophone {
+  flex: 0 0 40px !important;
+  width: 40px !important;
+  min-width: 40px !important;
+  height: 40px !important;
+  border-radius: 50% !important;
+  padding: 0 !important;
+  background: #254A77 !important;
+  color: #FFFFFF !important;
+  border: 1px solid #426B9C !important;
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+#coachForm #qMicrophone svg {
+  width: 19px;
+  height: 19px;
+}
+
+#coachForm #qMicrophone.listening {
+  background: #397FE8 !important;
+  border-color: #8DDAFF !important;
+  box-shadow:
+    0 0 10px #65C9FF,
+    0 0 22px #397FE888 !important;
+  animation: qMicPulse 1.4s ease-in-out infinite;
+}
+
+#coachForm #qMicrophone:focus-visible {
+  outline: 2px solid #9BDFFF !important;
+  outline-offset: 3px;
+}
+
+@keyframes qMicPulse {
+  50% { box-shadow: 0 0 28px #65C9FF; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #coachForm #qMicrophone.listening {
+    animation: none !important;
+  }
+}
+
+.q-voice-status {
+  display: block;
+  min-height: 0;
+  color: #A9D8FF;
+  font-size: 12px;
+  text-align: center;
+}
+
+.q-voice-status:empty {
+  display: none;
+}
+
+
+/* QUANTIZE CONSISTENT WORKSPACE V3 */
+
+/* Anchor both views to the top */
+body.q-restored .main {
+  display: block !important;
+  min-height: 100vh !important;
+  height: auto !important;
+  padding-top: 20px !important;
+  margin-top: 0 !important;
+  align-self: start !important;
+  justify-content: flex-start !important;
+}
+
+/* Keep header in the same position */
+body.q-restored .top {
+  position: relative !important;
+  display: grid !important;
+  grid-template-columns: 1fr auto 1fr !important;
+  align-items: center !important;
+  min-height: 48px !important;
+  margin: 0 0 16px !important;
+}
+
+/* Keep tabs fixed in their normal page position */
+body.q-restored .q-restored-tabs {
+  position: relative !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  width: max-content !important;
+  margin: 12px auto 20px !important;
+  transform: none !important;
+  top: auto !important;
+}
+
+/* Equal spacing above both workspaces */
+body.q-restored .q-restored-welcome,
+body.q-restored .q-restored-welcome[hidden] {
+  box-sizing: border-box !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+  height: 110px !important;
+  min-height: 110px !important;
+  max-height: 110px !important;
+  margin: 0 auto 20px !important;
+  padding: 0 !important;
+}
+
+/* Reserve the same space in Discover mode */
+body.q-restored .q-restored-welcome[hidden] {
+  visibility: hidden !important;
+}
+
+/* Both content areas start at the same height */
+body.q-restored .q-restored-grid {
+  position: relative !important;
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) !important;
+  align-items: start !important;
+  margin-top: 0 !important;
+  padding-top: 0 !important;
+}
+
+body.q-restored .q-restored-grid > * {
+  align-self: start !important;
+  margin-top: 0 !important;
+}
+
+/* Keep Discover full width */
+body.q-restored:not(.q-chat-view) .q-restored-grid {
+  width: 100% !important;
+  max-width: none !important;
+}
+
+/* Keep Coach centered */
+body.q-restored.q-chat-view .q-restored-grid {
+  width: min(100%, 860px) !important;
+  max-width: 860px !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+/* On smaller screens */
+@media (max-width: 690px) {
+  body.q-restored .top {
+    display: flex !important;
+    flex-wrap: wrap;
+  }
+
+  body.q-restored .q-restored-welcome,
+  body.q-restored .q-restored-welcome[hidden] {
+    height: 90px !important;
+    min-height: 90px !important;
+    max-height: 90px !important;
+  }
+
+  body.q-restored .q-restored-tabs {
+    width: 100% !important;
+  }
+}
+
+
+/* QUANTIZE SIDEBAR GOOGLE LOGIN V1 */
+
+.sidebar .q-auth {
+  position: static !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  margin-top: 14px !important;
+  padding-top: 12px !important;
+  border-top: 1px solid rgba(130,175,230,.18);
+  box-sizing: border-box;
+}
+
+.sidebar .q-auth button {
+  width: 100% !important;
+  max-width: 100% !important;
+  min-height: 38px;
+  border-radius: 10px !important;
+  background: #397FE8 !important;
+  color: white !important;
+  font-size: 12px !important;
+  white-space: normal;
+  cursor: pointer;
+}
+
+.sidebar .q-auth button:hover {
+  background: #5397F2 !important;
+}
+
+.sidebar .q-auth {
+  overflow-wrap: anywhere;
+}
+
 </style>
 </head>
 <body>
@@ -2214,6 +2474,82 @@ function speakCoach(text) {
   window.speechSynthesis.speak(utterance);
 }
 
+
+// QUANTIZE MARKDOWN FORMAT V2
+function formatCoachReply(bubble, answer) {
+  bubble.replaceChildren();
+
+  const lines = answer.replace(/\r\n?/g, '\n').split('\n');
+  let list = null;
+
+  function addInline(parent, text) {
+    const pattern = /\*\*(.+?)\*\*|`([^`]+)`|\*(.+?)\*/g;
+    let last = 0;
+    let match;
+
+    while ((match = pattern.exec(text))) {
+      parent.append(document.createTextNode(
+        text.slice(last, match.index)
+      ));
+
+      const element = document.createElement(
+        match[1] ? 'strong' : match[2] ? 'code' : 'em'
+      );
+
+      element.textContent = match[1] || match[2] || match[3];
+      parent.append(element);
+      last = pattern.lastIndex;
+    }
+
+    parent.append(document.createTextNode(text.slice(last)));
+  }
+
+  for (const raw of lines) {
+    const text = raw.trim();
+
+    if (!text) {
+      list = null;
+      continue;
+    }
+
+    if (/^---+$/.test(text)) {
+      list = null;
+      continue;
+    }
+
+    const heading = text.match(/^#{1,6}\s+(.+)$/);
+
+    if (heading) {
+      list = null;
+      const h = document.createElement('h3');
+      addInline(h, heading[1]);
+      bubble.append(h);
+      continue;
+    }
+
+    const item = text.match(/^([-*]|\d+\.)\s+(.+)$/);
+
+    if (item) {
+      const tag = /^\d/.test(item[1]) ? 'ol' : 'ul';
+
+      if (!list || list.tagName.toLowerCase() !== tag) {
+        list = document.createElement(tag);
+        bubble.append(list);
+      }
+
+      const li = document.createElement('li');
+      addInline(li, item[2]);
+      list.append(li);
+      continue;
+    }
+
+    list = null;
+    const paragraph = document.createElement('p');
+    addInline(paragraph, text);
+    bubble.append(paragraph);
+  }
+}
+
 async function ask(q){
   q = q.trim();
   if (!q) return;
@@ -2237,10 +2573,12 @@ async function ask(q){
     const answer = data.reply || data.answer ||
       data.response || data.output_text || data.message;
 
-    bubble.textContent =
-      typeof answer === 'string' && answer.trim()
-        ? answer
-        : 'The AI returned an empty response.';
+    formatCoachReply(
+        bubble,
+        typeof answer === 'string' && answer.trim()
+          ? answer
+          : 'The AI returned an empty response.'
+      );
     if (typeof answer === 'string' && answer.trim()) speakCoach(answer);
   } catch(error) {
     bubble.textContent =
@@ -2656,6 +2994,277 @@ onAuthStateChanged(auth, user => {
     document.addEventListener('DOMContentLoaded', setup);
   } else {
     setup();
+  }
+})();
+</script>
+
+
+<script>
+/* QUANTIZE TWO WAY VOICE V1 */
+(() => {
+  function initVoiceChat() {
+    const form = document.getElementById('coachForm');
+    const input = document.getElementById('coachInput');
+    const qButton = document.getElementById('voiceToggle');
+
+    if (!form || !input || !qButton) return;
+    if (document.getElementById('qMicrophone')) return;
+
+    const Recognition =
+      window.SpeechRecognition ||
+      window.webkitSpeechRecognition;
+
+    const mic = document.createElement('button');
+    mic.type = 'button';
+    mic.id = 'qMicrophone';
+    mic.title = 'Talk to Quantize AI';
+    mic.setAttribute('aria-label', 'Talk to Quantize AI');
+
+    mic.innerHTML = `
+      <svg viewBox="0 0 24 24" fill="none"
+           stroke="currentColor" stroke-width="2"
+           stroke-linecap="round" stroke-linejoin="round"
+           aria-hidden="true">
+        <rect x="9" y="2" width="6" height="12" rx="3"/>
+        <path d="M5 10a7 7 0 0 0 14 0"/>
+        <path d="M12 17v5"/>
+        <path d="M8 22h8"/>
+      </svg>`;
+
+    form.insertBefore(mic, qButton);
+
+    const status = document.createElement('div');
+    status.className = 'q-voice-status';
+    status.setAttribute('role', 'status');
+    status.setAttribute('aria-live', 'polite');
+    form.after(status);
+
+    if (!Recognition) {
+      mic.disabled = true;
+      mic.title = 'Speech recognition is unavailable in this browser';
+      mic.setAttribute(
+        'aria-label',
+        'Speech recognition unavailable'
+      );
+      return;
+    }
+
+    const recognition = new Recognition();
+    recognition.lang = 'en-US';
+    recognition.continuous = false;
+    recognition.interimResults = true;
+
+    let listening = false;
+    let finalText = '';
+
+    function setListening(value) {
+      listening = value;
+      mic.classList.toggle('listening', value);
+      mic.setAttribute('aria-pressed', String(value));
+      mic.setAttribute(
+        'aria-label',
+        value ? 'Stop listening' : 'Talk to Quantize AI'
+      );
+    }
+
+    function stopListening() {
+      if (!listening) return;
+      recognition.abort();
+      setListening(false);
+      status.textContent = '';
+    }
+
+    function startListening() {
+      if (listening) return;
+
+      if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+      }
+
+      finalText = '';
+      status.textContent = 'Listening...';
+
+      try {
+        recognition.start();
+        setListening(true);
+      } catch (error) {
+        setListening(false);
+        status.textContent =
+          'Microphone could not start. Check permission.';
+      }
+    }
+
+    mic.addEventListener('click', () => {
+      if (listening) {
+        stopListening();
+        return;
+      }
+
+      // Activate existing spoken replies.
+      if (qButton.getAttribute('aria-pressed') !== 'true') {
+        qButton.click();
+      }
+
+      startListening();
+    });
+
+    // The original Q toggle continues controlling speech.
+    // Turning it on also opens the microphone.
+    qButton.addEventListener('click', () => {
+      const enabled =
+        qButton.getAttribute('aria-pressed') === 'true';
+
+      if (enabled) {
+        startListening();
+      } else {
+        stopListening();
+      }
+    });
+
+    recognition.onresult = event => {
+      let interim = '';
+
+      for (let i = event.resultIndex;
+           i < event.results.length; i++) {
+        const result = event.results[i];
+
+        if (result.isFinal) {
+          finalText += result[0].transcript + ' ';
+        } else {
+          interim += result[0].transcript;
+        }
+      }
+
+      status.textContent =
+        interim || finalText || 'Listening...';
+    };
+
+    recognition.onend = () => {
+      setListening(false);
+
+      const spoken = finalText.trim();
+      finalText = '';
+      status.textContent = '';
+
+      if (!spoken) return;
+
+      input.value = spoken;
+
+      // Use the existing chatbot submit handler.
+      if (form.requestSubmit) {
+        form.requestSubmit();
+      } else {
+        form.querySelector('button[type="submit"], button.primary')
+          ?.click();
+      }
+    };
+
+    recognition.onerror = event => {
+      setListening(false);
+      finalText = '';
+
+      if (event.error === 'not-allowed' ||
+          event.error === 'service-not-allowed') {
+        status.textContent =
+          'Allow microphone access in your browser.';
+      } else if (event.error === 'no-speech') {
+        status.textContent =
+          'No speech detected. Tap the microphone to retry.';
+      } else if (event.error === 'aborted') {
+        status.textContent = '';
+      } else {
+        status.textContent =
+          'Voice recognition unavailable. Please retry.';
+      }
+    };
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initVoiceChat);
+  } else {
+    initVoiceChat();
+  }
+})();
+</script>
+
+
+<script>
+/* QUANTIZE SIDEBAR GOOGLE LOGIN V1 */
+(() => {
+  function moveGoogleLogin() {
+    const sidebar = document.querySelector('.sidebar');
+    const auth = document.querySelector('.q-auth');
+
+    if (!sidebar || !auth) return false;
+
+    // Find the existing Student Workspace card.
+    const card = [...sidebar.querySelectorAll('*')]
+      .filter(el =>
+        el.textContent.includes('Student workspace') &&
+        el.textContent.includes('Explore scholarly')
+      )
+      .sort((a, b) =>
+        a.querySelectorAll('*').length -
+        b.querySelectorAll('*').length
+      )[0];
+
+    if (!card) return false;
+
+    if (!card.contains(auth)) {
+      card.appendChild(auth);
+    }
+
+    return true;
+  }
+
+  function init() {
+    if (moveGoogleLogin()) return;
+
+    // Firebase may create the Google login after page load.
+    const observer = new MutationObserver(() => {
+      if (moveGoogleLogin()) observer.disconnect();
+    });
+
+    observer.observe(document.body, {
+      childList: true,
+      subtree: true
+    });
+
+    setTimeout(() => observer.disconnect(), 15000);
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();
+</script>
+
+
+<script>
+/* QUANTIZE CLEAN HEADER V1 */
+(() => {
+  function cleanHeader() {
+    const top = document.querySelector('.main .top');
+    if (!top) return;
+
+    for (const element of top.children) {
+      const label = element.textContent.trim();
+
+      if (
+        label.includes('Workspace / Research dashboard') ||
+        label.includes('Free research tools')
+      ) {
+        element.style.display = 'none';
+      }
+    }
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', cleanHeader);
+  } else {
+    cleanHeader();
   }
 })();
 </script>
