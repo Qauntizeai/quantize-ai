@@ -146,6 +146,346 @@
   border-color: #79b6ff;
 }
 
+
+/* QUANTIZE MERGED RESEARCH LAYOUT */
+.merged-results {
+  margin-top: 24px;
+  padding: 24px 0 0;
+  border: 0;
+  border-top: 1px solid #34516f;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.merged-results h2 {
+  margin-bottom: 16px;
+}
+
+@media (max-width: 690px) {
+  .merged-results {
+    margin-top: 20px;
+    padding-top: 20px;
+  }
+}
+
+
+/* QUANTIZE CLEAN RESEARCH DESIGN */
+
+/* Main combined research card */
+.card:has(> .merged-results) {
+  background: #0d1b30;
+  border: 1px solid #2b4260;
+  border-radius: 22px;
+  padding: 26px;
+  box-shadow: none;
+}
+
+/* Cleaner headings */
+.card:has(> .merged-results) h2 {
+  font-size: 21px;
+  font-weight: 750;
+  letter-spacing: -0.4px;
+}
+
+.merged-results h2 {
+  font-size: 18px !important;
+  margin-bottom: 12px;
+}
+
+/* Compact source selections */
+.card:has(> .merged-results) .choicebar {
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.card:has(> .merged-results) .choicebar button {
+  padding: 9px 13px;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+/* Search area */
+.card:has(> .merged-results) .row.search {
+  gap: 10px;
+}
+
+.card:has(> .merged-results) .row.search input {
+  min-height: 52px;
+  border-radius: 13px;
+  background: #091526;
+  border-color: #35516e;
+  padding: 14px 16px;
+  font-size: 15px;
+}
+
+.card:has(> .merged-results) .row.search .primary {
+  min-height: 52px;
+  border-radius: 13px;
+  white-space: nowrap;
+}
+
+/* Suggestions */
+.card:has(> .merged-results) .chips {
+  gap: 7px;
+  margin-top: 13px;
+}
+
+.card:has(> .merged-results) .chips button {
+  font-size: 11px;
+  padding: 7px 12px;
+}
+
+/* Research results inside same workspace */
+.merged-results {
+  margin-top: 24px;
+  padding: 22px 0 0;
+  border-top: 1px solid #2c4360;
+}
+
+.merged-results .filters {
+  gap: 7px;
+  margin-bottom: 14px;
+}
+
+.merged-results .filter {
+  font-size: 12px;
+  padding: 8px 11px;
+  border-radius: 10px;
+}
+
+/* Clean empty results state */
+.merged-results .empty {
+  padding: 32px 18px;
+  background: #0a182b;
+  border: 1px dashed #34516f;
+  border-radius: 14px;
+  color: #a9bfd9;
+}
+
+/* Cleaner individual result cards */
+.merged-results .source {
+  padding: 17px;
+  background: #11243b;
+  border-radius: 14px;
+  border-color: #2e4967;
+}
+
+/* Mobile layout */
+@media (max-width: 690px) {
+  .card:has(> .merged-results) {
+    padding: 17px;
+    border-radius: 17px;
+  }
+
+  .card:has(> .merged-results) .row.search {
+    flex-direction: column;
+  }
+
+  .card:has(> .merged-results) .row.search .primary {
+    width: 100%;
+  }
+
+  .merged-results {
+    margin-top: 18px;
+    padding-top: 18px;
+  }
+
+  .merged-results .filters {
+    flex-wrap: wrap;
+  }
+}
+
+
+/* QUANTIZE COMPACT SEARCH BUTTON */
+.row.search {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  gap: 9px;
+  align-items: stretch;
+}
+
+.row.search input {
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+.row.search button.primary {
+  flex: 0 0 48px;
+  width: 48px;
+  min-width: 48px;
+  height: 48px;
+  padding: 0;
+  display: grid;
+  place-items: center;
+  font-size: 27px;
+  border-radius: 12px;
+}
+
+@media (max-width: 690px) {
+  .row.search {
+    flex-direction: row !important;
+  }
+
+  .row.search button.primary {
+    flex: 0 0 46px;
+    width: 46px !important;
+    min-width: 46px;
+    height: 46px;
+  }
+}
+
+
+/* QUANTIZE EQUAL SPLIT LAYOUT */
+
+/* Equal desktop columns */
+@media (min-width: 1101px) {
+  .grid {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 20px;
+    align-items: start;
+  }
+
+  .grid > .column,
+  .grid > #coach {
+    min-width: 0;
+    width: 100%;
+  }
+}
+
+/* On tablets and phones, stack the panels */
+@media (max-width: 1100px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Keep buttons and inputs responsive */
+.grid input,
+.grid button {
+  max-width: 100%;
+}
+
+.grid .row.search {
+  min-width: 0;
+}
+
+/* Prevent text overflow in AI responses */
+#coach .bubble {
+  overflow-wrap: anywhere;
+  word-break: normal;
+}
+
+
+/* QUANTIZE Q NEXT TO SEND */
+#coachForm {
+  display: flex;
+  flex-direction: row !important;
+  flex-wrap: nowrap !important;
+  align-items: center;
+  gap: 8px;
+}
+
+#coachForm #coachInput {
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+#coachForm #voiceToggle {
+  flex: 0 0 44px;
+  width: 44px;
+  min-width: 44px;
+  height: 44px;
+  margin: 0;
+  padding: 0;
+  border-radius: 12px;
+  font-weight: 800;
+  font-size: 18px;
+}
+
+#coachForm button.primary {
+  flex: 0 0 44px;
+  width: 44px !important;
+  min-width: 44px;
+  height: 44px;
+  padding: 0;
+}
+
+@media(max-width:690px) {
+  #coachForm {
+    flex-direction: row !important;
+  }
+}
+
+
+/* QUANTIZE EVEN CATEGORY BUTTONS */
+.choicebar {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+  width: 100%;
+}
+
+.choicebar button {
+  width: 100%;
+  min-width: 0;
+  min-height: 46px;
+  padding: 9px 5px;
+  border-radius: 11px;
+  text-align: center;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.3;
+  white-space: normal;
+}
+
+@media (max-width: 690px) {
+  .choicebar {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+
+/* QUANTIZE FIREBASE GOOGLE LOGIN V1 */
+.q-auth {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  flex-wrap: wrap;
+}
+.q-auth button {
+  padding: 9px 14px;
+  background: #2867c6;
+  color: white;
+  border: 1px solid #659ff2;
+  border-radius: 11px;
+  font-size: 13px;
+  font-weight: 650;
+  cursor: pointer;
+}
+.q-auth button:hover { background: #387fdf; }
+.q-auth button:disabled { opacity: .6; }
+.q-auth #qSignOut {
+  background: #172b46;
+}
+.q-auth #qUser {
+  color: #c3daf8;
+  font-size: 13px;
+  overflow-wrap: anywhere;
+}
+.q-auth #qAuthStatus {
+  color: #ffcf9b;
+  font-size: 12px;
+}
+@media(max-width:690px) {
+  .q-auth {
+    width: 100%;
+    justify-content: flex-end;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -161,14 +501,14 @@
   <section class="metrics"><div class="metric"><strong id="resultCount">0</strong><small>Results shown</small></div><div class="metric"><strong id="savedCount">0</strong><small>Saved sources</small></div><div class="metric"><strong>Free</strong><small>Research plan</small></div></section>
   <div class="grid"><div class="column">
     <section class="card"><div class="heading"><h2 id="searchHeading">Discover sources</h2><span class="badge" id="searchBadge">ACADEMIC + NEWS</span></div><div class="choicebar"><button id="modeAcademic" type="button" class="active">Scholarly databases</button><button id="modeSecondary" type="button">Secondary sources</button><button id="modeNews" 
-type="button"><button id="modeWikipedia" type="button">Wikipedia</button></button></div><form id="searchForm" class="row search"><input id="query" type="search" placeholder="e.g. Artificial intelligence in education" aria-label="Search topic" maxlength="150" required><button id="searchBtn" class="primary">Search sources →</button></form><div id="academicTopics" class="chips"><button data-topic="Artificial intelligence in education">AI in education</button><button data-topic="Climate change impacts">Climate change</button><button data-topic="Social media and mental health">Mental health</button></div><p id="secondaryNote" class="notice" hidden>Find literature reviews, systematic reviews, and meta-analyses. Results are candidates based on scholarly metadata or title clues—not automatic credibility or peer-review certification. Open the original and evaluate its evidence.</p><div id="newsTools" class="news-tools" hidden><label for="publisherChoice">Choose publisher: <select id="publisherChoice"><option value="all">All major publishers</option></select></label><p class="notice">Search publisher-indexed article headlines directly in Quantize AI using GDELT. Full articles remain on publisher websites and may require subscriptions.</p></div><p class="providerstatus" id="providerStatus" aria-live="polite">Scholarly: Crossref · OpenAlex · Europe PMC · OpenAIRE · Semantic Scholar</p></section>
+type="button"><button id="modeWikipedia" type="button">Wikipedia</button></button></div><form id="searchForm" class="row search"><input id="query" type="search" placeholder="e.g. Artificial intelligence in education" aria-label="Search topic" maxlength="150" required><button id="searchBtn" class="primary" aria-label="Search sources" title="Search sources"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m16 16 5 5"/></svg></button></form><div id="academicTopics" class="chips"><button data-topic="Artificial intelligence in education">AI in education</button><button data-topic="Climate change impacts">Climate change</button><button data-topic="Social media and mental health">Mental health</button></div><p id="secondaryNote" class="notice" hidden>Find literature reviews, systematic reviews, and meta-analyses. Results are candidates based on scholarly metadata or title clues—not automatic credibility or peer-review certification. Open the original and evaluate its evidence.</p><div id="newsTools" class="news-tools" hidden><label for="publisherChoice">Choose publisher: <select id="publisherChoice"><option value="all">All major publishers</option></select></label><p class="notice">Search publisher-indexed article headlines directly in Quantize AI using GDELT. Full articles remain on publisher websites and may require subscriptions.</p></div><p class="providerstatus" id="providerStatus" aria-live="polite">Scholarly: Crossref · OpenAlex · Europe PMC · OpenAIRE · Semantic Scholar</p></section>
     <section class="card"><div class="heading"><h2 id="resultsTitle">Research results</h2><span class="badge" id="viewBadge">Search to get started</span></div><div class="filters" id="filters"><button class="filter active" data-filter="all">All sources</button><button class="filter" data-filter="primary">Primary candidates</button><button class="filter" data-filter="review">Review candidates</button><button class="filter" data-filter="secondary">Secondary candidates</button></div><div id="results" aria-live="polite"><div class="empty">Search for a topic to discover academic publications.</div></div><p class="hint" id="resultsHint">Research metadata comes from scholarly indexes. Source-type labels and citation drafts need verification against originals.</p><div id="publisherDirectory" hidden><h3 style="font-size:14px;margin-top:20px">Search a specific news publisher</h3><div class="publisherlinks" id="publisherLinks"></div><p class="hint">Choose a publisher to search articles here in Quantize AI. Enter a topic first. Article cards show publisher-indexed headlines and links to original reporting; full articles are not reproduced or unlocked.</p></div></section>
   </div><div class="column">
     <section class="card" id="coach"><div class="heading"><h2>✧ Research Coach</h2><span class="badge">FREE GUIDE</span></div><div id="messages" class="chat" role="log" aria-live="polite"><div class="bubble bot">Hi! Ask me about primary sources, secondary sources, citations, credibility, or planning your research.</div></div><div class="chips"><button data-question="What is a primary source?">Primary sources</button><button data-question="How do I check credibility?">Check credibility</button><button data-question="How do I cite a source?">Citation tips</button></div>
-<button id="voiceToggle" type="button"
-  aria-pressed="false">Q</button>
 
-<form id="coachForm" class="row"><input id="coachInput" maxlength="4000" placeholder="Ask a research question..." aria-label="Ask the Research Coach" required><button class="primary" aria-label="Send">↑</button></form><p class="coach-note">Quantize AI Research Coach uses an AI-powered assistant to help with research questions, source credibility, and citations. Verify important information against original sources.</p></section>
+
+<form id="coachForm" class="row"><input id="coachInput" maxlength="4000" placeholder="Ask a research question..." aria-label="Ask the Research Coach" required><button id="voiceToggle" type="button"
+  aria-pressed="false">Q</button><button class="primary" aria-label="Send">↑</button></form><p class="coach-note">Quantize AI Research Coach uses an AI-powered assistant to help with research questions, source credibility, and citations. Verify important information against original sources.</p></section>
     <section class="card guide"><h2>Source essentials</h2><h3>Primary sources</h3><p>Original research, first-hand evidence, experiments, interviews, datasets.</p><h3>Secondary sources</h3><p>Reviews, interpretations, analyses, and textbooks.</p><h3>Credibility checklist</h3><p>Check authors, methods, publication venue, citations, conflicts of interest, and corrections.</p></section>
   </div></div>
   <p class="foot">© 2026 Quantize AI · Student prototype · Academic metadata: Crossref, OpenAlex, Europe PMC, OpenAIRE, Semantic Scholar · News discovery: GDELT</p>
@@ -471,7 +811,7 @@ displayWikipediaResults(data);
     else{const statuses=(data.sources||[]).map(s=>(ACADEMIC_LABELS[s.id]||s.label||s.id)+': '+(s.status==='ok'?(s.count+' records'):'unavailable'));setStatus((mode==='secondary'?'Review-focused search · ':'')+(data.fallback?'Direct search (up to 3 sources): ':'Five-source server: ')+statuses.join(' · '));}
     render();
   }catch{works=[];render();setStatus('Search unavailable; check your connection or server.');}
-  finally{btn.disabled=false;btn.textContent='Search sources →';if(mode==='news')renderPublisherLinks();}
+  finally{btn.disabled=false;btn.innerHTML='<svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m16 16 5 5"/></svg>';if(mode==='news')renderPublisherLinks();}
 };
 function coachAnswer(q){const s=q.toLowerCase();if(/primary/.test(s))return'Primary sources provide original evidence: experiments, datasets, interviews, or historical documents.';if(/secondary|review/.test(s))return'Use the Secondary sources tab for literature reviews, systematic reviews and meta-analyses. Check publisher, author expertise, methods, cited studies, bias, funding and retractions before trusting a result.';if(/credib|reliab|trust|peer.review/.test(s))return'Check author expertise, publisher, methods, cited evidence, date, conflicts of interest, and corrections. Newspaper reports and peer-reviewed papers serve different purposes.';if(/cite|citation|apa|mla|reference/.test(s))return'Record the actual author, date, title, publisher or journal, and URL or DOI. Check each generated citation draft against your assignment style.';if(/news|newspaper|publisher/.test(s))return'News reports are useful for current events, but are not scholarly peer review. Compare outlets, identify original reporting, and verify claims against primary documents.';if(/plan|topic|question|research/.test(s))return'Research plan: 1. Define a question. 2. Search academic and news sources separately. 3. Compare evidence and original reporting. 4. Record limitations. 5. Cite properly.';return'I can help with sources, credibility, citations, newspapers and research planning. This free guide does not read full articles or generate OpenAI responses.';}
 
@@ -545,6 +885,136 @@ $('coachForm').onsubmit=e=>{e.preventDefault();ask($('coachInput').value);$('coa
 document.querySelectorAll('[data-question]').forEach(b=>b.onclick=()=>ask(b.dataset.question));
 render();
 </script>
+
+<script>
+/* QUANTIZE MERGED RESEARCH LAYOUT */
+(function () {
+  const cards = [...document.querySelectorAll('.card')];
+
+  function findCard(title) {
+    return cards.find(card => {
+      const heading = card.querySelector('h2');
+      return heading &&
+        heading.textContent.trim().toLowerCase() === title;
+    });
+  }
+
+  const discover = findCard('discover sources');
+  const results = findCard('research results');
+
+  if (!discover || !results || discover === results) {
+    console.warn('Research sections could not be merged.');
+    return;
+  }
+
+  results.classList.add('merged-results');
+  discover.appendChild(results);
+})();
+</script>
+
+
+<script>
+/* Restore missing News category label */
+document.querySelectorAll('.choicebar').forEach(bar => {
+  const buttons = bar.querySelectorAll('button');
+  if (buttons.length === 4 && !buttons[2].textContent.trim()) {
+    buttons[2].textContent = 'News';
+  }
+});
+</script>
+
+
+<script type="module">
+/* QUANTIZE FIREBASE GOOGLE LOGIN V1 */
+import { initializeApp } from
+  'https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js';
+
+import {
+  getAuth,
+  GoogleAuthProvider,
+  signInWithPopup,
+  signOut,
+  onAuthStateChanged
+} from
+  'https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js';
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBmh61WwCvak2rnwiZL6zuaAJBab5fd7vU",
+  authDomain: "quantize-ai.firebaseapp.com",
+  projectId: "quantize-ai",
+  storageBucket: "quantize-ai.firebasestorage.app",
+  messagingSenderId: "47546813662",
+  appId: "1:47546813662:web:5114ec90057d00805bc64f",
+  measurementId: "G-EDCB7S1JZ0"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const provider = new GoogleAuthProvider();
+
+const bar = document.createElement('div');
+bar.className = 'q-auth';
+
+bar.innerHTML = `
+  <button type="button" id="qSignIn">
+    Continue with Google
+  </button>
+  <span id="qUser" hidden></span>
+  <button type="button" id="qSignOut" hidden>
+    Sign out
+  </button>
+  <span id="qAuthStatus" role="status"></span>
+`;
+
+document.querySelector('.top').appendChild(bar);
+
+const login = document.getElementById('qSignIn');
+const logout = document.getElementById('qSignOut');
+const userLabel = document.getElementById('qUser');
+const status = document.getElementById('qAuthStatus');
+
+login.addEventListener('click', async () => {
+  status.textContent = '';
+  login.disabled = true;
+  try {
+    await signInWithPopup(auth, provider);
+  } catch (error) {
+    if (error.code === 'auth/popup-closed-by-user' ||
+        error.code === 'auth/cancelled-popup-request') {
+      status.textContent = 'Sign-in canceled.';
+    } else if (error.code === 'auth/unauthorized-domain') {
+      status.textContent =
+        'Add this website to Firebase Authorized domains.';
+    } else {
+      console.error('Google sign-in:', error);
+      status.textContent =
+        'Sign-in failed. Please try again.';
+    }
+  } finally {
+    login.disabled = false;
+  }
+});
+
+logout.addEventListener('click', async () => {
+  try {
+    await signOut(auth);
+    status.textContent = '';
+  } catch (error) {
+    console.error('Sign-out error:', error);
+    status.textContent = 'Could not sign out.';
+  }
+});
+
+onAuthStateChanged(auth, user => {
+  login.hidden = !!user;
+  logout.hidden = !user;
+  userLabel.hidden = !user;
+  userLabel.textContent = user
+    ? 'Hello, ' + (user.displayName || user.email || 'Student')
+    : '';
+});
+</script>
+
 </body>
 
 </html>
