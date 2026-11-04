@@ -129,6 +129,23 @@
   }
 }
 
+
+/* QUANTIZE VOICE REPLIES */
+#voiceToggle {
+  margin-top: 12px;
+  padding: 10px 15px;
+  border-radius: 12px;
+  border: 1px solid #4976a9;
+  background: #183655;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+}
+#voiceToggle[aria-pressed="true"] {
+  background: #285db0;
+  border-color: #79b6ff;
+}
+
 </style>
 </head>
 <body>
@@ -147,7 +164,11 @@
 type="button"><button id="modeWikipedia" type="button">Wikipedia</button></button></div><form id="searchForm" class="row search"><input id="query" type="search" placeholder="e.g. Artificial intelligence in education" aria-label="Search topic" maxlength="150" required><button id="searchBtn" class="primary">Search sources →</button></form><div id="academicTopics" class="chips"><button data-topic="Artificial intelligence in education">AI in education</button><button data-topic="Climate change impacts">Climate change</button><button data-topic="Social media and mental health">Mental health</button></div><p id="secondaryNote" class="notice" hidden>Find literature reviews, systematic reviews, and meta-analyses. Results are candidates based on scholarly metadata or title clues—not automatic credibility or peer-review certification. Open the original and evaluate its evidence.</p><div id="newsTools" class="news-tools" hidden><label for="publisherChoice">Choose publisher: <select id="publisherChoice"><option value="all">All major publishers</option></select></label><p class="notice">Search publisher-indexed article headlines directly in Quantize AI using GDELT. Full articles remain on publisher websites and may require subscriptions.</p></div><p class="providerstatus" id="providerStatus" aria-live="polite">Scholarly: Crossref · OpenAlex · Europe PMC · OpenAIRE · Semantic Scholar</p></section>
     <section class="card"><div class="heading"><h2 id="resultsTitle">Research results</h2><span class="badge" id="viewBadge">Search to get started</span></div><div class="filters" id="filters"><button class="filter active" data-filter="all">All sources</button><button class="filter" data-filter="primary">Primary candidates</button><button class="filter" data-filter="review">Review candidates</button><button class="filter" data-filter="secondary">Secondary candidates</button></div><div id="results" aria-live="polite"><div class="empty">Search for a topic to discover academic publications.</div></div><p class="hint" id="resultsHint">Research metadata comes from scholarly indexes. Source-type labels and citation drafts need verification against originals.</p><div id="publisherDirectory" hidden><h3 style="font-size:14px;margin-top:20px">Search a specific news publisher</h3><div class="publisherlinks" id="publisherLinks"></div><p class="hint">Choose a publisher to search articles here in Quantize AI. Enter a topic first. Article cards show publisher-indexed headlines and links to original reporting; full articles are not reproduced or unlocked.</p></div></section>
   </div><div class="column">
-    <section class="card" id="coach"><div class="heading"><h2>✧ Research Coach</h2><span class="badge">FREE GUIDE</span></div><div id="messages" class="chat" role="log" aria-live="polite"><div class="bubble bot">Hi! Ask me about primary sources, secondary sources, citations, credibility, or planning your research.</div></div><div class="chips"><button data-question="What is a primary source?">Primary sources</button><button data-question="How do I check credibility?">Check credibility</button><button data-question="How do I cite a source?">Citation tips</button></div><form id="coachForm" class="row"><input id="coachInput" maxlength="4000" placeholder="Ask a research question..." aria-label="Ask the Research Coach" required><button class="primary" aria-label="Send">↑</button></form><p class="coach-note">This free Research Coach is a rule-based guide, not an OpenAI chatbot. It cannot read or verify full articles.</p></section>
+    <section class="card" id="coach"><div class="heading"><h2>✧ Research Coach</h2><span class="badge">FREE GUIDE</span></div><div id="messages" class="chat" role="log" aria-live="polite"><div class="bubble bot">Hi! Ask me about primary sources, secondary sources, citations, credibility, or planning your research.</div></div><div class="chips"><button data-question="What is a primary source?">Primary sources</button><button data-question="How do I check credibility?">Check credibility</button><button data-question="How do I cite a source?">Citation tips</button></div>
+<button id="voiceToggle" type="button"
+  aria-pressed="false">Q</button>
+
+<form id="coachForm" class="row"><input id="coachInput" maxlength="4000" placeholder="Ask a research question..." aria-label="Ask the Research Coach" required><button class="primary" aria-label="Send">↑</button></form><p class="coach-note">Quantize AI Research Coach uses an AI-powered assistant to help with research questions, source credibility, and citations. Verify important information against original sources.</p></section>
     <section class="card guide"><h2>Source essentials</h2><h3>Primary sources</h3><p>Original research, first-hand evidence, experiments, interviews, datasets.</p><h3>Secondary sources</h3><p>Reviews, interpretations, analyses, and textbooks.</p><h3>Credibility checklist</h3><p>Check authors, methods, publication venue, citations, conflicts of interest, and corrections.</p></section>
   </div></div>
   <p class="foot">© 2026 Quantize AI · Student prototype · Academic metadata: Crossref, OpenAlex, Europe PMC, OpenAIRE, Semantic Scholar · News discovery: GDELT</p>
@@ -453,6 +474,37 @@ displayWikipediaResults(data);
   finally{btn.disabled=false;btn.textContent='Search sources →';if(mode==='news')renderPublisherLinks();}
 };
 function coachAnswer(q){const s=q.toLowerCase();if(/primary/.test(s))return'Primary sources provide original evidence: experiments, datasets, interviews, or historical documents.';if(/secondary|review/.test(s))return'Use the Secondary sources tab for literature reviews, systematic reviews and meta-analyses. Check publisher, author expertise, methods, cited studies, bias, funding and retractions before trusting a result.';if(/credib|reliab|trust|peer.review/.test(s))return'Check author expertise, publisher, methods, cited evidence, date, conflicts of interest, and corrections. Newspaper reports and peer-reviewed papers serve different purposes.';if(/cite|citation|apa|mla|reference/.test(s))return'Record the actual author, date, title, publisher or journal, and URL or DOI. Check each generated citation draft against your assignment style.';if(/news|newspaper|publisher/.test(s))return'News reports are useful for current events, but are not scholarly peer review. Compare outlets, identify original reporting, and verify claims against primary documents.';if(/plan|topic|question|research/.test(s))return'Research plan: 1. Define a question. 2. Search academic and news sources separately. 3. Compare evidence and original reporting. 4. Record limitations. 5. Cite properly.';return'I can help with sources, credibility, citations, newspapers and research planning. This free guide does not read full articles or generate OpenAI responses.';}
+
+let voiceEnabled = false;
+
+const voiceButton = document.getElementById('voiceToggle');
+
+voiceButton.addEventListener('click', () => {
+  if (!('speechSynthesis' in window)) {
+    alert('Speech is not supported in this browser.');
+    return;
+  }
+
+  voiceEnabled = !voiceEnabled;
+  voiceButton.setAttribute('aria-pressed', String(voiceEnabled));
+  voiceButton.textContent = voiceEnabled
+    ? 'Q'
+    : 'Q';
+
+  if (!voiceEnabled) window.speechSynthesis.cancel();
+});
+
+function speakCoach(text) {
+  if (!voiceEnabled || !('speechSynthesis' in window)) return;
+
+  window.speechSynthesis.cancel();
+  const utterance = new SpeechSynthesisUtterance(text);
+  utterance.lang = 'en-US';
+  utterance.rate = 0.95;
+  utterance.pitch = 1;
+  window.speechSynthesis.speak(utterance);
+}
+
 async function ask(q){
   q = q.trim();
   if (!q) return;
@@ -480,6 +532,7 @@ async function ask(q){
       typeof answer === 'string' && answer.trim()
         ? answer
         : 'The AI returned an empty response.';
+    if (typeof answer === 'string' && answer.trim()) speakCoach(answer);
   } catch(error) {
     bubble.textContent =
       'Unable to contact the AI. Please try again.';
