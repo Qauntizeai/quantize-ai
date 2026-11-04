@@ -486,6 +486,1375 @@
   }
 }
 
+
+/* QUANTIZE RESTORED RESEARCH LAYOUT V1 */
+
+body.q-restored {
+  background: #071425 !important;
+  color: #f4f8ff;
+}
+
+body.q-restored .sidebar {
+  background: #0a1b31 !important;
+  border-color: #294665;
+}
+
+body.q-restored .main {
+  background: #071425 !important;
+  min-width: 0;
+}
+
+.q-restored-tabs {
+  display: flex;
+  gap: 6px;
+  width: fit-content;
+  max-width: 100%;
+  margin: 20px auto 30px;
+  padding: 5px;
+  border: 1px solid #294665;
+  border-radius: 14px;
+  background: #10243d;
+}
+
+.q-restored-tabs button {
+  padding: 12px 20px;
+  border: 0;
+  border-radius: 10px;
+  background: transparent;
+  color: #b9cce5;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.q-restored-tabs button.active {
+  background: #285c9b;
+  color: white;
+}
+
+.q-restored-welcome {
+  text-align: center;
+  margin: 65px auto 30px;
+}
+
+.q-restored-welcome h1 {
+  font-size: clamp(26px, 3vw, 38px);
+  color: white;
+  line-height: 1.2;
+  margin: 0 0 12px;
+}
+
+.q-restored-welcome p {
+  color: #adc2dd;
+  font-size: 15px;
+}
+
+body.q-restored .main .q-restored-grid {
+  display: grid !important;
+  grid-template-columns: minmax(0,1fr) !important;
+  max-width: 900px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+body.q-restored .q-hidden-column {
+  display: none !important;
+}
+
+body.q-restored.q-chat-view #coach {
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+
+body.q-restored.q-chat-view #coach #messages {
+  background: transparent !important;
+  border: 0 !important;
+  min-height: 170px;
+  max-height: 45vh;
+  overflow-y: auto;
+}
+
+body.q-restored #coachForm {
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: nowrap !important;
+  align-items: center;
+  gap: 8px;
+  background: #172d4b !important;
+  border: 1px solid #365a83 !important;
+  border-radius: 24px !important;
+  padding: 9px;
+}
+
+body.q-restored #coachInput {
+  flex: 1 1 0;
+  min-width: 0;
+  background: transparent !important;
+  color: white;
+}
+
+body.q-restored #coachForm #voiceToggle {
+  flex: 0 0 42px;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: #285483;
+  color: white;
+}
+
+body.q-restored #coachForm button.primary {
+  flex: 0 0 42px;
+  width: 42px !important;
+  min-width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: #397fe8 !important;
+  color: white;
+}
+
+@media(max-width: 690px) {
+  .q-restored-welcome {
+    margin: 35px auto 20px;
+  }
+
+  .q-restored-tabs {
+    width: 100%;
+  }
+
+  .q-restored-tabs button {
+    flex: 1;
+    padding: 10px;
+  }
+}
+
+
+/* QUANTIZE HIDE HERO AND METRICS */
+
+.hero,
+.metrics {
+    display: none !important;
+}
+
+
+/* QUANTIZE WIDE DISCOVERY V1 */
+
+/* Expand the main workspace */
+body.q-restored:not(.q-chat-view) .main {
+  width: 100% !important;
+  max-width: none !important;
+  min-width: 0;
+  padding: 24px 32px !important;
+  background: #071425 !important;
+}
+
+/* Remove the narrow 900px restriction */
+body.q-restored:not(.q-chat-view) .main .q-restored-grid {
+  width: 100% !important;
+  max-width: none !important;
+  margin: 0 !important;
+  grid-template-columns: minmax(0, 1fr) !important;
+}
+
+/* Expand the Discover Sources column */
+body.q-restored:not(.q-chat-view) .q-restored-grid > :not(.q-hidden-column) {
+  width: 100% !important;
+  max-width: none !important;
+  min-width: 0 !important;
+}
+
+/* Bigger research workspace */
+body.q-restored:not(.q-chat-view) .q-restored-grid .card {
+  width: 100% !important;
+  max-width: none !important;
+  box-sizing: border-box;
+  padding: 28px !important;
+  border-radius: 20px !important;
+  background: #0d1d32 !important;
+  border: 1px solid #294665 !important;
+  box-shadow: none !important;
+}
+
+/* Tidy up the research heading */
+body.q-restored:not(.q-chat-view) .q-restored-grid h2 {
+  font-size: 22px;
+  letter-spacing: -.4px;
+  line-height: 1.3;
+}
+
+/* Evenly sized research category buttons */
+body.q-restored:not(.q-chat-view) .choicebar {
+  display: grid !important;
+  grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  gap: 12px !important;
+}
+
+body.q-restored:not(.q-chat-view) .choicebar button {
+  min-height: 48px;
+  border-radius: 12px;
+  padding: 10px;
+}
+
+/* Full-width search row */
+body.q-restored:not(.q-chat-view) .row.search {
+  display: flex !important;
+  flex-direction: row !important;
+  width: 100%;
+  gap: 12px;
+  margin-top: 15px;
+}
+
+body.q-restored:not(.q-chat-view) .row.search input {
+  flex: 1 1 0;
+  min-width: 0;
+  width: 100%;
+  min-height: 50px;
+  border-radius: 12px;
+  background: #09182b;
+  border: 1px solid #365677;
+  color: white;
+}
+
+body.q-restored:not(.q-chat-view) .row.search button.primary {
+  flex: 0 0 50px;
+  width: 50px !important;
+  min-width: 50px;
+  height: 50px;
+  border-radius: 12px;
+  background: #397fe8;
+}
+
+/* Cleaner results area */
+body.q-restored:not(.q-chat-view) #results {
+  width: 100%;
+  max-width: none;
+  gap: 14px;
+}
+
+body.q-restored:not(.q-chat-view) .source {
+  padding: 20px;
+  border-radius: 15px;
+  background: #122741;
+  border: 1px solid #304e70;
+}
+
+body.q-restored:not(.q-chat-view) .empty {
+  min-height: 110px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 15px;
+  background: #091a2d;
+  border: 1px dashed #345779;
+}
+
+/* Keep tabs centered */
+body.q-restored:not(.q-chat-view) .q-restored-tabs {
+  margin: 12px auto 24px !important;
+}
+
+/* Smaller screens */
+@media (max-width: 850px) {
+  body.q-restored:not(.q-chat-view) .main {
+    padding: 16px !important;
+  }
+
+  body.q-restored:not(.q-chat-view) .q-restored-grid .card {
+    padding: 18px !important;
+  }
+
+  body.q-restored:not(.q-chat-view) .choicebar {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 8px !important;
+  }
+}
+
+
+/* QUANTIZE ALIGNED WORKSPACES V1 */
+
+/* Keep tabs in the same position for both views */
+body.q-restored .q-restored-tabs {
+    margin: 12px auto 24px !important;
+}
+
+/* Reserve the same heading space in both views */
+body.q-restored .q-restored-welcome,
+body.q-restored .q-restored-welcome[hidden] {
+    display: flex !important;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 100px;
+    margin: 0 auto 24px !important;
+    text-align: center;
+    visibility: visible !important;
+}
+
+/* Visually hide the heading in Discover mode,
+   but keep its space to maintain alignment */
+body.q-restored .q-restored-welcome[hidden] {
+    visibility: hidden !important;
+}
+
+/* Both workspaces start at the same position */
+body.q-restored .q-restored-grid {
+    margin-top: 0 !important;
+    align-items: start !important;
+}
+
+/* Maintain consistent outer spacing */
+body.q-restored .q-restored-grid > * {
+    margin-top: 0 !important;
+}
+
+/* Reduce extra top spacing on the coach */
+body.q-restored.q-chat-view #coach {
+    margin-top: 0 !important;
+}
+
+/* Keep the wide discovery layout */
+body.q-restored:not(.q-chat-view) .q-restored-grid {
+    width: 100% !important;
+    max-width: none !important;
+}
+
+/* Smaller screens */
+@media (max-width: 690px) {
+    body.q-restored .q-restored-welcome,
+    body.q-restored .q-restored-welcome[hidden] {
+        min-height: 80px;
+        margin-bottom: 16px !important;
+    }
+}
+
+
+/* QUANTIZE FIX VERTICAL ALIGNMENT V2 */
+
+/* Keep the main content anchored at the top */
+body.q-restored .shell {
+  align-items: stretch !important;
+  align-content: start !important;
+}
+
+body.q-restored .main {
+  display: block !important;
+  align-self: stretch !important;
+  justify-content: flex-start !important;
+  align-content: start !important;
+  min-height: 100vh !important;
+  height: auto !important;
+  margin-top: 0 !important;
+  padding-top: 24px !important;
+}
+
+/* Tabs remain in exactly the same position */
+body.q-restored .q-restored-tabs {
+  margin: 16px auto 24px !important;
+}
+
+/* Equal heading space in both views */
+body.q-restored .q-restored-welcome,
+body.q-restored .q-restored-welcome[hidden] {
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+  height: 110px !important;
+  min-height: 110px !important;
+  max-height: 110px !important;
+  margin: 0 auto 24px !important;
+  padding: 0 !important;
+}
+
+/* Invisible in Discover, but maintains alignment */
+body.q-restored .q-restored-welcome[hidden] {
+  visibility: hidden !important;
+}
+
+/* Identical starting position for both panels */
+body.q-restored .q-restored-grid {
+  margin-top: 0 !important;
+  padding-top: 0 !important;
+  align-items: start !important;
+}
+
+/* Don't vertically center either panel */
+body.q-restored .q-restored-grid > * {
+  margin-top: 0 !important;
+  align-self: start !important;
+}
+
+/* Keep Discover Sources full width */
+body.q-restored:not(.q-chat-view) .q-restored-grid {
+  width: 100% !important;
+  max-width: none !important;
+}
+
+@media (max-width: 690px) {
+  body.q-restored .main {
+    padding-top: 16px !important;
+  }
+
+  body.q-restored .q-restored-welcome,
+  body.q-restored .q-restored-welcome[hidden] {
+    height: 90px !important;
+    min-height: 90px !important;
+    max-height: 90px !important;
+  }
+}
+
+
+/* QUANTIZE SOFTER BORDER TUNE V1 */
+
+:root{
+  --panel-soft: rgba(120, 170, 255, 0.10);
+  --panel-softer: rgba(120, 170, 255, 0.06);
+  --panel-glow: rgba(80, 140, 255, 0.08);
+}
+
+/* Main cards and panels */
+.card,
+.source,
+.empty,
+#results,
+#coach,
+#messages,
+#coachForm,
+.q-restored-grid > *,
+main section,
+main article {
+  border-color: var(--panel-soft) !important;
+  box-shadow: 0 0 0 1px rgba(255,255,255,0.015) inset !important;
+}
+
+/* Search/results container */
+#searchPanel,
+#resultsPanel,
+#discover,
+#researchResults {
+  border-color: var(--panel-soft) !important;
+  background: rgba(10, 24, 44, 0.72) !important;
+}
+
+/* Buttons / pills / chips */
+button,
+.chips button,
+.filter,
+.choicebar button {
+  border-color: var(--panel-softer) !important;
+}
+
+/* Inputs */
+input,
+textarea,
+select {
+  border-color: rgba(120, 170, 255, 0.12) !important;
+  box-shadow: none !important;
+}
+
+/* Results dashed area */
+#results .empty,
+.empty {
+  border-color: rgba(120, 170, 255, 0.14) !important;
+}
+
+/* Big outer discover box */
+.q-restored-grid,
+.q-restored-grid > div,
+main .card {
+  box-shadow: 0 1px 0 rgba(255,255,255,0.02) inset, 0 0 0 1px rgba(80,140,255,0.05) !important;
+}
+
+/* Footer area */
+footer {
+  border-color: transparent !important;
+}
+
+
+/* QUANTIZE CLEAN CHAT V1 */
+
+/* Keep original navy styling */
+body.q-chat-view {
+  background: #071425 !important;
+}
+
+/* Center the Research Coach */
+body.q-chat-view .q-restored-grid {
+  width: min(100%, 820px) !important;
+  max-width: 820px !important;
+  margin-inline: auto !important;
+}
+
+body.q-chat-view #coach {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0 10px !important;
+}
+
+/* Remove unnecessary panel outlines */
+body.q-chat-view #coach .heading {
+  display: none !important;
+}
+
+/* Open chat area */
+body.q-chat-view #coach #messages {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  min-height: 200px !important;
+  height: clamp(200px, 30vh, 380px) !important;
+  max-height: 380px !important;
+  overflow-y: auto !important;
+  padding: 16px 4px !important;
+}
+
+/* Keep messages readable */
+body.q-chat-view #coach .bubble.bot {
+  background: #1B3453 !important;
+  color: #F4F8FF !important;
+  border-radius: 17px !important;
+}
+
+body.q-chat-view #coach .bubble.me {
+  background: #295D9B !important;
+  color: white !important;
+  border-radius: 17px !important;
+}
+
+/* Large rounded message bar */
+body.q-chat-view #coachForm {
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: nowrap !important;
+  align-items: center !important;
+  width: 100% !important;
+  padding: 12px !important;
+  gap: 10px !important;
+  background: #192E4A !important;
+  border: 1px solid #304D70 !important;
+  border-radius: 24px !important;
+  box-shadow: none !important;
+}
+
+body.q-chat-view #coachForm #coachInput {
+  flex: 1 1 0 !important;
+  min-width: 0 !important;
+  width: 100% !important;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  color: white !important;
+  font-size: 16px !important;
+}
+
+/* Original Q voice control */
+body.q-chat-view #coachForm #voiceToggle {
+  flex: 0 0 40px !important;
+  width: 40px !important;
+  height: 40px !important;
+  border-radius: 50% !important;
+  background: #284D7C !important;
+  color: white !important;
+}
+
+/* Blue Send button */
+body.q-chat-view #coachForm button.primary {
+  flex: 0 0 40px !important;
+  width: 40px !important;
+  min-width: 40px !important;
+  height: 40px !important;
+  padding: 0 !important;
+  border-radius: 50% !important;
+  background: #397FE8 !important;
+  color: white !important;
+}
+
+/* Subtle guidance text */
+body.q-chat-view .coach-note {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  color: #9DB4D2 !important;
+  text-align: center !important;
+}
+
+@media (max-width: 690px) {
+  body.q-chat-view #coach #messages {
+    min-height: 150px !important;
+    height: 28dvh !important;
+  }
+
+  body.q-chat-view #coachForm {
+    padding: 8px !important;
+  }
+}
+
+
+/* QUANTIZE CENTERED COACH V2 */
+
+/* Keep the existing navy background */
+body.q-chat-view .main {
+  background: #071425 !important;
+}
+
+/* Center the welcome heading vertically */
+body.q-chat-view .q-restored-welcome {
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+  visibility: visible !important;
+
+  height: auto !important;
+  min-height: 0 !important;
+  max-height: none !important;
+
+  margin: clamp(90px, 17vh, 180px) auto 28px !important;
+  padding: 0 !important;
+}
+
+body.q-chat-view .q-restored-welcome h1 {
+  font-size: clamp(25px, 2.5vw, 34px);
+  letter-spacing: -0.7px;
+}
+
+body.q-chat-view .q-restored-welcome p {
+  margin-top: 10px;
+  color: #a9bfda;
+}
+
+/* A clean and narrower research coach */
+body.q-chat-view .q-restored-grid {
+  max-width: 840px !important;
+  width: min(100%, 840px) !important;
+  margin-inline: auto !important;
+}
+
+body.q-chat-view #coach {
+  width: 100% !important;
+  max-width: none !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+}
+
+/* Remove heading and unnecessary panel outlines */
+body.q-chat-view #coach .heading {
+  display: none !important;
+}
+
+/* Before chatting, collapse the introductory message area */
+body.q-chat-view:not(.q-chat-started) #coach #messages {
+  display: none !important;
+}
+
+/* Once a conversation starts, show its messages */
+body.q-chat-view.q-chat-started #coach #messages {
+  display: block !important;
+  height: auto !important;
+  min-height: 160px !important;
+  max-height: 55vh !important;
+  overflow-y: auto !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  margin-bottom: 18px !important;
+}
+
+/* Rounded, centered message composer */
+body.q-chat-view #coachForm {
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: nowrap !important;
+  align-items: center !important;
+  width: 100% !important;
+  box-sizing: border-box;
+  min-height: 64px !important;
+  padding: 10px 12px !important;
+  gap: 10px !important;
+  margin: 12px auto !important;
+
+  border-radius: 28px !important;
+  background: #1b304d !important;
+  border: 1px solid #314d70 !important;
+  box-shadow: none !important;
+}
+
+body.q-chat-view #coachInput {
+  flex: 1 1 0 !important;
+  min-width: 0 !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  color: white !important;
+  font-size: 16px !important;
+}
+
+body.q-chat-view #coachForm #voiceToggle,
+body.q-chat-view #coachForm button.primary {
+  flex: 0 0 40px !important;
+  width: 40px !important;
+  min-width: 40px !important;
+  height: 40px !important;
+  border-radius: 50% !important;
+  padding: 0 !important;
+}
+
+body.q-chat-view #coachForm #voiceToggle {
+  background: #285483 !important;
+  color: white !important;
+}
+
+body.q-chat-view #coachForm button.primary {
+  background: #397fe8 !important;
+  color: white !important;
+}
+
+/* Remove clutter only in Coach view */
+body.q-chat-view .q-coach-extra-hidden {
+  display: none !important;
+}
+
+body.q-chat-view .coach-note {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  text-align: center !important;
+  color: #95adc9 !important;
+}
+
+@media (max-width: 690px) {
+  body.q-chat-view .q-restored-welcome {
+    margin-top: 60px !important;
+  }
+
+  body.q-chat-view #coachForm {
+    min-height: 58px !important;
+  }
+}
+
+
+/* QUANTIZE CONVERSATION MODE V1 */
+
+/* Only apply after the first message */
+body.q-chat-view.q-chat-started {
+  background: #071425 !important;
+}
+
+/* Remove welcome screen during conversation */
+body.q-chat-view.q-chat-started .q-restored-welcome {
+  display: none !important;
+}
+
+/* Expand conversation space */
+body.q-chat-view.q-chat-started .q-restored-grid {
+  width: min(100%, 860px) !important;
+  max-width: 860px !important;
+  margin: 30px auto 0 !important;
+  padding-bottom: 150px !important;
+}
+
+body.q-chat-view.q-chat-started #coach {
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+
+/* Let the page scroll naturally */
+body.q-chat-view.q-chat-started #coach #messages {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 24px !important;
+  height: auto !important;
+  min-height: 0 !important;
+  max-height: none !important;
+  overflow: visible !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  padding: 15px 0 30px !important;
+}
+
+/* Assistant responses */
+body.q-chat-view.q-chat-started #messages .bubble.bot {
+  align-self: flex-start !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  color: #f4f8ff !important;
+  max-width: 90% !important;
+  line-height: 1.7 !important;
+  padding: 12px 0 !important;
+}
+
+/* Student messages */
+body.q-chat-view.q-chat-started #messages .bubble.me {
+  align-self: flex-end !important;
+  background: #1b416e !important;
+  color: #ffffff !important;
+  border: 0 !important;
+  border-radius: 22px !important;
+  padding: 12px 18px !important;
+  max-width: 75% !important;
+}
+
+/* Composer stays at bottom while chatting */
+body.q-chat-view.q-chat-started #coachForm {
+  position: fixed !important;
+  bottom: max(22px, env(safe-area-inset-bottom)) !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  z-index: 100 !important;
+
+  width: min(790px, calc(100vw - 40px)) !important;
+  max-width: 790px !important;
+
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+
+  background: #1a304e !important;
+  border: 1px solid #355477 !important;
+  border-radius: 28px !important;
+  padding: 10px 12px !important;
+  box-shadow: 0 12px 40px #0005 !important;
+}
+
+/* Keep Q and Send controls */
+body.q-chat-view.q-chat-started #coachForm #voiceToggle {
+  background: #285483 !important;
+  color: white !important;
+}
+
+body.q-chat-view.q-chat-started #coachForm button.primary {
+  background: #397fe8 !important;
+  color: white !important;
+}
+
+/* Hide secondary information while chatting */
+body.q-chat-view.q-chat-started .coach-note,
+body.q-chat-view.q-chat-started .q-coach-extra-hidden {
+  display: none !important;
+}
+
+/* Preserve page layout on mobile */
+@media(max-width:690px) {
+  body.q-chat-view.q-chat-started #coachForm {
+    width: calc(100vw - 24px) !important;
+    bottom: max(12px, env(safe-area-inset-bottom)) !important;
+    padding: 8px !important;
+  }
+
+  body.q-chat-view.q-chat-started .q-restored-grid {
+    padding-bottom: 130px !important;
+  }
+}
+
+
+/* QUANTIZE CLEAN CONVERSATION V2 */
+
+/* Clean the surrounding coach area */
+body.q-chat-view.q-chat-started #coach {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+/* Remove unnecessary panel outlines */
+body.q-chat-view.q-chat-started #messages {
+  background: transparent !important;
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+/* Keep conversation messages open and readable */
+body.q-chat-view.q-chat-started #messages .bubble.bot {
+  background: transparent !important;
+  border: none !important;
+  padding: 8px 0 !important;
+  line-height: 1.75 !important;
+}
+
+body.q-chat-view.q-chat-started #messages .bubble.me {
+  background: #1C416D !important;
+  border: none !important;
+  border-radius: 22px !important;
+  padding: 12px 17px !important;
+}
+
+/* Hide quick suggestions while chatting */
+body.q-chat-view.q-chat-started #coach .chips,
+body.q-chat-view.q-chat-started #coach .quick-actions,
+body.q-chat-view.q-chat-started #coach .suggestions {
+  display: none !important;
+}
+
+/* Minimal conversation container */
+body.q-chat-view.q-chat-started .q-restored-grid {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+/* Keep the navy bottom composer */
+body.q-chat-view.q-chat-started #coachForm {
+  background: #1A304E !important;
+  border: 1px solid #304C6D !important;
+  box-shadow: 0 8px 28px #0003 !important;
+}
+
+/* Keep text readable */
+body.q-chat-view.q-chat-started #coachInput {
+  color: #F3F8FF !important;
+}
+
+/* Remove extra footer clutter while chatting */
+body.q-chat-view.q-chat-started footer {
+  display: none !important;
+}
+
+
+/* QUANTIZE OPEN CHAT V3 */
+
+/* Remove visible chat container boundaries */
+body.q-chat-view.q-chat-started #coach,
+body.q-chat-view.q-chat-started #messages,
+body.q-chat-view.q-chat-started .q-restored-grid,
+body.q-chat-view.q-chat-started .q-restored-grid > * {
+  background: transparent !important;
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+/* Expand the conversation workspace */
+body.q-chat-view.q-chat-started .q-restored-grid {
+  width: min(100%, 1100px) !important;
+  max-width: 1100px !important;
+  margin: 20px auto 0 !important;
+  padding: 0 24px 160px !important;
+  box-sizing: border-box;
+}
+
+/* Remove artificial message-area limits */
+body.q-chat-view.q-chat-started #messages {
+  height: auto !important;
+  min-height: 0 !important;
+  max-height: none !important;
+  overflow: visible !important;
+  padding: 0 0 30px !important;
+}
+
+/* Keep user and AI messages properly aligned */
+body.q-chat-view.q-chat-started #messages .bubble.bot {
+  align-self: flex-start !important;
+  max-width: 90% !important;
+  background: transparent !important;
+}
+
+body.q-chat-view.q-chat-started #messages .bubble.me {
+  align-self: flex-end !important;
+  max-width: 80% !important;
+  background: #1c416d !important;
+}
+
+/* Hide the research prototype footer during chat */
+body.q-chat-view.q-chat-started footer,
+body.q-chat-view.q-chat-started .footer {
+  display: none !important;
+}
+
+/* Keep the chat input at the bottom */
+body.q-chat-view.q-chat-started #coachForm {
+  background: #1a304e !important;
+  border: 1px solid #355477 !important;
+  border-radius: 28px !important;
+}
+
+/* Mobile layout */
+@media(max-width:690px) {
+  body.q-chat-view.q-chat-started .q-restored-grid {
+    padding: 0 12px 140px !important;
+  }
+}
+
+
+/* QUANTIZE HIDE FOOTER V1 */
+
+/* Hide the website footer in every view */
+footer,
+.footer,
+[role="contentinfo"] {
+    display: none !important;
+}
+
+
+/* QUANTIZE CENTER CHAT BAR V1 */
+
+/* Center the bar within the main workspace */
+body.q-chat-view.q-chat-started #coachForm {
+  position: fixed !important;
+  bottom: 20px !important;
+
+  left: calc(50% + 90px) !important;
+  transform: translateX(-50%) !important;
+
+  width: min(790px, calc(100vw - 230px)) !important;
+  max-width: 790px !important;
+
+  margin: 0 !important;
+  z-index: 100 !important;
+
+  background: #1a304e !important;
+  border: 1px solid #355477 !important;
+  border-radius: 28px !important;
+}
+
+/* On mobile, center it within the full screen */
+@media (max-width: 690px) {
+  body.q-chat-view.q-chat-started #coachForm {
+    left: 50% !important;
+    width: calc(100vw - 24px) !important;
+    bottom: max(12px, env(safe-area-inset-bottom)) !important;
+  }
+}
+
+
+/* QUANTIZE DISCOVERY REFRESH V2 */
+
+/* Open, seamless research workspace */
+body.q-restored:not(.q-chat-view) .q-restored-grid .card {
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  padding: 18px 24px !important;
+}
+
+/* Clearer headings */
+body.q-restored:not(.q-chat-view) .q-restored-grid h2 {
+  font-size: 26px !important;
+  font-weight: 750 !important;
+  letter-spacing: -0.7px;
+  color: #f5f9ff !important;
+}
+
+/* Compact category selector */
+body.q-restored:not(.q-chat-view) .choicebar {
+  display: grid !important;
+  grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  gap: 10px !important;
+}
+
+body.q-restored:not(.q-chat-view) .choicebar button {
+  min-height: 46px;
+  background: #112640 !important;
+  color: #c4d6eb !important;
+  border: 1px solid #253e5d !important;
+  border-radius: 13px !important;
+  font-weight: 600;
+}
+
+body.q-restored:not(.q-chat-view) .choicebar button.active {
+  background: #24558d !important;
+  color: #ffffff !important;
+  border-color: #4a86c3 !important;
+}
+
+/* Large, comfortable search input */
+body.q-restored:not(.q-chat-view) .row.search {
+  display: flex !important;
+  flex-direction: row !important;
+  gap: 10px !important;
+  width: 100%;
+  margin: 18px 0 12px;
+}
+
+body.q-restored:not(.q-chat-view) .row.search input {
+  flex: 1 1 0 !important;
+  width: 100% !important;
+  min-width: 0;
+  min-height: 58px;
+  padding: 0 18px !important;
+  background: #132a46 !important;
+  color: #f4f8ff !important;
+  border: 1px solid #2a4868 !important;
+  border-radius: 17px !important;
+  font-size: 15px;
+  box-shadow: none !important;
+}
+
+body.q-restored:not(.q-chat-view) .row.search input:focus {
+  outline: 2px solid #4c94ee !important;
+  outline-offset: 2px;
+}
+
+body.q-restored:not(.q-chat-view) .row.search button.primary {
+  flex: 0 0 58px !important;
+  width: 58px !important;
+  min-width: 58px !important;
+  min-height: 58px;
+  background: #397fe8 !important;
+  color: white !important;
+  border: 0 !important;
+  border-radius: 16px !important;
+}
+
+/* Visually integrated results */
+body.q-restored:not(.q-chat-view) .merged-results,
+body.q-restored:not(.q-chat-view) #results {
+  border-color: transparent !important;
+  box-shadow: none !important;
+}
+
+body.q-restored:not(.q-chat-view) .source {
+  background: #10243e !important;
+  border: 1px solid #203b59 !important;
+  border-radius: 16px !important;
+  padding: 20px !important;
+  box-shadow: none !important;
+}
+
+body.q-restored:not(.q-chat-view) .empty {
+  background: #0b1c31 !important;
+  border: 1px solid #203a56 !important;
+  border-radius: 18px !important;
+  min-height: 125px;
+}
+
+/* Filters are low-contrast until selected */
+body.q-restored:not(.q-chat-view) .filter {
+  border: 1px solid transparent !important;
+  background: #152a45 !important;
+  color: #bcd0e8 !important;
+  border-radius: 10px !important;
+}
+
+body.q-restored:not(.q-chat-view) .filter.active {
+  background: #24558d !important;
+  color: white !important;
+}
+
+/* Comfortable layout on phones */
+@media (max-width: 700px) {
+  body.q-restored:not(.q-chat-view) .choicebar {
+    grid-template-columns: repeat(2, minmax(0,1fr)) !important;
+  }
+
+  body.q-restored:not(.q-chat-view) .q-restored-grid .card {
+    padding: 12px !important;
+  }
+
+  body.q-restored:not(.q-chat-view) .row.search button.primary {
+    flex-basis: 50px !important;
+    width: 50px !important;
+    min-width: 50px !important;
+  }
+}
+
+
+/* QUANTIZE BORDERLESS DISCOVERY V1 */
+
+/* Remove outer Discover Sources border */
+body.q-restored:not(.q-chat-view)
+.q-restored-grid .card {
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+    background: transparent !important;
+}
+
+/* Remove workspace divider lines */
+body.q-restored:not(.q-chat-view)
+.q-restored-grid {
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+/* Preserve the navy background */
+body.q-restored:not(.q-chat-view) .main {
+    background: #071425 !important;
+}
+
+
+/* QUANTIZE SEARCH BUTTON FIX V1 */
+
+.row.search button.primary {
+  position: relative !important;
+  flex: 0 0 50px !important;
+  width: 50px !important;
+  min-width: 50px !important;
+  max-width: 50px !important;
+  height: 50px !important;
+  min-height: 50px !important;
+  padding: 0 !important;
+  border-radius: 12px !important;
+  background: #397FE8 !important;
+  overflow: hidden !important;
+  font-size: 0 !important;
+  line-height: 0 !important;
+  color: transparent !important;
+  cursor: pointer;
+}
+
+/* Always display a magnifying-glass icon */
+.row.search button.primary::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  display: block;
+  background: center / 22px 22px no-repeat
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2.4' stroke-linecap='round'%3E%3Ccircle cx='10.8' cy='10.8' r='6.5'/%3E%3Cpath d='m16 16 4.5 4.5'/%3E%3C/svg%3E");
+  pointer-events: none;
+}
+
+/* Prevent an existing icon from overlapping */
+.row.search button.primary svg {
+  display: none !important;
+}
+
+.row.search input {
+  flex: 1 1 0 !important;
+  min-width: 0 !important;
+}
+
+.row.search button.primary:focus-visible {
+  outline: 2px solid #90BFFF !important;
+  outline-offset: 3px;
+}
+
+
+/* QUANTIZE SEAMLESS COACH V1 */
+
+/* Blend the Research Coach into the navy background */
+body.q-chat-view .q-restored-welcome,
+body.q-chat-view .q-restored-grid,
+body.q-chat-view .q-restored-grid > *,
+body.q-chat-view #coach,
+body.q-chat-view #messages,
+body.q-chat-view .coach-note {
+  background: transparent !important;
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+/* Remove decorative horizontal divider lines */
+body.q-chat-view #coach .heading {
+  border: none !important;
+  box-shadow: none !important;
+}
+
+/* Keep the actual typing bar visible */
+body.q-chat-view #coachForm {
+  background: #1B304D !important;
+  border: 1px solid #355477 !important;
+  border-radius: 28px !important;
+  box-shadow: none !important;
+}
+
+/* Keep the original Quantize blue buttons */
+body.q-chat-view #coachForm #voiceToggle {
+  background: #285483 !important;
+  color: white !important;
+}
+
+body.q-chat-view #coachForm button.primary {
+  background: #397FE8 !important;
+  color: white !important;
+}
+
+/* Softer secondary text */
+body.q-chat-view .coach-note {
+  color: #91ABC9 !important;
+}
+
+
+/* QUANTIZE DISCOVERY SIDEBAR V1 */
+
+/* Only show these sidebar items in Discover Sources */
+body.q-chat-view #navSecondary,
+body.q-chat-view #navNews {
+  display: none !important;
+}
+
+
+/* QUANTIZE HIDE SIDEBAR COACH V1 */
+
+#navCoach {
+  display: none !important;
+}
+
+
+/* QUANTIZE STABLE HEADER V1 */
+
+/* Keep the main page positioned consistently */
+body.q-restored .main {
+  display: block !important;
+  align-self: start !important;
+  justify-content: flex-start !important;
+  min-height: 100vh !important;
+  height: auto !important;
+  margin-top: 0 !important;
+  padding-top: 20px !important;
+}
+
+/* Keep the top header in one steady row */
+body.q-restored .top {
+  display: grid !important;
+  grid-template-columns: 1fr auto 1fr !important;
+  align-items: center !important;
+  gap: 16px !important;
+  width: 100% !important;
+  min-height: 46px !important;
+  margin: 0 0 20px !important;
+}
+
+/* Left header item */
+body.q-restored .top > :first-child {
+  justify-self: start !important;
+}
+
+/* Center header item */
+body.q-restored .top > :nth-child(2) {
+  justify-self: center !important;
+}
+
+/* Right header item */
+body.q-restored .top > :nth-child(3) {
+  justify-self: end !important;
+}
+
+/* Keep the tabs positioned below the header */
+body.q-restored .q-restored-tabs {
+  margin: 12px auto 24px !important;
+}
+
+/* Keep the same header alignment in both views */
+body.q-restored.q-chat-view .top,
+body.q-restored:not(.q-chat-view) .top {
+  position: relative !important;
+  top: auto !important;
+  transform: none !important;
+}
+
+/* Small screens */
+@media (max-width: 690px) {
+  body.q-restored .top {
+    grid-template-columns: 1fr auto !important;
+    row-gap: 12px !important;
+  }
+
+  body.q-restored .top > :nth-child(2) {
+    grid-column: 1 / -1;
+    grid-row: 2;
+  }
+
+  body.q-restored .top > :nth-child(3) {
+    grid-column: 2;
+    grid-row: 1;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -1013,6 +2382,282 @@ onAuthStateChanged(auth, user => {
     ? 'Hello, ' + (user.displayName || user.email || 'Student')
     : '';
 });
+</script>
+
+
+<script>
+/* QUANTIZE RESTORED RESEARCH LAYOUT V1 */
+(() => {
+  function init() {
+    const main = document.querySelector('.main');
+    const coach = document.getElementById('coach');
+    if (!main || !coach) return;
+
+    const grid = [...main.querySelectorAll('.grid')]
+      .find(g => g.contains(coach));
+
+    if (!grid) return;
+
+    let coachColumn = coach;
+    while (coachColumn.parentElement &&
+           coachColumn.parentElement !== grid) {
+      coachColumn = coachColumn.parentElement;
+    }
+
+    if (coachColumn.parentElement !== grid ||
+        grid.children.length < 2) return;
+
+    const columns = [...grid.children];
+    grid.classList.add('q-restored-grid');
+
+    const tabs = document.createElement('nav');
+    tabs.className = 'q-restored-tabs';
+    tabs.setAttribute('aria-label', 'Research workspace');
+
+    const chat = document.createElement('button');
+    chat.type = 'button';
+    chat.textContent = 'Research Coach';
+
+    const research = document.createElement('button');
+    research.type = 'button';
+    research.textContent = 'Discover Sources';
+
+    tabs.append(chat, research);
+
+    const welcome = document.createElement('section');
+    welcome.className = 'q-restored-welcome';
+    welcome.innerHTML =
+      '<h1>What are you researching?</h1>' +
+      '<p>Find sources. Explore evidence. Learn more.</p>';
+
+    grid.before(tabs, welcome);
+
+    function show(view) {
+      const isChat = view === 'chat';
+
+      document.body.classList.add('q-restored');
+      document.body.classList.toggle('q-chat-view', isChat);
+
+      columns.forEach(col => {
+        col.classList.toggle(
+          'q-hidden-column',
+          isChat ? col !== coachColumn : col === coachColumn
+        );
+      });
+
+      chat.classList.toggle('active', isChat);
+      research.classList.toggle('active', !isChat);
+      chat.setAttribute('aria-pressed', String(isChat));
+      research.setAttribute('aria-pressed', String(!isChat));
+      welcome.hidden = !isChat;
+    }
+
+    chat.addEventListener('click', () => show('chat'));
+    research.addEventListener('click', () => show('research'));
+
+    show('chat');
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();
+</script>
+
+
+<script>
+/* QUANTIZE CENTERED COACH V2 */
+(() => {
+  function init() {
+    const messages = document.getElementById('messages');
+    const form = document.getElementById('coachForm');
+    const input = document.getElementById('coachInput');
+    const coach = document.getElementById('coach');
+
+    if (!messages || !form || !coach) return;
+
+    // Keep existing conversations visible.
+    function detectConversation() {
+      if (messages.querySelector(
+          '.bubble.me, .message.user, [data-role="user"]'
+      )) {
+        document.body.classList.add('q-chat-started');
+      }
+    }
+
+    detectConversation();
+
+    // Show the conversation after the user sends a message.
+    form.addEventListener('submit', () => {
+      if (input && input.value.trim()) {
+        document.body.classList.add('q-chat-started');
+      }
+    }, true);
+
+    new MutationObserver(detectConversation).observe(messages, {
+      childList: true,
+      subtree: true
+    });
+
+    // Hide Source Essentials only in Research Coach mode.
+    const headings = document.querySelectorAll('h2,h3,h4');
+    headings.forEach(h => {
+      if (h.textContent.trim().toLowerCase() ===
+          'source essentials') {
+        const section = h.closest('.card');
+        if (section && !section.contains(coach)) {
+          section.classList.add('q-coach-extra-hidden');
+        }
+      }
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();
+</script>
+
+
+<script>
+/* QUANTIZE REMOVE PROTOTYPE FOOTER V2 */
+(() => {
+  function hidePrototypeFooter() {
+    const elements = document.querySelectorAll(
+      'footer, .footer, [role="contentinfo"], small, div, p'
+    );
+
+    for (const element of elements) {
+      if (
+        element.children.length === 0 &&
+        element.textContent.includes('Student prototype') &&
+        element.textContent.includes('Academic metadata')
+      ) {
+        element.style.display = 'none';
+      }
+    }
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener(
+      'DOMContentLoaded',
+      hidePrototypeFooter
+    );
+  } else {
+    hidePrototypeFooter();
+  }
+})();
+</script>
+
+
+<script>
+/* QUANTIZE DISCOVER FIRST V1 */
+(() => {
+  function reorderTabs() {
+    const tabs = document.querySelector('.q-restored-tabs');
+    if (!tabs) return;
+
+    const buttons = [...tabs.querySelectorAll('button')];
+
+    const discover = buttons.find(b =>
+      b.textContent.trim().includes('Discover Sources')
+    );
+
+    if (discover) {
+      tabs.prepend(discover);
+    }
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', reorderTabs);
+  } else {
+    reorderTabs();
+  }
+})();
+</script>
+
+
+<script>
+/* QUANTIZE DISCOVERY SIDEBAR V1 */
+(() => {
+  function setup() {
+    const secondary = document.getElementById('navSecondary');
+    const news = document.getElementById('navNews');
+    const tabs = document.querySelector('.q-restored-tabs');
+
+    if (!secondary || !news || !tabs) return;
+
+    function syncSidebar() {
+      const chatSelected =
+        document.body.classList.contains('q-chat-view');
+
+      secondary.hidden = chatSelected;
+      news.hidden = chatSelected;
+    }
+
+    syncSidebar();
+
+    tabs.addEventListener('click', () => {
+      requestAnimationFrame(syncSidebar);
+    });
+
+    new MutationObserver(syncSidebar).observe(document.body, {
+      attributes: true,
+      attributeFilter: ['class']
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', setup);
+  } else {
+    setup();
+  }
+})();
+</script>
+
+
+<script>
+/* QUANTIZE SIDEBAR TAB SHORTCUTS V1 */
+(() => {
+  function setup() {
+    function openTab(name) {
+      const tabs = document.querySelector('.q-restored-tabs');
+      if (!tabs) return;
+
+      const button = [...tabs.querySelectorAll('button')]
+        .find(b => b.textContent.trim()
+          .toLowerCase().includes(name.toLowerCase()));
+
+      if (button) button.click();
+    }
+
+    function connect(id, tab) {
+      const button = document.getElementById(id);
+      if (!button) return;
+
+      // Switch the workspace before existing sidebar actions run.
+      button.addEventListener('click', () => {
+        openTab(tab);
+      }, true);
+    }
+
+    connect('navDiscover', 'Discover Sources');
+    connect('navSecondary', 'Discover Sources');
+    connect('navNews', 'Discover Sources');
+    connect('navSaved', 'Discover Sources');
+    connect('navCoach', 'Research Coach');
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', setup);
+  } else {
+    setup();
+  }
+})();
 </script>
 
 </body>
