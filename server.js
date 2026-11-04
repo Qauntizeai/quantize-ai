@@ -28,7 +28,7 @@ const LABELS = {
   openaire: 'OpenAIRE (Europe)', semanticscholar: 'Semantic Scholar', pubmed: 'PubMed', arxiv: 'arXiv', eric: 'ERIC', doaj: 'DOAJ', clinicaltrials: 'ClinicalTrials.gov', hal: 'HAL Open Science'
 };
 const PORT = Number(process.env.PORT || 3000);
-const LIMIT = 25; // Maximum records per provider before deduplication.
+const LIMIT = 100; // Maximum records per provider before deduplication.
 const TIMEOUT_MS = 20000;
 const CACHE_MS = 120000;
 const CACHE_MAX = 120;
@@ -533,7 +533,7 @@ function merge(results, yearStart = null) {
       if (!previous.author.length && w.author.length) previous.author = w.author;
     } else seen.set(k, {...w});
   }
-  return [...seen.values()].slice(0, 125);
+  return [...seen.values()].slice(0, 1000);
 }
 async function combinedSearch(q, providerIds, fromYear, secondaryOnly = false) {
   const key = JSON.stringify([q.toLowerCase(), providerIds, fromYear, secondaryOnly]);
