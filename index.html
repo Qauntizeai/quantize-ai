@@ -22,6 +22,113 @@
 [hidden]{display:none!important}.choicebar{display:flex;gap:9px;flex-wrap:wrap;margin:0 0 18px}.choicebar button{padding:10px 14px;border:1px solid #35506d;background:#132742;color:#c4d7ef;border-radius:10px}.choicebar button.active{background:#24538c;border-color:#73abf1;color:#fff}.news-tools{margin-top:16px}.news-tools label{font-size:12px;color:#b2c6dc}.news-tools select{border:1px solid #35506d;background:#0a1729;color:white;border-radius:10px;padding:8px;margin-left:8px;max-width:100%}.publisherlinks{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:8px;margin-top:12px} .publisherlinks button{display:block;width:100%;text-align:left;font-size:12px;color:#cde6ff;background:#112941;border:1px solid #315373;border-radius:9px;padding:10px}.publisherlinks button:hover,.publisherlinks button:focus-visible,.publisherlinks button.active{border-color:#74b1fa;background:#173b5c}.notice{font-size:12px;color:#aec7e2;margin:10px 0 0}.providerstatus{font-size:11px;color:#9ebddd;margin:12px 0 0}.source .source-meta{font-size:11px;color:#8fdad2;margin-top:6px}.source .tag.news-tag{background:#46351c;color:#ffdf98}
 @media(max-width:1100px){.grid{grid-template-columns:1fr}.shell{grid-template-columns:210px minmax(0,1fr)}}
 @media(max-width:690px){.shell{display:block}.sidebar{padding:15px;gap:0}.sidebar .nav,.sidebar .label,.sidebar .plan,.sidebar .spacer{display:none}.main{padding:18px 15px}.hero h1{font-size:36px}.hero:after{opacity:.2}.metrics{gap:7px}.metric{padding:12px}.metric strong{font-size:21px}.metric small{font-size:10px}.row.search{flex-direction:column}.primary{width:100%}.card{padding:16px}}
+
+/* QUANTIZE CHAT MOBILE UPGRADE */
+#coach {
+  overflow: hidden;
+}
+
+#coach .heading {
+  gap: 12px;
+}
+
+#coach #messages {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  height: 420px;
+  min-height: 300px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 16px;
+  border-radius: 18px;
+  background: #091628;
+  border: 1px solid #294361;
+  scroll-behavior: smooth;
+}
+
+#coach .bubble {
+  width: fit-content;
+  max-width: 85%;
+  padding: 13px 16px;
+  font-size: 14px;
+  line-height: 1.6;
+  border-radius: 18px;
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
+}
+
+#coach .bubble.bot {
+  align-self: flex-start;
+  background: #1a304d;
+}
+
+#coach .bubble.me {
+  align-self: flex-end;
+  background: #286bd0;
+  color: white;
+}
+
+#coachForm {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  margin-top: 14px;
+}
+
+#coachForm #coachInput {
+  display: block;
+  flex: 1 1 0%;
+  min-width: 0;
+  width: 100%;
+  height: 52px;
+  font-size: 16px;
+  border-radius: 16px;
+  padding: 12px 15px;
+}
+
+#coachForm button.primary {
+  flex: 0 0 52px;
+  width: 52px;
+  min-width: 52px;
+  height: 52px;
+  padding: 0;
+  display: grid;
+  place-items: center;
+  font-size: 23px;
+  border-radius: 16px;
+}
+
+@media (max-width: 690px) {
+  #coach {
+    padding: 16px;
+  }
+
+  #coach #messages {
+    height: 48dvh;
+    min-height: 300px;
+    max-height: 550px;
+    padding: 12px;
+  }
+
+  #coach .bubble {
+    max-width: 92%;
+    font-size: 14px;
+  }
+
+  #coachForm {
+    flex-direction: row;
+    flex-wrap: nowrap;
+  }
+
+  #coachForm button.primary {
+    width: 52px;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -40,7 +147,7 @@
 type="button"><button id="modeWikipedia" type="button">Wikipedia</button></button></div><form id="searchForm" class="row search"><input id="query" type="search" placeholder="e.g. Artificial intelligence in education" aria-label="Search topic" maxlength="150" required><button id="searchBtn" class="primary">Search sources →</button></form><div id="academicTopics" class="chips"><button data-topic="Artificial intelligence in education">AI in education</button><button data-topic="Climate change impacts">Climate change</button><button data-topic="Social media and mental health">Mental health</button></div><p id="secondaryNote" class="notice" hidden>Find literature reviews, systematic reviews, and meta-analyses. Results are candidates based on scholarly metadata or title clues—not automatic credibility or peer-review certification. Open the original and evaluate its evidence.</p><div id="newsTools" class="news-tools" hidden><label for="publisherChoice">Choose publisher: <select id="publisherChoice"><option value="all">All major publishers</option></select></label><p class="notice">Search publisher-indexed article headlines directly in Quantize AI using GDELT. Full articles remain on publisher websites and may require subscriptions.</p></div><p class="providerstatus" id="providerStatus" aria-live="polite">Scholarly: Crossref · OpenAlex · Europe PMC · OpenAIRE · Semantic Scholar</p></section>
     <section class="card"><div class="heading"><h2 id="resultsTitle">Research results</h2><span class="badge" id="viewBadge">Search to get started</span></div><div class="filters" id="filters"><button class="filter active" data-filter="all">All sources</button><button class="filter" data-filter="primary">Primary candidates</button><button class="filter" data-filter="review">Review candidates</button><button class="filter" data-filter="secondary">Secondary candidates</button></div><div id="results" aria-live="polite"><div class="empty">Search for a topic to discover academic publications.</div></div><p class="hint" id="resultsHint">Research metadata comes from scholarly indexes. Source-type labels and citation drafts need verification against originals.</p><div id="publisherDirectory" hidden><h3 style="font-size:14px;margin-top:20px">Search a specific news publisher</h3><div class="publisherlinks" id="publisherLinks"></div><p class="hint">Choose a publisher to search articles here in Quantize AI. Enter a topic first. Article cards show publisher-indexed headlines and links to original reporting; full articles are not reproduced or unlocked.</p></div></section>
   </div><div class="column">
-    <section class="card" id="coach"><div class="heading"><h2>✧ Research Coach</h2><span class="badge">FREE GUIDE</span></div><div id="messages" class="chat" role="log" aria-live="polite"><div class="bubble bot">Hi! Ask me about primary sources, secondary sources, citations, credibility, or planning your research.</div></div><div class="chips"><button data-question="What is a primary source?">Primary sources</button><button data-question="How do I check credibility?">Check credibility</button><button data-question="How do I cite a source?">Citation tips</button></div><form id="coachForm" class="row"><input id="coachInput" maxlength="300" placeholder="Ask a research question..." aria-label="Ask the Research Coach" required><button class="primary" aria-label="Send">➜</button></form><p class="coach-note">This free Research Coach is a rule-based guide, not an OpenAI chatbot. It cannot read or verify full articles.</p></section>
+    <section class="card" id="coach"><div class="heading"><h2>✧ Research Coach</h2><span class="badge">FREE GUIDE</span></div><div id="messages" class="chat" role="log" aria-live="polite"><div class="bubble bot">Hi! Ask me about primary sources, secondary sources, citations, credibility, or planning your research.</div></div><div class="chips"><button data-question="What is a primary source?">Primary sources</button><button data-question="How do I check credibility?">Check credibility</button><button data-question="How do I cite a source?">Citation tips</button></div><form id="coachForm" class="row"><input id="coachInput" maxlength="4000" placeholder="Ask a research question..." aria-label="Ask the Research Coach" required><button class="primary" aria-label="Send">↑</button></form><p class="coach-note">This free Research Coach is a rule-based guide, not an OpenAI chatbot. It cannot read or verify full articles.</p></section>
     <section class="card guide"><h2>Source essentials</h2><h3>Primary sources</h3><p>Original research, first-hand evidence, experiments, interviews, datasets.</p><h3>Secondary sources</h3><p>Reviews, interpretations, analyses, and textbooks.</p><h3>Credibility checklist</h3><p>Check authors, methods, publication venue, citations, conflicts of interest, and corrections.</p></section>
   </div></div>
   <p class="foot">© 2026 Quantize AI · Student prototype · Academic metadata: Crossref, OpenAlex, Europe PMC, OpenAIRE, Semantic Scholar · News discovery: GDELT</p>
